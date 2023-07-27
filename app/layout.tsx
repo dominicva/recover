@@ -16,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={hankenGrotesk.className}>{children}</body>
+      <body className={`${hankenGrotesk.className} text-off-black`}>
+        {children}
+      </body>
     </html>
   );
 }

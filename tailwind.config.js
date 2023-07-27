@@ -7,12 +7,18 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        primary: '#0a6ff8',
+        secondary: '#FF7E1D',
+        tertiary: '#FECE00',
+        'blue-lighter': '#5BBBFF',
+        'blue-darker': '#0540FF',
+        'purple-lighter': '#5330A5',
+        'purple-darker': '#281465',
+        'off-white': '#F9F4F2',
+        'off-black': '#2D2C2B',
       },
     },
   },
-  plugins: [],
+  plugins: [require('@headlessui/tailwindcss')],
 };
