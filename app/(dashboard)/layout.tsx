@@ -8,7 +8,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <Container className="px-4">
+    <Container>
       <Header isLoggedIn={await isLoggedIn()} />
       {children}
     </Container>

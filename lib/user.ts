@@ -5,3 +5,8 @@ export const isLoggedIn = async () => {
   const session = await getServerSession(authOptions);
   return Boolean(session?.user);
 };
+
+export const getUser = async () => {
+  const session = await getServerSession(authOptions);
+  return session?.user;
+};

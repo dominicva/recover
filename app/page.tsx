@@ -1,15 +1,18 @@
 import { isLoggedIn } from '@/lib/user';
 import Header from '@/components/layout/Header';
 import Hero from '@/components/layout/Hero';
-import Container from '@/components/utils/Container';
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
-    <Container className="px-4">
+    <>
       <Header isLoggedIn={await isLoggedIn()} />
-      <main>
+      <main className="bg-off-white">
         <Hero />
       </main>
-    </Container>
+    </>
   );
 }

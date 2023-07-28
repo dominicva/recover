@@ -15,7 +15,7 @@ export default function AuthForm({
   title,
   subtitle,
 }: {
-  title: string;
+  title: 'Sign Up' | 'Log In';
   subtitle: string;
 }) {
   const [email, setEmail] = useState('');
@@ -25,13 +25,17 @@ export default function AuthForm({
     await signIn('email', { email, callbackUrl: '/' });
   };
 
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignIn = async () => {
     await signIn('google', { callbackUrl: '/' });
   };
 
+  const handleGitHubSignIn = async () => {
+    await signIn('github', { callbackUrl: '/' });
+  };
+
   return (
-    <Container as="main" className="px-4">
-      <FlexCol className="mt-6 gap-4">
+    <Container as="main" className="px-4 sm:px-0">
+      <FlexCol className="mx-auto mt-6 max-w-sm gap-4">
         <div className="relative">
           <Link href="/">
             <X className="absolute left-0 top-[1.5px] h-6 w-6 text-off-black" />
@@ -47,6 +51,7 @@ export default function AuthForm({
                 type="email"
                 id="email"
                 name="email"
+                autoComplete={title === 'Sign Up' ? 'email' : 'current-email'}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -64,7 +69,7 @@ export default function AuthForm({
         <hr className="border-t-solid border-t-1 text-md m-auto my-6 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
         <div className="flex flex-col gap-4">
           <Button
-            onClick={handleGoogleSignUp}
+            onClick={handleGoogleSignIn}
             size="large"
             intent="text"
             className="flex w-full items-center justify-center gap-4"
@@ -100,6 +105,7 @@ export default function AuthForm({
             <span className="ml-1">Continue with Instagram</span>
           </Button>
           <Button
+            onClick={handleGitHubSignIn}
             size="large"
             intent="text"
             type="submit"
