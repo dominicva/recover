@@ -16,7 +16,9 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signIn('email', { email });
+    // console.log('email', email);
+    const res = await signIn('email', { email, callbackUrl: '/' });
+    console.log(res);
   };
 
   const handleGoogleSignUp = async () => {
@@ -39,13 +41,13 @@ export default function SignUp() {
             </legend>
             <div className="flex flex-col gap-2">
               <label htmlFor="email">Email</label>
-              <Input type="email" id="email" name="email" />
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
           </fieldset>
           <Button
             size="large"
