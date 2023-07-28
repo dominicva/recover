@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Button from '../buttons/Button';
 
 export default function Header() {
@@ -7,9 +8,11 @@ export default function Header() {
       <nav>
         <ul>
           <li>
-            <Button size="small" intent="text">
-              Log in
-            </Button>
+            <Link href="/signin">
+              <Button size="small" intent="text">
+                Log in
+              </Button>
+            </Link>
           </li>
         </ul>
       </nav>

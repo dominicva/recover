@@ -20,7 +20,13 @@ const buttonClasses = cva(
         primary: ['bg-primary', 'text-white', 'border-transparent'],
         secondary: ['bg-secondary', 'text-white', 'border-transparent'],
         tertiary: ['text-white', 'bg-purple-darker', 'border-transparent'],
-        text: ['bg-transparent', 'text-off-black', 'hover:bg-gray-100'],
+        text: [
+          'bg-transparent',
+          'text-off-black',
+          'hover:bg-gray-100',
+          'border-2',
+          'border-gray-300',
+        ],
         disabled: ['bg-gray-300', 'text-gray-400', 'cursor-not-allowed'],
       },
       size: {
