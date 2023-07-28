@@ -1,19 +1,13 @@
-import Link from 'next/link';
-import Button from '../buttons/Button';
+import LoginButton from '../buttons/LoginButton';
+import LogoutButton from '../buttons/LogoutButton';
 
-export default function Header() {
+export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <header className="flex items-center justify-between py-4">
       <h1 className="text-2xl font-semibold text-purple-darker">Recover</h1>
       <nav>
         <ul>
-          <li>
-            <Link href="/signin">
-              <Button size="small" intent="text">
-                Log in
-              </Button>
-            </Link>
-          </li>
+          <li>{isLoggedIn ? <LogoutButton /> : <LoginButton />}</li>
         </ul>
       </nav>
     </header>

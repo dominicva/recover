@@ -1,6 +1,5 @@
 import EmailProvider from 'next-auth/providers/email';
 import GoogleProvider from 'next-auth/providers/google';
-import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './db';
 import type { NextAuthOptions } from 'next-auth';
@@ -30,6 +29,6 @@ export const authOptions: NextAuthOptions = {
     // signOut: '/auth/signout',
     // error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/verify-request', // (used for check email message)
-    // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+    newUser: '/new-user',
   },
 };
