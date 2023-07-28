@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
     // signIn: '/signin',
     // signOut: '/auth/signout',
     // error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/verify-request', // (used for check email message)
+    verifyRequest: '/verify-request',
     newUser: '/new-user',
   },
 };
