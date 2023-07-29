@@ -1,24 +1,35 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { isLoggedIn, getUser } from '@/lib/user';
+import { isLoggedIn } from '@/lib/user';
 import Container from '@/components/utils/Container';
+import { FlexCol } from '@/components/utils/Flex';
+import Button from '@/components/buttons/Button';
 
 export default async function NewUser() {
   if (!(await isLoggedIn())) {
     redirect('/signin');
   }
 
-  const user = await getUser();
-  console.log('user in NewUser page', user);
-
   return (
     <main>
       <Container className="px-4">
-        <h1 className="text-2xl font-semibold">Welcome!</h1>
-        {user && (
-          <p>
-            You are logged in as <strong>{user.email}</strong>.
-          </p>
-        )}
+        <Container className="py-4">
+          <h3 className="mb-4 text-2xl font-semibold">
+            First of all, welcome.
+          </h3>
+          <FlexCol className="mb-6 gap-3">
+            <p>
+              To get started, we&apos;ll ask you a few questions to help with
+              tracking your progress.
+            </p>
+            <p>You can always change your answers later.</p>
+          </FlexCol>
+          <Link href="/new-user/on-boarding" className="flex justify-center">
+            <Button size="large" className="mt-4 w-1/2">
+              Let&apos;s go
+            </Button>
+          </Link>
+        </Container>
       </Container>
     </main>
   );
