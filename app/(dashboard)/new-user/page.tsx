@@ -8,6 +8,7 @@ export default async function NewUser() {
   }
 
   const user = await getUser();
+  console.log('user in NewUser page', user);
 
   return (
     <main>

@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Button from './Button';
 
-export default function LoginButton() {
+export default function SignInButton() {
   return (
     <Link href="/signin">
       <Button size="small" intent="text">
-        Login
+        Sign in
       </Button>
     </Link>
   );

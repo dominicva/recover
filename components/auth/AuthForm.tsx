@@ -15,22 +15,24 @@ export default function AuthForm({
   title,
   subtitle,
 }: {
-  title: 'Sign Up' | 'Log In';
+  title: 'Sign Up' | 'Sign In';
   subtitle: string;
 }) {
   const [email, setEmail] = useState('');
+  const callbackUrl = title === 'Sign Up' ? '/new-user' : '/';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signIn('email', { email, callbackUrl: '/' });
+
+    await signIn('email', { email, callbackUrl });
   };
 
   const handleGoogleSignIn = async () => {
-    await signIn('google', { callbackUrl: '/' });
+    await signIn('google', { callbackUrl });
   };
 
   const handleGitHubSignIn = async () => {
-    await signIn('github', { callbackUrl: '/' });
+    await signIn('github', { callbackUrl });
   };
 
   return (

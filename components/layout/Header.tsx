@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import LoginButton from '../buttons/LoginButton';
-import LogoutButton from '../buttons/LogoutButton';
+import SigninButton from '../buttons/SignInButton';
+import SignOutButton from '../buttons/SignOutButton';
 import Container from '@/components/utils/Container';
 
 export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -11,7 +11,7 @@ export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
       </h1>
       <nav>
         <ul>
-          <li>{isLoggedIn ? <LogoutButton /> : <LoginButton />}</li>
+          <li>{isLoggedIn ? <SignOutButton /> : <SigninButton />}</li>
         </ul>
       </nav>
     </Container>
