@@ -1,30 +1,32 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Container from '@/components/utils/Container';
 import { FlexCol } from '@/components/utils/Flex';
 import Button from '../buttons/Button';
 import Input from '../utils/Input';
-import { ExtendedSession } from '@/types';
+import { ExtendedUserSession } from '@/types';
 
 export default function OnBoarding() {
+  const router = useRouter();
   const { data: session } = useSession();
-  const user = session?.user as ExtendedSession;
+  const user = session?.user as ExtendedUserSession;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const dataObj = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch('/api/user', {
+      await fetch('/api/user', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...dataObj, userId: user.userId }),
       });
-      const json = await res.json();
-      console.log(json);
+      router.push('/home');
     } catch (error) {
       console.error(error);
     } finally {
