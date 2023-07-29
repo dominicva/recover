@@ -26,7 +26,7 @@ export default function OnBoarding() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...dataObj, userId: user.userId }),
       });
-      router.push('/home');
+      router.push('/dashboard');
     } catch (error) {
       console.error(error);
     } finally {
