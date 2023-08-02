@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { getUserFromDb } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
@@ -43,9 +44,11 @@ export default async function DashboardHome() {
           <FlexRow as="ul" className="flex-wrap gap-4">
             {entries.map((entry) => (
               <li key={entry.id}>
-                <Card>
-                  <p>{entry.content}</p>
-                </Card>
+                <Link href={`/dashboard/journal/${entry.id}`}>
+                  <Card>
+                    <p>{entry.content}</p>
+                  </Card>
+                </Link>
               </li>
             ))}
           </FlexRow>
