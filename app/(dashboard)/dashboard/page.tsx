@@ -1,22 +1,17 @@
+import { prisma } from '@/lib/db';
 import { getUserFromDb } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
-import Container from '@/components/utils/Container';
 import Card from '@/components/utils/Card';
-import JournalTextEditor from '@/components/journal/JournalTextEditor';
 import { FlexCol, FlexRow } from '@/components/utils/Flex';
-import Button from '@/components/buttons/Button';
-import { prisma } from '@/lib/db';
 import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
 
 const getEntries = async () => {
   const user = await getUserFromDb();
-  const entries = await prisma.journalEntry.findMany({
+  return await prisma.journalEntry.findMany({
     where: {
       userId: user?.id,
     },
   });
-
-  return entries;
 };
 
 export default async function DashboardHome() {
@@ -40,13 +35,12 @@ export default async function DashboardHome() {
           </span>
         </p>
       </Card>
-      {/* <JournalTextEditor /> */}
 
-      <FlexRow className="justify-start gap-12">
+      <FlexCol className="justify-start gap-12">
         <CreateNewEntryButton />
         <div>
           <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
-          <FlexRow as="ul" className="gap-4">
+          <FlexRow as="ul" className="flex-wrap gap-4">
             {entries.map((entry) => (
               <li key={entry.id}>
                 <Card>
@@ -56,7 +50,7 @@ export default async function DashboardHome() {
             ))}
           </FlexRow>
         </div>
-      </FlexRow>
+      </FlexCol>
     </FlexCol>
   );
 }

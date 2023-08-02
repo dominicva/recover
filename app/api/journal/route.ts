@@ -1,7 +1,7 @@
+import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/db';
 import { getUserSession } from '@/lib/user';
-import { revalidatePath } from 'next/cache';
-import { NextResponse } from 'next/server';
 
 export const POST = async () => {
   const { userId } = await getUserSession();
