@@ -2,9 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export const PATCH = async (req: NextRequest) => {
-  const body = await req.json();
-
-  const { userId, name, substanceOfAbuse, dateOfSobriety } = body;
+  const { userId, name, substanceOfAbuse, dateOfSobriety } = await req.json();
 
   try {
     const updatedUser = await prisma.user.update({
@@ -18,17 +16,9 @@ export const PATCH = async (req: NextRequest) => {
       },
     });
 
-    return new NextResponse(JSON.stringify(updatedUser), {
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    return NextResponse.json({ data: updatedUser });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify(error), {
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    return NextResponse.json({ data: error });
   }
 };
