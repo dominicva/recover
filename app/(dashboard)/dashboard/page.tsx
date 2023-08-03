@@ -34,7 +34,7 @@ export default async function DashboardHome() {
           <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
           <FlexRow as="ul" className="flex-wrap gap-4">
             {entries.map((entry) => (
-              <JournalEntryCard entry={entry} />
+              <JournalEntryCard key={entry.id} entry={entry} />
             ))}
           </FlexRow>
         </div>
