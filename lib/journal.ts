@@ -1,4 +1,18 @@
 import { prisma } from './db';
+import { getUserSession } from './user';
+
+export const getJournalEntryById = async (id: string) => {
+  const { userId } = await getUserSession();
+
+  const journalEntry = await prisma.journalEntry.findUnique({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  return journalEntry;
+};
 
 export const createJournalEntry = async ({
   userId,
@@ -23,9 +37,11 @@ export const createJournalEntry = async ({
 
 export const updateJournalEntry = async ({
   journalEntryId,
+  title,
   content,
 }: {
   journalEntryId: string;
+  title: string;
   content: string;
 }) => {
   const updatedJournalEntry = await prisma.journalEntry.update({
@@ -33,6 +49,7 @@ export const updateJournalEntry = async ({
       id: journalEntryId,
     },
     data: {
+      title,
       content,
     },
   });

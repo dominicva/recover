@@ -14,7 +14,7 @@ export const POST = async () => {
 };
 
 export const PATCH = async (request: NextRequest) => {
-  const { content } = await request.json();
+  const { title, content } = await request.json();
   const { searchParams } = new URL(request.url);
   const journalEntryId = searchParams.get('id');
 
@@ -28,6 +28,7 @@ export const PATCH = async (request: NextRequest) => {
 
   const updatedJournalEntry = await updateJournalEntry({
     journalEntryId,
+    title,
     content,
   });
 
