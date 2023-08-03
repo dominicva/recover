@@ -5,6 +5,7 @@ import Card from '@/components/utils/Card';
 import JournalEntryCard from '@/components/journal/JournalEntryCard';
 import { FlexCol, FlexRow } from '@/components/utils/Flex';
 import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
+import StartQuestionnaireButton from '@/components/questionnaire/StartQuestionnaireButton';
 
 export default async function DashboardHome() {
   const user = await getUserFromDb();
@@ -12,7 +13,7 @@ export default async function DashboardHome() {
   const timeSober = daysAndHoursSinceDate(user?.dateOfSobriety);
 
   return (
-    <FlexCol as="main" className="gap-8 p-4">
+    <FlexCol as="main" className="gap-8 p-4 md:flex-row">
       <Card>
         <h2 className="mb-4 text-2xl font-semibold">Summary</h2>
         <p className="text-lg">
@@ -29,7 +30,11 @@ export default async function DashboardHome() {
       </Card>
 
       <FlexCol className="justify-start gap-12">
-        <CreateNewEntryButton />
+        <div className="flex gap-4">
+          <CreateNewEntryButton />
+          <StartQuestionnaireButton />
+        </div>
+
         <div>
           <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
           <FlexRow as="ul" className="flex-wrap gap-4">

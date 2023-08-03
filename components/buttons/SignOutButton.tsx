@@ -10,7 +10,7 @@ export default function SignOutButton() {
       intent="text"
       onClick={() => signOut({ callbackUrl: '/' })}
     >
-      Sign Out
+      Sign out
     </Button>
   );
 }
