@@ -33,7 +33,7 @@ export default async function JournalEntryPage({
 
   return (
     <Container as="main" className="h-full w-full px-4">
-      <JournalTextEditor content={entry?.content} />
+      <JournalTextEditor id={id} content={entry?.content} />
     </Container>
   );
 }
