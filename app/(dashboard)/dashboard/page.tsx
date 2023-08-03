@@ -1,24 +1,15 @@
-import Link from 'next/link';
-import { prisma } from '@/lib/db';
 import { getUserFromDb } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
+import { getJournalEntries } from '@/lib/journal';
 import Card from '@/components/utils/Card';
+import JournalEntryCard from '@/components/journal/JournalEntryCard';
 import { FlexCol, FlexRow } from '@/components/utils/Flex';
 import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
 
-const getEntries = async () => {
-  const user = await getUserFromDb();
-  return await prisma.journalEntry.findMany({
-    where: {
-      userId: user?.id,
-    },
-  });
-};
-
 export default async function DashboardHome() {
   const user = await getUserFromDb();
-  const timeSober = await daysAndHoursSinceDate(user?.dateOfSobriety);
-  const entries = await getEntries();
+  const entries = await getJournalEntries();
+  const timeSober = daysAndHoursSinceDate(user?.dateOfSobriety);
 
   return (
     <FlexCol as="main" className="gap-8 p-4">
@@ -43,13 +34,7 @@ export default async function DashboardHome() {
           <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
           <FlexRow as="ul" className="flex-wrap gap-4">
             {entries.map((entry) => (
-              <li key={entry.id}>
-                <Link href={`/dashboard/journal/${entry.id}`}>
-                  <Card>
-                    <p>{entry.content}</p>
-                  </Card>
-                </Link>
-              </li>
+              <JournalEntryCard entry={entry} />
             ))}
           </FlexRow>
         </div>

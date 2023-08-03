@@ -18,22 +18,38 @@ export default function JournalTextEditor({
     title ?? `Journal entry ${createdAt.toLocaleDateString()}`
   );
   const [text, setText] = useState(content ?? '');
+  const [isSaving, setIsSaving] = useState(false);
 
   const updateJournalEntry = async () => {
+    setIsSaving(true);
     await fetch(`/api/journal?id=${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ title: entryTitle, content: text }),
     });
+    setIsSaving(false);
   };
 
+  /**
+   * Had to use two separate instances of useAutosave.
+   * When passing [entryTitle, text] as the data prop, the auto-save was saving the
+   * changes to the database, but it initiated a re-save interval
+   * instead of only auto-saving when the user changed the text or title.
+   */
   useAutosave({
-    data: [entryTitle, text],
+    data: entryTitle,
+    onSave: updateJournalEntry,
+    interval: 2000, // this is the default value
+  });
+
+  useAutosave({
+    data: text,
     onSave: updateJournalEntry,
     interval: 2000, // this is the default value
   });
 
   return (
     <Container>
+      {isSaving && <p>Saving...</p>}
       <form>
         <FlexCol className="gap-1">
           <label htmlFor="title" className="sr-only">
@@ -43,12 +59,12 @@ export default function JournalTextEditor({
             type="text"
             name="title"
             id="title"
-            className="mb-4 mt-6 p-4 text-xl font-semibold"
+            className="mb-1 p-4 text-xl font-semibold"
             placeholder="Title"
             value={entryTitle}
             onChange={(e) => setEntryTitle(e.target.value)}
           />
-          <label htmlFor="journal-text-editor">
+          <label htmlFor="journal-text-editor" className="pl-4">
             Write down anything that comes to mind 🫶
           </label>
           <textarea

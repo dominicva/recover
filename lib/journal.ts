@@ -1,6 +1,17 @@
 import { prisma } from './db';
-import { getUserSession } from './user';
+import { getUserFromDb, getUserSession } from './user';
 
+// get all
+export const getJournalEntries = async () => {
+  const user = await getUserFromDb();
+  return await prisma.journalEntry.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+};
+
+// get one by id
 export const getJournalEntryById = async (id: string) => {
   const { userId } = await getUserSession();
 
@@ -28,6 +39,7 @@ export const createJournalEntry = async ({
           id: userId,
         },
       },
+      title: `New Journal Entry ${new Date().toLocaleDateString()}`,
       content: initialContent,
     },
   });
