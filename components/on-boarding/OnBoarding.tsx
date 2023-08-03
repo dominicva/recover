@@ -39,7 +39,7 @@ export default function OnBoarding() {
       <form onSubmit={handleSubmit}>
         <FlexCol as="fieldset">
           <legend className="mb-6 text-center text-xl font-semibold">
-            <h1>Time to get a little real</h1>
+            <h2>A few questions to get you started</h2>
           </legend>
           <FlexCol className="mb-4 gap-1">
             <label htmlFor="name">What&apos;s your name? (Optional)</label>
@@ -47,7 +47,7 @@ export default function OnBoarding() {
           </FlexCol>
           <FlexCol className="mb-4 gap-1">
             <label htmlFor="substanceOfAbuse">
-              What&apos;s your poison? 😱
+              What are you trying to quit? 😱
             </label>
             <Input
               type="text"
@@ -73,7 +73,7 @@ export default function OnBoarding() {
           </FlexCol>
         </FlexCol>
         <Button size="large" type="submit" className="mt-6 w-full">
-          Honesty hurts
+          Let&apos;s go
         </Button>
       </form>
     </Container>

@@ -56,6 +56,7 @@ export const openAI = async (userContent: string) => {
       { role: 'system', content: systemContent },
       { role: 'user', content: userContent },
     ],
+    // stream: true, // will require logic to handle multiple responses
   });
 
   return chat_completion;
