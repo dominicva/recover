@@ -70,7 +70,7 @@ model JournalEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String?
-  content   String
+  content   String   @db.Text
   userId    String
   user      User     @relation(fields: [userId], references: [id])
 
