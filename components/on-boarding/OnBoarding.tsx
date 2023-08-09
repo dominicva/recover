@@ -2,10 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import Container from '@/components/utils/Container';
-import { FlexCol } from '@/components/utils/Flex';
+import Container from '@/components/ui/Container';
+import { FlexCol } from '@/components/ui/Flex';
 import Button from '../buttons/Button';
-import Input from '../utils/Input';
+import Input from '../ui/Input';
 import { ExtendedUserSession } from '@/types';
 
 export default function OnBoarding() {
@@ -21,11 +21,16 @@ export default function OnBoarding() {
     const dataObj = Object.fromEntries(formData.entries());
 
     try {
-      await fetch('/api/user', {
+      const res = await fetch('/api/user', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...dataObj, userId: user.userId }),
       });
+      // TODO work on this error handling
+      if (!res.ok) {
+        throw new Error('Something went wrong');
+      }
+      // check res.ok for error handling
       router.push('/dashboard');
     } catch (error) {
       console.error(error);

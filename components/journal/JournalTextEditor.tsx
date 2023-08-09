@@ -4,8 +4,8 @@ import { useState } from 'react';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
 import type { JournalEntry } from '@prisma/client';
-import Container from '@/components/utils/Container';
-import { FlexCol } from '../utils/Flex';
+import Container from '@/components/ui/Container';
+import { FlexCol } from '../ui/Flex';
 import Button from '../buttons/Button';
 
 export default function JournalTextEditor({

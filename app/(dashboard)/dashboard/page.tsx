@@ -1,14 +1,16 @@
 import { getUserFromDb } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
 import { getJournalEntries } from '@/lib/journal';
-import Card from '@/components/utils/Card';
+import Card from '@/components/ui/Card';
 import JournalEntryCard from '@/components/journal/JournalEntryCard';
-import { FlexCol, FlexRow } from '@/components/utils/Flex';
+import { FlexCol, FlexRow } from '@/components/ui/Flex';
 import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
 import StartQuestionnaireButton from '@/components/questionnaire/StartQuestionnaireButton';
 
 export default async function DashboardHome() {
+  // consider adding required fields to session object rather than fetching from db
   const user = await getUserFromDb();
+  // alternatively fetch user and include journal entries from db in one call
   const entries = await getJournalEntries();
   const timeSober = daysAndHoursSinceDate(user?.dateOfSobriety);
 

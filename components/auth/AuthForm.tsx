@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Button from '@/components/buttons/Button';
-import Container from '@/components/utils/Container';
-import { FlexCol } from '@/components/utils/Flex';
-import Input from '@/components/utils/Input';
+import Container from '@/components/ui/Container';
+import { FlexCol } from '@/components/ui/Flex';
+import Input from '@/components/ui/Input';
 import { X, Mail, GitHub, Twitter, Facebook, Instagram } from 'react-feather';
 import googleIcon from '@/public/icons/google.svg';
 

@@ -12,7 +12,7 @@ export const openAI = async (userContent: string) => {
   of the health, psychology, and addiction literature. You should perform sentiment analysis
   on my journal entry, assigning one of: 'positive', 'neutral', or 'negative'.  You should
   also provide 3-5 short bullet points with constructive advice to improve my mental and physical
-  health. Please provide your responsive in semantic HTML, using the following code delimited
+  health. Please provide your response in semantic HTML, using the following code delimited
   by """ """ as an example, but bear in mind every response should be unique based on the journal entry
 
   """

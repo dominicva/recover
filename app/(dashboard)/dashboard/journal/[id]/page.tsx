@@ -1,6 +1,6 @@
 import { getJournalEntryById } from '@/lib/journal';
 import JournalTextEditor from '@/components/journal/JournalTextEditor';
-import Container from '@/components/utils/Container';
+import Container from '@/components/ui/Container';
 
 export default async function JournalEntryPage({
   params,

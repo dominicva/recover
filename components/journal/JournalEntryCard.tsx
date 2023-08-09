@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Card from '../utils/Card';
+import Card from '../ui/Card';
 import type { JournalEntry } from '@prisma/client';
 
 export default function JournalEntryCard({ entry }: { entry: JournalEntry }) {

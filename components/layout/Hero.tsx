@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Button from '@/components/buttons/Button';
-import Container from '@/components/utils/Container';
-import { FlexCol } from '@/components/utils/Flex';
+import Container from '@/components/ui/Container';
+import { FlexCol } from '@/components/ui/Flex';
 
 export default function Hero() {
   return (
@@ -15,6 +15,7 @@ export default function Hero() {
           Visualize and celebrate your progress.
         </p>
       </FlexCol>
+      {/* refactor button with as prop for link or NavLink 'button' */}
       <Link href="/signup">
         <Button
           intent="primary"

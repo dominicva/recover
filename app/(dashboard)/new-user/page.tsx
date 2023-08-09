@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { isLoggedIn } from '@/lib/user';
-import Container from '@/components/utils/Container';
-import { FlexCol } from '@/components/utils/Flex';
+import Container from '@/components/ui/Container';
+import { FlexCol } from '@/components/ui/Flex';
 import Button from '@/components/buttons/Button';
 
 export default async function NewUser() {
@@ -24,6 +24,7 @@ export default async function NewUser() {
             </p>
             <p>You can always change your answers later.</p>
           </FlexCol>
+          {/* sort out link button situation */}
           <Link href="/new-user/on-boarding" className="flex justify-center">
             <Button size="large" className="mt-4 w-1/2">
               Let&apos;s go

@@ -24,3 +24,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Initialise color scheme in `tailwind.config.js`
 - Install `@headlessui/react` and `@headlessui/tailwindcss` plugin for accessible components
 - Install and use class-variance-authority to define reusable button variants
+
+## Refactors
+
+- Don't have Button inside Link
+- CSS variants with clsx etc. to avoid conflicts
+- UI component folder instead of utils - DONE
+- think about using middleware to protect routes
+- look into react-hook-form
+- dashboard home, cleanup fetching user data from db only once
+- look out for Hamed's article on useTransition or look into server actions

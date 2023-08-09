@@ -11,7 +11,6 @@ export default function CreateNewEntryButton() {
       method: 'POST',
     });
     const { data } = await res.json();
-    console.log(data);
     router.push(`/dashboard/journal/${data.id}`);
   };
 
