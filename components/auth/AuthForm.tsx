@@ -2,14 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import Button from '@/components/buttons/Button';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
-import Input from '@/components/ui/Input';
 import { X, Mail, GitHub, Twitter, Facebook, Instagram } from 'react-feather';
 import googleIcon from '@/public/icons/google.svg';
+
+type Inputs = {
+  email: string;
+};
 
 export default function AuthForm({
   title,
@@ -18,12 +21,16 @@ export default function AuthForm({
   title: 'Sign Up' | 'Sign In';
   subtitle: string;
 }) {
-  const [email, setEmail] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
   const callbackUrl = title === 'Sign Up' ? '/new-user' : '/';
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email } = data;
     await signIn('email', { email, callbackUrl });
   };
 
@@ -44,18 +51,13 @@ export default function AuthForm({
           </Link>
           <h1 className="text-center text-xl font-semibold">{title}</h1>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <legend className="mb-4 text-center">{subtitle}</legend>
             <div className="mb-4 flex flex-col gap-2">
               <label htmlFor="email">Email</label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                autoComplete={title === 'Sign Up' ? 'email' : 'current-email'}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <input {...register('email', { required: true })} />
+              {errors.email && <span>Email required</span>}
             </div>
           </fieldset>
           <Button
