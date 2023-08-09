@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { BaseComponentProps } from '@/types';
 
 export function FlexRow({
@@ -6,7 +7,7 @@ export function FlexRow({
   className,
 }: BaseComponentProps) {
   return (
-    <Component className={`flex flex-row ${className ?? ''}`.trim()}>
+    <Component className={clsx('flex flex-row', className ?? null)}>
       {children}
     </Component>
   );
@@ -18,7 +19,7 @@ export function FlexCol({
   className,
 }: BaseComponentProps) {
   return (
-    <Component className={`flex flex-col ${className ?? ''}`.trim()}>
+    <Component className={clsx('flex flex-col', className ?? null)}>
       {children}
     </Component>
   );

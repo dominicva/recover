@@ -1,4 +1,5 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import clsx from 'clsx';
+import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 export default function Input({
   as: Component = 'input',
@@ -13,9 +14,10 @@ export default function Input({
 > & { type: string }) {
   return (
     <Component
-      className={`rounded w-full bg-off-white focus-within:border-purple-darker border-2 p-3 ${
-        className ?? ''
-      }`.trim()}
+      className={clsx(
+        'w-full rounded border-2 bg-off-white p-3 focus-within:border-purple-darker',
+        className ?? null
+      )}
       {...props}
     />
   );
