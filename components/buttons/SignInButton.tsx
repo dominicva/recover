@@ -1,12 +1,9 @@
-import Link from 'next/link';
-import Button from './Button';
+import LinkButton from './LinkButton';
 
 export default function SignInButton() {
   return (
-    <Link href="/signin">
-      <Button size="small" intent="text">
-        Sign in
-      </Button>
-    </Link>
+    <LinkButton size="small" intent="text" href="/signin">
+      Sign in
+    </LinkButton>
   );
 }

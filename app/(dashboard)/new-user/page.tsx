@@ -4,6 +4,7 @@ import { isLoggedIn } from '@/lib/user';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
 import Button from '@/components/buttons/Button';
+import LinkButton from '@/components/buttons/LinkButton';
 
 export default async function NewUser() {
   if (!(await isLoggedIn())) {
@@ -24,12 +25,13 @@ export default async function NewUser() {
             </p>
             <p>You can always change your answers later.</p>
           </FlexCol>
-          {/* sort out link button situation */}
-          <Link href="/new-user/on-boarding" className="flex justify-center">
-            <Button size="large" className="mt-4 w-1/2">
-              Let&apos;s go
-            </Button>
-          </Link>
+          <LinkButton
+            href="/new-user/on-boarding"
+            className="mt-4 flex w-1/2 justify-center"
+            size="large"
+          >
+            Let&apos;s go
+          </LinkButton>
         </Container>
       </Container>
     </main>

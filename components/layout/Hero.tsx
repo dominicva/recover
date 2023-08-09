@@ -1,7 +1,6 @@
-import Link from 'next/link';
-import Button from '@/components/buttons/Button';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
+import LinkButton from '../buttons/LinkButton';
 
 export default function Hero() {
   return (
@@ -15,16 +14,14 @@ export default function Hero() {
           Visualize and celebrate your progress.
         </p>
       </FlexCol>
-      {/* refactor button with as prop for link or NavLink 'button' */}
-      <Link href="/signup">
-        <Button
-          intent="primary"
-          size="large"
-          className="mx-auto block w-11/12 sm:mx-0 sm:max-w-[160px]"
-        >
-          <span className="text-lg">Get started</span>
-        </Button>
-      </Link>
+      <LinkButton
+        href="/signup"
+        intent="primary"
+        size="large"
+        className="mx-auto block w-11/12 sm:mx-0 sm:max-w-[160px]"
+      >
+        <span className="text-lg">Get started</span>
+      </LinkButton>
     </Container>
   );
 }

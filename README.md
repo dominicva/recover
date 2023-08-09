@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Refactors
 
 - Don't have Button inside Link
-- CSS variants with clsx etc. to avoid conflicts
+- CSS variants with clsx etc. to avoid conflicts - DONE
 - UI component folder instead of utils - DONE
 - think about using middleware to protect routes
 - look into react-hook-form
