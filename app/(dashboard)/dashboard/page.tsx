@@ -1,6 +1,5 @@
-import { getUserFromDb } from '@/lib/user';
+import { getUserWithEntries } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
-import { getJournalEntries } from '@/lib/journal';
 import Card from '@/components/ui/Card';
 import JournalEntryCard from '@/components/journal/JournalEntryCard';
 import { FlexCol, FlexRow } from '@/components/ui/Flex';
@@ -8,10 +7,7 @@ import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
 import StartQuestionnaireButton from '@/components/questionnaire/StartQuestionnaireButton';
 
 export default async function DashboardHome() {
-  // consider adding required fields to session object rather than fetching from db
-  const user = await getUserFromDb();
-  // alternatively fetch user and include journal entries from db in one call
-  const entries = await getJournalEntries();
+  const user = await getUserWithEntries();
   const timeSober = daysAndHoursSinceDate(user?.dateOfSobriety);
 
   return (
@@ -40,7 +36,7 @@ export default async function DashboardHome() {
         <div>
           <h2 className="mb-4 text-2xl font-semibold">Journal Entries</h2>
           <FlexRow as="ul" className="flex-wrap gap-4">
-            {entries.map((entry) => (
+            {user?.journalEntries.map((entry) => (
               <JournalEntryCard key={entry.id} entry={entry} />
             ))}
           </FlexRow>

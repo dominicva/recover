@@ -19,6 +19,22 @@ export const getUserFromDb = async () => {
   return user;
 };
 
+export const getUserWithEntries = async () => {
+  const session = await getUserSession();
+  if (!session) return null;
+
+  const userWithEntries = await prisma.user.findUnique({
+    where: {
+      id: session.userId,
+    },
+    include: {
+      journalEntries: true,
+    },
+  });
+
+  return userWithEntries;
+};
+
 export const isLoggedIn = async (): Promise<boolean> => {
   const session = await getServerSession(authOptions);
   return Boolean(session?.user);
