@@ -1,17 +1,22 @@
 'use client';
 
+import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../buttons/Button';
 
 export default function CreateNewEntryButton() {
   const router = useRouter();
+  const [, startTransition] = useTransition();
 
   const handleClick = async () => {
     const res = await fetch('/api/journal', {
       method: 'POST',
     });
     const { data } = await res.json();
-    router.push(`/dashboard/journal/${data.id}`);
+    startTransition(() => {
+      router.refresh();
+      router.push(`/dashboard/journal/${data.id}`);
+    });
   };
 
   return (

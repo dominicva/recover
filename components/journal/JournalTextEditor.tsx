@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
 import type { JournalEntry } from '@prisma/client';
@@ -14,6 +15,8 @@ export default function JournalTextEditor({
   content,
   createdAt,
 }: JournalEntry) {
+  const router = useRouter();
+  const [, startTransition] = useTransition();
   const [entryTitle, setEntryTitle] = useState(
     title ?? `Journal entry ${createdAt.toLocaleDateString()}`
   );
@@ -28,6 +31,9 @@ export default function JournalTextEditor({
       body: JSON.stringify({ title: entryTitle, content: text }),
     });
     setIsSaving(false);
+    startTransition(() => {
+      router.refresh();
+    });
   };
 
   /**

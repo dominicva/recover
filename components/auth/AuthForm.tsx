@@ -9,6 +9,7 @@ import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
 import { X, Mail, GitHub, Twitter, Facebook, Instagram } from 'react-feather';
 import googleIcon from '@/public/icons/google.svg';
+import Input from '../ui/Input';
 
 type Inputs = {
   email: string;
@@ -56,7 +57,8 @@ export default function AuthForm({
             <legend className="mb-4 text-center">{subtitle}</legend>
             <div className="mb-4 flex flex-col gap-2">
               <label htmlFor="email">Email</label>
-              <input {...register('email', { required: true })} />
+              {/* <input {...register('email', { required: true })} /> */}
+              <Input type="email" {...register('email', { required: true })} />
               {errors.email && <span>Email required</span>}
             </div>
           </fieldset>
