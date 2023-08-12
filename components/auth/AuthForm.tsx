@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
-import Button from '@/components/buttons/Button';
+import Button from '@/components/ui/buttons/Button';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
 import { X, Mail, GitHub, Twitter, Facebook, Instagram } from 'react-feather';

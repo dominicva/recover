@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import SigninButton from '../buttons/SignInButton';
-import SignOutButton from '../buttons/SignOutButton';
+import SigninButton from '../ui/buttons/SignInButton';
+import SignOutButton from '../ui/buttons/SignOutButton';
 import Container from '@/components/ui/Container';
 
 export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {

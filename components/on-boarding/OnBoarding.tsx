@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 import Input from '../ui/Input';
 import { ExtendedUserSession } from '@/types';
 

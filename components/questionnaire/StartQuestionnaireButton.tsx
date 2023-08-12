@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 
 export default function StartQuestionnaireButton() {
   const handleClick = async () => {};

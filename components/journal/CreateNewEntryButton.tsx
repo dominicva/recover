@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 
 export default function CreateNewEntryButton() {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
-import LinkButton from '../buttons/LinkButton';
+import LinkButton from '../ui/buttons/LinkButton';
 
 export default function Hero() {
   return (

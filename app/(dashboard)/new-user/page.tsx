@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { isLoggedIn } from '@/lib/user';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
-import Button from '@/components/buttons/Button';
-import LinkButton from '@/components/buttons/LinkButton';
+import LinkButton from '@/components/ui/buttons/LinkButton';
 
 export default async function NewUser() {
   if (!(await isLoggedIn())) {

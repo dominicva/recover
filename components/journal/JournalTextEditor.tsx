@@ -7,7 +7,7 @@ import { useAutosave } from 'react-autosave';
 import type { JournalEntry } from '@prisma/client';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '../ui/Flex';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 
 export default function JournalTextEditor({
   id,
