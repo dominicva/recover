@@ -9,8 +9,7 @@ export default async function JournalEntryPage({
     id: string;
   };
 }) {
-  const { id } = params;
-  const entry = await getJournalEntryById(id);
+  const entry = await getJournalEntryById(params.id);
 
   if (!entry) {
     return (

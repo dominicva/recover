@@ -83,6 +83,46 @@ export default function JournalTextEditor({
 
   return (
     <>
+      <Container>
+        <h2>Track your mood over time</h2>
+        <form>
+          <fieldset>
+            <legend>
+              Rate how you feel along each of the following dimensions:
+            </legend>
+            <FlexCol className="gap-4">
+              <label htmlFor="mood">Mood</label>
+              <input type="range" name="mood" id="mood" min="1" max="10" />
+              <label htmlFor="energy">Energy</label>
+              <input type="range" name="energy" id="energy" min="1" max="10" />
+              <label htmlFor="motivation">Motivation</label>
+              <input
+                type="range"
+                name="motivation"
+                id="motivation"
+                min="1"
+                max="10"
+              />
+              <label htmlFor="anxiety">Anxiety</label>
+              <input
+                type="range"
+                name="anxiety"
+                id="anxiety"
+                min="1"
+                max="10"
+              />
+              <label htmlFor="depression">Depression</label>
+              <input
+                type="range"
+                name="depression"
+                id="depression"
+                min="1"
+                max="10"
+              />
+            </FlexCol>
+          </fieldset>
+        </form>
+      </Container>
       {isSaving && <p>Saving...</p>}
       <form onSubmit={handleSubmit}>
         <FlexCol className="gap-1">
@@ -104,7 +144,7 @@ export default function JournalTextEditor({
           <textarea
             id="journal-text-editor"
             name="journal-text-editor"
-            className="h-[75vh] resize-none rounded-lg border-2 border-gray-300 bg-gray-100 p-4 text-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="h-[60vh] resize-none rounded-lg border-2 border-gray-300 bg-gray-100 p-4 text-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300"
             placeholder="Write your thoughts here..."
             value={input}
             onChange={handleInputChange}

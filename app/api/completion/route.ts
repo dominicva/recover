@@ -16,9 +16,8 @@ export async function POST(req: Request) {
   I will provide you with a personal journal entry. I am trying to overcome an addiction,
   which I may mention explicitly. You should adopt the persona of someone knowledgeable
   of the health, psychology, and addiction literature. You should perform sentiment analysis
-  on my journal entry, assigning one of: 'positive', 'neutral', or 'negative'.  You should
-  also provide 3-5 short bullet points with constructive advice to improve my mental and physical
-  health. Please provide your response in semantic HTML, using the following code delimited
+  on my journal entry, assigning one of: 'positive', 'neutral', or 'negative'.  You should provide
+  3 bullet points around 20 words in length with constructive advice. Please provide your response in semantic HTML, using the following code delimited
   by """ """ as an example, but bear in mind every response should be unique based on the journal entry.
 
   """
@@ -30,31 +29,23 @@ export async function POST(req: Request) {
           <h3 class="mb-4 text-xl">
             Here are some tips that might help you feel better
           </h3>
-          <ol class="list-decimal">
+          <ul>
             <li>
-              Gradually increase your concentration levels by engaging in
-              activities that require focus, such as reading, puzzles, or
-              studying.
+              Make sure to get enough natural light exposure early in the day
             </li>
             <li>
-              Consider incorporating regular exercise into your routine to help
-              improve your sleep patterns and reduce appetite.
+              Exercise vigorosouly at least 3 times a week
             </li>
             <li>
-              Focus on maintaining a balanced diet to prevent excessive binging.
-              Plan out meals and snacks in advance to provide structure and avoid
-              impulsive eating.
+              Make sure your bedroom is dark, quiet, and cool. Go to bed at the same time each night.
             </li>
             <li>
-              Establish a consistent sleep schedule and create a relaxing bedtime
-              routine to promote better sleep. Avoid electronic devices before bed
-              as they can disrupt sleep patterns.
+              Take cold showers to boost your dopamine levels
             </li>
             <li>
-              Seek support from a healthcare professional or therapist who can
-              provide specialized guidance and advice tailored to your situation.
+              Eliminate all processed foods from your diet
             </li>
-          </ol>
+          </ul>
   """`;
 
   // Request the OpenAI API for the response based on the prompt
