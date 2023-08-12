@@ -1,7 +1,33 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getUserSession } from '@/lib/user';
-import { createJournalEntry, updateJournalEntry } from '@/lib/journal';
+import {
+  createJournalEntry,
+  updateJournalEntry,
+  getJournalEntryById,
+} from '@/lib/journal';
+
+export const GET = async (request: NextRequest) => {
+  const { searchParams } = new URL(request.url);
+  const journalEntryId = searchParams.get('id');
+
+  if (!journalEntryId) {
+    return NextResponse.json(
+      {
+        data: {
+          error: 'No journal entry id provided',
+        },
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const journalEntry = await getJournalEntryById(journalEntryId);
+
+  return NextResponse.json({ data: journalEntry }, { status: 200 });
+};
 
 export const POST = async () => {
   const { userId } = (await getUserSession()) as { userId: string };

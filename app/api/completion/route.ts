@@ -1,10 +1,16 @@
-import { Configuration, OpenAIApi } from 'openai';
+import { Configuration, OpenAIApi } from 'openai-edge';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 
-export const openAI = async (userContent: string) => {
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
+export const runtime = 'edge';
+
+const apiConfig = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY!,
+});
+
+const openai = new OpenAIApi(apiConfig);
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
 
   const systemContent = `
   I will provide you with a personal journal entry. I am trying to overcome an addiction,
@@ -13,12 +19,12 @@ export const openAI = async (userContent: string) => {
   on my journal entry, assigning one of: 'positive', 'neutral', or 'negative'.  You should
   also provide 3-5 short bullet points with constructive advice to improve my mental and physical
   health. Please provide your response in semantic HTML, using the following code delimited
-  by """ """ as an example, but bear in mind every response should be unique based on the journal entry
+  by """ """ as an example, but bear in mind every response should be unique based on the journal entry.
 
   """
   <h2 class="mb-3 text-2xl font-semibold">Analysis</h2>
           <p class="mb-3 text-xl">
-            Based on your journal entry, your mood has been categorised as{' '}
+            Based on your journal entry, your mood has been categorised as
             <span class="font-bold">neutral</span>.
           </p>
           <h3 class="mb-4 text-xl">
@@ -50,14 +56,20 @@ export const openAI = async (userContent: string) => {
             </li>
           </ol>
   """`;
-  const chat_completion = await openai.createChatCompletion({
+
+  // Request the OpenAI API for the response based on the prompt
+  const response = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
+    stream: true,
     messages: [
       { role: 'system', content: systemContent },
-      { role: 'user', content: userContent },
+      { role: 'user', content: messages[0].content },
     ],
-    // stream: true, // will require logic to handle multiple responses
   });
 
-  return chat_completion;
-};
+  // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response);
+
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
+}
