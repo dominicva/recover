@@ -50,7 +50,7 @@ export default function JournalTextEditor({
      * the handleSubmit helper function provided by useChat
      * automatically clears the input field.
      */
-  }, [isLoading]);
+  }, [isLoading, id, setInput]);
 
   const updateJournalEntry = async () => {
     setIsSaving(true);
