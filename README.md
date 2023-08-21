@@ -162,11 +162,39 @@ Handles authentication using NextAuth.js.
 
 - Deletes a questionnaire
 
+#### Badge
+
+**GET /badge**
+
+- Returns a list of badges
+
+**GET /badge/:id**
+
+- Returns a badge by id
+
+#### Recording
+
+**GET /recording**
+
+- Returns a list of recordings
+
+**GET /recording/:id**
+
+- Returns a recording by id
+
+**POST /recording**
+
+- Creates a new recording
+
+**DELETE /recording/:id**
+
+- Deletes a recording
+
 #### OpenAI Completion
 
 **POST /completion**
 
-Initialises a streaming text response from the OpenAI API. The response gets sent to the client in chunks as they are generated. For example:
+Initialises a streaming text response from the OpenAI API. The response gets streamed to the client in chunks as they are generated. For example:
 
 ```json
 [
@@ -202,13 +230,19 @@ Initialises a streaming text response from the OpenAI API. The response gets sen
 
 ## Roadmap
 
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
+[Link to Trello board](https://trello.com/invite/b/yCP5lfZg/ATTI2d736d5c338c8fe000c15187041c3d6e2C5B7DC6/recover)
 
-## Nice-to-haves
+## Non-essential features
 
-Your project will be marked based on what you committed to in the above document. Under nice-to-haves, you can list any additional features you may complete if you have extra time, or after finishing.
+If time is limited, the following features could easily be dropped without impacting the core functionality of the app:
 
-## TODO
+- Reminders
+- Notifications
+- Recordings
+
+---
+
+## TODOS
 
 - think about using middleware to protect routes
 - Tailwind typography to style OpenAI response
