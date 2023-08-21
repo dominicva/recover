@@ -1,19 +1,17 @@
 import { redirect } from 'next/navigation';
 import { isLoggedIn } from '@/lib/user';
-import Header from '@/components/layout/Header';
 import Hero from '@/components/layout/Hero';
 
 export default async function Home() {
-  if (await isLoggedIn()) {
+  const userLoggedIn = await isLoggedIn();
+
+  if (userLoggedIn) {
     redirect('/dashboard');
   }
 
   return (
-    <>
-      <Header isLoggedIn={await isLoggedIn()} />
-      <main className="bg-off-white">
-        <Hero />
-      </main>
-    </>
+    <main className="bg-off-white">
+      <Hero />
+    </main>
   );
 }

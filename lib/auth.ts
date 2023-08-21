@@ -38,14 +38,17 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    // signIn: '/signin',
+    signIn: '/signin',
     // signOut: '/auth/signout',
     // error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/verify-request',
     newUser: '/new-user',
   },
   callbacks: {
-    async jwt({ token, trigger }) {
+    async jwt({ token, trigger, user }) {
+      // when we get to building the on-boarding, will use trigger to
+      // determine when/how to update the user's profile on the session
+
       /**
        * called when JWT is created. Receives a trigger property which indicates how the JWT was created.
        * If trigger === 'signUp', then the user is new, and we set isNewUser to true.
@@ -58,15 +61,22 @@ export const authOptions: NextAuthOptions = {
         token.isNewUser = false;
       }
 
-      if (token?.email) {
-        const user = await prisma.user.findUnique({
-          where: {
-            email: token?.email,
-          },
-        });
-
-        token.userId = user?.id;
+      // equivalent tp if (token?.email) { ... } but without
+      // need to query the database
+      if (user) {
+        console.log('user', user);
+        token.userId = user.id;
       }
+
+      // if (token?.email) {
+      //   const user = await prisma.user.findUnique({
+      //     where: {
+      //       email: token?.email,
+      //     },
+      //   });
+
+      //   token.userId = user?.id;
+      // }
 
       return token;
     },
@@ -75,12 +85,13 @@ export const authOptions: NextAuthOptions = {
        * called when session is created. Receives a session object and a token object.
        * Add the user id to the session object so we can access it across the app.
        */
-      if (session.user) {
-        // @ts-ignore
-        session.user.isNewUser = token.isNewUser;
-        // @ts-ignore
-        session.user.userId = token.userId;
-      }
+      // user should always be on the session object
+      // if (session.user) {
+      // @ts-ignore
+      session.user.isNewUser = token.isNewUser;
+      // @ts-ignore
+      session.user.userId = token.userId;
+      // }
 
       return session;
     },

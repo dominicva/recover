@@ -26,6 +26,9 @@ export default function JournalTextEditor({
     api: '/api/completion',
   });
 
+  // TODO: write my own handleSubmit that calls handleSubmit(e) and preserves the
+  // textarea state
+
   const [entryTitle, setEntryTitle] = useState(
     title ?? `Journal entry ${createdAt.toLocaleDateString()}`
   );
@@ -83,46 +86,58 @@ export default function JournalTextEditor({
 
   return (
     <>
-      <Container>
-        <h2>Track your mood over time</h2>
+      {/* <Container className="mx-auto mb-20 max-w-lg">
+        <h2 className="mb-4 text-xl font-semibold">
+          Track your mood over time
+        </h2>
         <form>
           <fieldset>
-            <legend>
+            <legend className="mb-8 font-bold">
               Rate how you feel along each of the following dimensions:
             </legend>
-            <FlexCol className="gap-4">
-              <label htmlFor="mood">Mood</label>
-              <input type="range" name="mood" id="mood" min="1" max="10" />
-              <label htmlFor="energy">Energy</label>
-              <input type="range" name="energy" id="energy" min="1" max="10" />
-              <label htmlFor="motivation">Motivation</label>
+            <FlexCol className="mx-auto max-w-sm gap-4">
+              <label htmlFor="mood">Mood (4)</label>
+              <input type="range" name="mood" id="mood" min="1" max="5" />
+              <label htmlFor="energy">Energy (4)</label>
+              <input type="range" name="energy" id="energy" min="1" max="5" />
+              <label htmlFor="motivation">Motivation (3)</label>
               <input
                 type="range"
                 name="motivation"
                 id="motivation"
                 min="1"
-                max="10"
+                max="5"
               />
-              <label htmlFor="anxiety">Anxiety</label>
-              <input
-                type="range"
-                name="anxiety"
-                id="anxiety"
-                min="1"
-                max="10"
-              />
-              <label htmlFor="depression">Depression</label>
+              <label htmlFor="anxiety">Anxiety (1)</label>
+              <input type="range" name="anxiety" id="anxiety" min="1" max="5" />
+              <label htmlFor="depression">Depression (2)</label>
               <input
                 type="range"
                 name="depression"
                 id="depression"
                 min="1"
-                max="10"
+                max="5"
+              />
+              <label htmlFor="sleepQuality">Sleep quality (2)</label>
+              <input
+                type="range"
+                name="sleepQuality"
+                id="sleepQuality"
+                min="1"
+                max="5"
+              />
+              <label htmlFor="cravings">Cravings (5)</label>
+              <input
+                type="range"
+                name="cravings"
+                id="cravings"
+                min="1"
+                max="5"
               />
             </FlexCol>
           </fieldset>
         </form>
-      </Container>
+      </Container> */}
       {isSaving && <p>Saving...</p>}
       <form onSubmit={handleSubmit}>
         <FlexCol className="gap-1">
@@ -151,7 +166,7 @@ export default function JournalTextEditor({
           />
         </FlexCol>
         <Button type="submit" intent="tertiary" className="mt-4">
-          Send
+          Get advice
         </Button>
       </form>
       <Container className="my-12">

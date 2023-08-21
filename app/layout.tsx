@@ -2,6 +2,7 @@ import './globals.css';
 import { Hanken_Grotesk } from 'next/font/google';
 import NextAuthProvider from './providers';
 import type { Metadata } from 'next';
+import Header from '@/components/layout/Header';
 
 const hankenGrotesk = Hanken_Grotesk({ subsets: ['latin'] });
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   description: 'An AI-assisted mood tracker to help you move past addiction.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${hankenGrotesk.className} text-off-black`}>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <Header />
+          {children}
+        </NextAuthProvider>
       </body>
     </html>
   );

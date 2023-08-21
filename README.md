@@ -28,3 +28,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Refactors
 
 - think about using middleware to protect routes
+
+## TODO
+
+- Tailwind typography to style OpenAI response
+- Recharts for data visualisation
