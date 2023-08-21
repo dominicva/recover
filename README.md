@@ -72,8 +72,6 @@ As a user, I want to:
 
 ### Endpoints
 
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
-
 #### Auth
 
 **GET /auth** and **POST /auth**
