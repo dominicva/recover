@@ -74,27 +74,131 @@ As a user, I want to:
 
 List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
 
-**GET /todos**
+#### Auth
 
-Lists all todo items.
+**GET /auth** and **POST /auth**
 
-```
+Handles authentication using NextAuth.js.
+
+#### User
+
+**GET /user**
+
+- Returns the currently logged in user
+
+**PATCH /user**
+
+- Updates the currently logged in user
+
+**DELETE /user**
+
+- Deletes the currently logged in user
+
+> Note: the Prisma adapter for NextAuth handles user creation.
+
+#### Reminder
+
+**GET /reminder**
+
+- Returns a list of reminders
+
+**GET /reminder/:id**
+
+- Returns a reminder by id
+
+**POST /reminder**
+
+- Creates a new reminder
+
+**PATCH /reminder/:id**
+
+- Updates a reminder
+
+**DELETE /reminder/:id**
+
+- Deletes a reminder
+
+#### Journal
+
+**GET /journal**
+
+- Returns a list of journal entries
+
+**GET /journal/:id**
+
+- Returns a journal entry by id
+
+**POST /journal**
+
+- Creates a new journal entry
+
+**PATCH /journal/:id**
+
+- Updates a journal entry
+
+**DELETE /journal/:id**
+
+- Deletes a journal entry
+
+#### Questionnaire
+
+**GET /questionnaire**
+
+- Returns a list of questionnaires
+
+**GET /questionnaire/:id**
+
+- Returns a questionnaire by id
+
+**POST /questionnaire**
+
+- Creates a new questionnaire
+
+**PATCH /questionnaire/:id**
+
+- Updates a questionnaire
+
+**DELETE /questionnaire/:id**
+
+- Deletes a questionnaire
+
+#### OpenAI Completion
+
+**POST /completion**
+
+Initialises a streaming text response from the OpenAI API. The response gets sent to the client in chunks as they are generated. For example:
+
+```json
 [
-    {
-        id: "6d85ca35"
-        text: "Go shopping",
-        done: false
-    },
+  {
+    "content": "hello, I'm not sleeping well",
+    "role": "user",
+    "createdAt": "2023-08-21T13:33:44.706Z",
+    "id": "cSXjVGK"
+  },
+  {
+    "id": "Pq1NY7n",
+    "createdAt": "2023-08-21T13:33:45.838Z",
+    "content": "<h2 class=\"mb-3 text-2xl font-semibold\">Analysis</h2>\n          <p class=\"mb-3 text-xl\">\n            Based on your journal entry, your mood has been categorised as\n            <span class=\"font-bold\">negative</span>.\n          </p>\n          <h3 class=\"mb-4 text-xl\">\n            Here are some tips that might help you improve your sleep quality\n          </h3>\n          <ul>\n            <li>\n              Create a relaxing bedtime routine and stick to it every night\n            </li>\n            <li>\n              Avoid caffeine and alcohol, especially in the evening\n           ",
+    "role": "assistant"
+  }
 ]
 ```
 
 ### Database
 
-Describe your data and the relationships between them. You can show this visually using diagrams, or write it out.
+![schema](./mockups/schema.png)
 
 ### Auth
 
-Does your project include any login or user profile functionality? If so, describe how authentication/authorization will be implemented.
+- NextAuth.js
+- Prisma adapter
+- Passwordless via email magic link
+- OAuth with the following providers:
+  - Google
+  - GitHub
+  - Facebook (if time permits)
+  - Twitter (if time permits)
 
 ## Roadmap
 
@@ -104,11 +208,8 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 Your project will be marked based on what you committed to in the above document. Under nice-to-haves, you can list any additional features you may complete if you have extra time, or after finishing.
 
-## Refactors
-
-- think about using middleware to protect routes
-
 ## TODO
 
+- think about using middleware to protect routes
 - Tailwind typography to style OpenAI response
 - Recharts for data visualisation

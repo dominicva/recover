@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { getUserSession } from '@/lib/user';
 import {
   createJournalEntry,
@@ -33,8 +32,6 @@ export const POST = async () => {
   const { userId } = (await getUserSession()) as { userId: string };
 
   const newJournalEntry = await createJournalEntry({ userId });
-
-  revalidatePath('/');
 
   return NextResponse.json({ data: newJournalEntry });
 };

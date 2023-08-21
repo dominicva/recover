@@ -26,6 +26,8 @@ export default function JournalTextEditor({
     api: '/api/completion',
   });
 
+  console.log('messages', messages);
+
   // TODO: write my own handleSubmit that calls handleSubmit(e) and preserves the
   // textarea state
 
