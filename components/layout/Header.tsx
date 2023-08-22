@@ -1,22 +1,31 @@
 import Link from 'next/link';
-import SigninButton from '../ui/buttons/SignInButton';
-import SignOutButton from '../ui/buttons/SignOutButton';
 import Container from '@/components/ui/Container';
-import { isLoggedIn } from '@/lib/user';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { buttonVariants } from '@/components/ui/button';
+import { getUserSession } from '@/lib/user';
 
 export default async function Header() {
-  const userLoggedIn = await isLoggedIn();
+  const userSession = await getUserSession();
 
   return (
     <Container as="header" className="flex items-center justify-between p-4">
       <h1 className="text-2xl font-semibold text-purple-darker">
-        <Link href={userLoggedIn ? '/dashboard' : '/'}>Recover</Link>
+        <Link href={userSession ? '/dashboard' : '/'}>Recover</Link>
       </h1>
       <nav>
-        <ul>
-          {/*  */}
-          <li>{userLoggedIn ? <SignOutButton /> : <SigninButton />}</li>
-        </ul>
+        {userSession ? (
+          <Avatar>
+            <AvatarImage
+              src={userSession?.image}
+              alt={userSession?.user?.name ?? 'User avatar'}
+            />
+            <AvatarFallback className="bg-gray-300"></AvatarFallback>
+          </Avatar>
+        ) : (
+          <Link href="/signin" className={buttonVariants({ variant: 'link' })}>
+            Sign In
+          </Link>
+        )}
       </nav>
     </Container>
   );
