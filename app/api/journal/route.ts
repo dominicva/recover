@@ -12,14 +12,8 @@ export const GET = async (request: NextRequest) => {
 
   if (!journalEntryId) {
     return NextResponse.json(
-      {
-        data: {
-          error: 'No journal entry id provided',
-        },
-      },
-      {
-        status: 400,
-      }
+      { error: 'No journal entry id provided' },
+      { status: 400 }
     );
   }
 
@@ -43,9 +37,7 @@ export const PATCH = async (request: NextRequest) => {
 
   if (!journalEntryId) {
     return NextResponse.json({
-      data: {
-        error: 'No journal entry id provided',
-      },
+      error: 'No journal entry id provided',
     });
   }
 
