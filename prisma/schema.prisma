@@ -49,8 +49,8 @@ model User {
   emailVerified    DateTime?
   name             String?
   image            String?
-  substanceOfAbuse String?
   dateOfSobriety   DateTime?
+  substanceOfAbuse String?
   journalEntries   JournalEntry[]
   questionnaires   Questionnaire[]
   accounts         Account[]
@@ -96,4 +96,11 @@ model Questionnaire {
   user          User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+model Substance {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
 }

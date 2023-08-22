@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import clsx from 'clsx';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
 import { buttonVariants } from '../ui/button';
@@ -18,7 +17,11 @@ export default function Hero() {
       </FlexCol>
       <Link
         href="/signup"
-        className={buttonVariants({ variant: 'default', size: 'lg' })}
+        className={buttonVariants({
+          variant: 'default',
+          size: 'lg',
+          className: 'w-full',
+        })}
       >
         <span className="text-lg">Get started</span>
       </Link>

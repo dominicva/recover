@@ -26,23 +26,7 @@ const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email' }),
 });
 
-type Inputs = {
-  email: string;
-};
-
-export default function AuthForm({
-  title,
-  subtitle,
-}: {
-  title: 'Sign Up' | 'Sign In';
-  subtitle: string;
-}) {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<Inputs>();
-
+export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,17 +92,14 @@ export default function AuthForm({
           <Button
             onClick={handleGoogleSignIn}
             size="lg"
-            // intent="text"
             className="flex w-full items-center justify-center gap-4"
           >
             <Image src={googleIcon} alt="Google icon" className="h-6 w-8" />
             Continue with Google
           </Button>
-
           <Button
             onClick={handleGitHubSignIn}
-            // size="lg"
-            size="icon"
+            size="lg"
             type="submit"
             className="flex w-full items-center justify-center gap-4"
           >
@@ -130,74 +111,3 @@ export default function AuthForm({
     </Container>
   );
 }
-
-/**
- <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset>
-            <legend className="mb-4 text-center">{subtitle}</legend>
-            <div className="mb-4 flex flex-col gap-2">
-              <label htmlFor="email">Email</label>
-              <Input type="email" {...register('email', { required: true })} />
-              {errors.email && <span>Email required</span>}
-            </div>
-          </fieldset>
-          <Button
-            size="lg"
-            intent="tertiary"
-            type="submit"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <Mail className="-ml-3 w-8" />
-            Continue with Email
-          </Button>
-        </form>
-        <hr className="border-t-solid border-t-1 text-md m-auto my-6 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
-        <div className="flex flex-col gap-4">
-          <Button
-            onClick={handleGoogleSignIn}
-            size="large"
-            intent="text"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <Image src={googleIcon} alt="Google icon" className="h-6 w-8" />
-            Continue with Google
-          </Button>
-          <Button
-            size="large"
-            intent="text"
-            type="submit"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <Twitter className="w-8" color="#1DA1F2" />
-            Continue with Twitter
-          </Button>
-          <Button
-            size="large"
-            intent="text"
-            type="submit"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <Facebook className="ml-[19px] w-8" color="#4267B2" />
-            <span className="ml-1">Continue with Facebook</span>
-          </Button>
-          <Button
-            size="large"
-            intent="text"
-            type="submit"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <Instagram className="ml-5 w-8" color="#C13584" />
-            <span className="ml-1">Continue with Instagram</span>
-          </Button>
-          <Button
-            onClick={handleGitHubSignIn}
-            size="large"
-            intent="text"
-            type="submit"
-            className="flex w-full items-center justify-center gap-4"
-          >
-            <GitHub className="w-8" />
-            Continue with GitHub
-          </Button>
-        </div>
- */
