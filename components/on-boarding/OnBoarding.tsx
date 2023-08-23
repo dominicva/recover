@@ -2,11 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import { isLoggedIn } from '@/lib/user';
-import Container from '@/components/ui/Container';
-import { FlexCol } from '@/components/ui/Flex';
-import LinkButton from '@/components/ui/buttons/LinkButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -20,23 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Calendar } from '@/components/ui/calendar';
-
-import { Input } from '@/components/ui/input';
-import type { ExtendedUserSession } from '@/types';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import Link from 'next/link';
-import type { Substance } from '@prisma/client';
-
-import { Check, ChevronsUpDown } from 'lucide-react';
-
-import { cn } from '@/lib/utils';
 import {
   Command,
   CommandEmpty,
@@ -44,13 +22,21 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command';
-
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { toast } from '@/components/ui/use-toast';
+import { Calendar } from '@/components/ui/calendar';
+import { Input } from '@/components/ui/input';
+import Container from '@/components/ui/Container';
+import { Check, ChevronsUpDown } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+
+import type { ExtendedUserSession } from '@/types';
+import type { Substance } from '@prisma/client';
+
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -70,6 +56,8 @@ export default function OnBoarding({
   const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user as ExtendedUserSession;
+
+  console.log('user', user);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,7 +82,7 @@ export default function OnBoarding({
       if (!res.ok) {
         throw 'Something went wrong updating the user';
       }
-      router.push('/dashboard');
+      router.push('/new-user/success');
     } catch (error) {
       console.error(error);
     }
@@ -194,8 +182,7 @@ export default function OnBoarding({
                   </SelectContent>
                 </Select> */}
                 <FormDescription>
-                  You can change this later in your{' '}
-                  <Link href="/examples/forms">profile settings</Link>
+                  You can change this later in your profile settings
                 </FormDescription>
                 <FormMessage />
               </FormItem>
