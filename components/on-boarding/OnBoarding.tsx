@@ -30,18 +30,40 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Link from 'next/link';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import type { Substance } from '@prisma/client';
+
+import { Check, ChevronsUpDown } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command';
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { toast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   name: z.string().nonempty(),
+  substanceOfAbuse: z.string().nonempty(),
   dateOfSobriety: z.date({
     required_error: 'Please select a date',
     invalid_type_error: "That's not a date!",
   }),
-  substanceOfAbuse: z.string().nonempty(),
 });
 
-export default function OnBoarding({ substances }: { substances: string[] }) {
+export default function OnBoarding({
+  substances,
+}: {
+  substances: Substance[];
+}) {
   const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user as ExtendedUserSession;
@@ -83,8 +105,8 @@ export default function OnBoarding({ substances }: { substances: string[] }) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
-            control={form.control}
             name="name"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
@@ -104,7 +126,56 @@ export default function OnBoarding({ substances }: { substances: string[] }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>What are you trying to quit?</FormLabel>
-                <Select
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          'w-full justify-between',
+                          !field.value && 'text-muted-foreground'
+                        )}
+                      >
+                        {field.value
+                          ? substances.find(
+                              (substance) => substance.name === field.value
+                            )?.name
+                          : 'Select substance'}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Search substance..." />
+                      <CommandEmpty>No substance found.</CommandEmpty>
+                      <CommandGroup>
+                        {substances.map((substance) => (
+                          <CommandItem
+                            value={substance?.name}
+                            key={substance.name}
+                            onSelect={() => {
+                              form.setValue('substanceOfAbuse', substance.name);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                substance.name === field.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            {substance?.name}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                {/* <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
@@ -113,17 +184,14 @@ export default function OnBoarding({ substances }: { substances: string[] }) {
                       <SelectValue placeholder="Select a verified email to display" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="h-96 overflow-scroll">
                     {substances.map((substance) => (
                       <SelectItem key={substance} value={substance}>
                         {substance}
                       </SelectItem>
                     ))}
-                    {/* <SelectItem value="m@example.com">m@example.com</SelectItem>
-                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                    <SelectItem value="m@support.com">m@support.com</SelectItem> */}
                   </SelectContent>
-                </Select>
+                </Select> */}
                 <FormDescription>
                   You can always change this later in your{' '}
                   <Link href="/examples/forms">profile settings</Link>.

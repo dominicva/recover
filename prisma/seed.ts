@@ -19,6 +19,7 @@ async function main() {
       { name: 'Fast Food' },
       { name: 'Fentanyl' },
       { name: 'Gambling' },
+      { name: 'Gaming' },
       { name: 'GHB' },
       { name: 'Hair Pulling' },
       { name: 'Heroin' },

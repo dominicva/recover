@@ -13,9 +13,11 @@ export default async function NewUser() {
     redirect('/signin');
   }
 
-  const substances = (await prisma.substance.findMany()).map(
-    (substance) => substance.name
-  );
+  const substances = await prisma.substance.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  });
 
   return (
     <main>
