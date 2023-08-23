@@ -20,6 +20,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Calendar } from '@/components/ui/calendar';
+
 import { Input } from '@/components/ui/input';
 import type { ExtendedUserSession } from '@/types';
 import {
@@ -49,13 +51,14 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
 
 const formSchema = z.object({
   name: z.string().nonempty(),
   substanceOfAbuse: z.string().nonempty(),
   dateOfSobriety: z.date({
     required_error: 'Please select a date',
-    invalid_type_error: "That's not a date!",
   }),
 });
 
@@ -113,9 +116,7 @@ export default function OnBoarding({
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
-                <FormDescription>
-                  Make one up if you&apos;d like to stay anonymous
-                </FormDescription>
+                <FormDescription>Feel free to use a pseudonym</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -146,11 +147,11 @@ export default function OnBoarding({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className="w-full p-0">
                     <Command>
                       <CommandInput placeholder="Search substance..." />
                       <CommandEmpty>No substance found.</CommandEmpty>
-                      <CommandGroup>
+                      <CommandGroup className="h-96 overflow-scroll">
                         {substances.map((substance) => (
                           <CommandItem
                             value={substance?.name}
@@ -193,8 +194,8 @@ export default function OnBoarding({
                   </SelectContent>
                 </Select> */}
                 <FormDescription>
-                  You can always change this later in your{' '}
-                  <Link href="/examples/forms">profile settings</Link>.
+                  You can change this later in your{' '}
+                  <Link href="/examples/forms">profile settings</Link>
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -227,14 +228,56 @@ export default function OnBoarding({
             control={form.control}
             name="dateOfSobriety"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Since when are you sober?</FormLabel>
-                <FormControl>{/* <Input {...field} /> */}</FormControl>
+              <FormItem className="flex flex-col">
+                <FormLabel>Your sober birthday</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full pl-3 text-left font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date('1900-01-01')
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormDescription>The date you last indulged</FormDescription>
+                <FormMessage />
               </FormItem>
             )}
           />
+          {/* <FormField
+            control={form.control}
+            name="dateOfSobriety"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Since when are you sober?</FormLabel>
+                <FormControl></FormControl>
+              </FormItem>
+            )}
+          /> */}
           <Button type="submit" size="lg" className="w-full">
-            Let&apos;s go
+            Continue
           </Button>
         </form>
       </Form>
