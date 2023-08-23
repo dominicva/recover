@@ -1,4 +1,4 @@
-import Card from '@/components/ui/Card';
+import { Card } from '@/components/ui/card';
 import { FlexCol } from '@/components/ui/Flex';
 
 export default function VerifyRequest() {

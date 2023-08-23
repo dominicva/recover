@@ -63,10 +63,14 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      const user = await prisma.user.findUnique({
+        where: { id: token.userId },
+      });
+
       session.user.isNewUser = token.isNewUser;
       session.user.userId = token.userId;
-      session.user.substanceOfAbuse = token.substanceOfAbuse;
-      session.user.dateOfSobriety = token.dateOfSobriety;
+      session.user.substanceOfAbuse = user.substanceOfAbuse;
+      session.user.dateOfSobriety = user.dateOfSobriety;
 
       return session;
     },

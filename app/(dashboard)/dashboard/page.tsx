@@ -1,33 +1,28 @@
 import { getUserWithEntries } from '@/lib/user';
 import { daysAndHoursSinceDate } from '@/lib/dates';
-import Card from '@/components/ui/Card';
 import JournalEntryCard from '@/components/journal/JournalEntryCard';
 import { FlexCol, FlexRow } from '@/components/ui/Flex';
 import CreateNewEntryButton from '@/components/journal/CreateNewEntryButton';
 import StartQuestionnaireButton from '@/components/questionnaire/StartQuestionnaireButton';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import CurrentStreak from '@/components/dashboard/CurrentStreak';
 
 export default async function DashboardHome() {
-  const user = await getUserWithEntries();
-  const timeSober = daysAndHoursSinceDate(user?.dateOfSobriety);
+  // const user = await getUserWithEntries();
 
   return (
     <FlexCol as="main" className="gap-8 p-4 md:flex-row">
-      <Card>
-        <h2 className="mb-4 text-2xl font-semibold">Summary</h2>
-        <p className="text-lg">
-          Congrats{user?.name && <span> {user.name}, </span>}you&apos;ve been{' '}
-          {user?.substanceOfAbuse ? `${user?.substanceOfAbuse} free` : 'sober'}{' '}
-          for{' '}
-          <span className="font-bold">
-            {timeSober
-              ? `${timeSober.days} days and ${timeSober.hours} hours`
-              : '0'}{' '}
-            🎉🎉🎉
-          </span>
-        </p>
-      </Card>
+      <CurrentStreak />
 
-      <FlexCol className="justify-start gap-12">
+      {/* <FlexCol className="justify-start gap-12">
         <div className="flex gap-4">
           <CreateNewEntryButton />
           <StartQuestionnaireButton />
@@ -41,7 +36,7 @@ export default async function DashboardHome() {
             ))}
           </FlexRow>
         </div>
-      </FlexCol>
+      </FlexCol> */}
     </FlexCol>
   );
 }
