@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { buttonVariants, Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function NewJournal() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function NewJournal() {
       <CardContent className="pb-0">
         <Button
           onClick={handleClick}
-          className={clsx(
+          className={cn(
             buttonVariants({
               size: 'icon',
               variant: 'outline',
