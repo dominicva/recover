@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Plus, ChevronRight } from 'react-feather';
+import { ChevronRight } from 'react-feather';
 import {
   Card,
   CardContent,

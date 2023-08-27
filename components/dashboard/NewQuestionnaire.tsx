@@ -14,7 +14,7 @@ export default function NewQuestionnaire() {
     <Card className="flex items-center justify-between rounded-2xl bg-gray-100">
       <CardHeader className="pr-0">
         <CardTitle className="font-normal">How do you feel today?</CardTitle>
-        <CardDescription>Questionnaire to track your mood</CardDescription>
+        <CardDescription>Complete a quick questionnaire</CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
         <Link

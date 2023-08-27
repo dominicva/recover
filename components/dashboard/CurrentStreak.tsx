@@ -10,13 +10,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { daysAndHoursSinceDate } from '@/lib/dates';
+import { daysSinceDate } from '@/lib/dates';
 import type { UserSession } from '@/types';
 
 export default function CurrentStreak() {
   const { data: session } = useSession();
   const user = session?.user as UserSession;
-  const timeSober = daysAndHoursSinceDate(new Date(user?.dateOfSobriety));
+  const currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
 
   const [progress, setProgress] = useState(67);
 
@@ -24,7 +24,7 @@ export default function CurrentStreak() {
     <Card className="rounded-2xl bg-gray-100">
       <CardHeader className="pb-4">
         <CardTitle className="text-center text-3xl font-normal">
-          {timeSober?.days} days
+          {currentStreak ? currentStreak : null} days
         </CardTitle>
         <CardDescription className="text-center text-gray-600">
           Current streak

@@ -1,4 +1,8 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import clsx from 'clsx';
 import { Plus } from 'react-feather';
 import {
   Card,
@@ -7,9 +11,25 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants, Button } from '@/components/ui/button';
 
 export default function NewJournal() {
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+
+  const handleClick = async () => {
+    const res = await fetch('/api/journal', {
+      method: 'POST',
+    });
+
+    const { data } = await res.json();
+
+    startTransition(() => {
+      router.refresh();
+      router.push(`/dashboard/journal/${data.id}`);
+    });
+  };
+
   return (
     <Card className="flex items-center justify-between rounded-2xl bg-gray-100">
       <CardHeader className="pr-0">
@@ -17,15 +37,18 @@ export default function NewJournal() {
         <CardDescription>Write whatever comes to mind</CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
-        <Link
-          href="/dashboard/journal/new"
-          className={buttonVariants({
-            size: 'icon',
-            variant: 'outline',
-          })}
+        <Button
+          onClick={handleClick}
+          className={clsx(
+            buttonVariants({
+              size: 'icon',
+              variant: 'outline',
+            }),
+            'p-0'
+          )}
         >
-          <Plus />
-        </Link>
+          <Plus color="#000" />
+        </Button>
       </CardContent>
     </Card>
   );
