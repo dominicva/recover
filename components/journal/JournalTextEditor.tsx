@@ -1,18 +1,19 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useTransition } from 'react';
 import { useChat } from 'ai/react';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
 import TextareaAutosize from 'react-textarea-autosize';
-import { format } from 'date-fns';
+import { NewQuestionnaire } from '../dashboard';
 import Container from '@/components/ui/Container';
 import { FlexCol, FlexRow } from '../ui/Flex';
 import { Button } from '../ui/button';
 import { Icons } from '@/components/ui/icons';
+import { formatDate } from '@/lib/dates';
 import type { JournalEntry } from '@prisma/client';
-import Link from 'next/link';
 
 export default function JournalTextEditor({
   id,
@@ -111,13 +112,18 @@ export default function JournalTextEditor({
   return (
     <>
       <FlexCol className="gap-1">
-        <Link href="/dashboard">
+        <Button
+          onClick={router.back}
+          variant="secondary"
+          className="flex w-24 gap-1 pl-3"
+        >
           <Icons.arrowLeft />
-        </Link>
+          <span>Back</span>
+        </Button>
 
         <div className="mt-8 p-2">
           <FlexRow className="justify-between">
-            <p>{format(createdAt, 'EEE, MMM d hh:mm a')}</p>
+            <p>{formatDate(createdAt)}</p>
             {isSaving ? (
               <Icons.spinner className="animate-spin" />
             ) : success ? (
@@ -150,26 +156,28 @@ export default function JournalTextEditor({
               id="journal-text-editor"
               name="journal-text-editor"
               placeholder="Write your thoughts here..."
-              className="mt-6 w-full resize-none appearance-none overflow-hidden bg-transparent  font-bold focus:outline-none"
+              className="mt-6 w-full resize-none appearance-none overflow-hidden bg-transparent font-bold focus:outline-none"
               value={input}
               onChange={handleInputChange}
             />
           </div>
 
-          <div className="min-h-[500px]" />
+          <div className="min-h-[320px]" />
         </div>
       </FlexCol>
 
+      <NewQuestionnaire />
+
       <form onSubmit={handleSubmit}>
-        <Button type="submit" size="lg" className="mx-auto mt-4 block w-11/12">
-          Get advice
+        <Button type="submit" size="lg" className="mx-auto mt-6 block w-11/12">
+          Ask for advice
         </Button>
       </form>
 
       <Container className="my-12">
         {completion ? (
           <article
-            className="prose prose-stone dark:prose-invert"
+            className="prose prose-stone dark:prose-invert prose-h4:mb-6"
             dangerouslySetInnerHTML={{ __html: completion }}
           />
         ) : (

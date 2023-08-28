@@ -1,7 +1,9 @@
 import {
   AlertTriangle,
+  AlignLeft,
   ArrowLeft,
   ArrowRight,
+  BarChart2,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -10,6 +12,7 @@ import {
   File,
   FileText,
   HelpCircle,
+  Home,
   Image,
   Laptop,
   Loader2,
@@ -22,6 +25,7 @@ import {
   Settings,
   SunMedium,
   Trash,
+  Trophy,
   Twitter,
   User,
   X,
@@ -31,11 +35,14 @@ import {
 export type Icon = LucideIcon;
 
 export const Icons = {
+  alignLeft: AlignLeft,
+  barChart: BarChart2,
   logo: Command,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  home: Home,
   trash: Trash,
   post: FileText,
   page: File,
@@ -52,6 +59,7 @@ export const Icons = {
   pizza: Pizza,
   save: Save,
   sun: SunMedium,
+  trophy: Trophy,
   moon: Moon,
   laptop: Laptop,
   gitHub: ({ ...props }: LucideProps) => (

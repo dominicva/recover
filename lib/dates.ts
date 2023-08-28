@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const daysSinceDate = (date: Date | null | undefined) => {
   if (!date) return null;
 
@@ -9,3 +11,5 @@ export const daysSinceDate = (date: Date | null | undefined) => {
 
   return days;
 };
+
+export const formatDate = (date: Date) => format(date, 'EEE, MMM d hh:mm a');
