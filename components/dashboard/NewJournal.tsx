@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
-import clsx from 'clsx';
 import { Plus } from 'react-feather';
 import {
   Card,
@@ -19,11 +18,11 @@ export default function NewJournal() {
   const [, startTransition] = useTransition();
 
   const handleClick = async () => {
-    const res = await fetch('/api/journal', {
+    const response = await fetch('/api/journal', {
       method: 'POST',
     });
 
-    const { data } = await res.json();
+    const { data } = await response.json();
 
     startTransition(() => {
       router.refresh();

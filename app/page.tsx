@@ -10,7 +10,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="bg-off-white">
+    <main>
       <Hero />
     </main>
   );

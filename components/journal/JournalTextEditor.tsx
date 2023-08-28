@@ -5,11 +5,13 @@ import { useState, useEffect, useTransition } from 'react';
 import { useChat } from 'ai/react';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
+import TextareaAutosize from 'react-textarea-autosize';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '../ui/Flex';
 import { Button } from '../ui/button';
 import { Icons } from '@/components/ui/icons';
 import type { JournalEntry } from '@prisma/client';
+import Link from 'next/link';
 
 export default function JournalTextEditor({
   id,
@@ -42,11 +44,13 @@ export default function JournalTextEditor({
 
       const { data } = await res.json();
 
-      setEntryTitle(data.title);
-      setInput(data.content);
+      return data;
     };
 
-    getEntry();
+    getEntry().then((data) => {
+      setEntryTitle(data.title);
+      setInput(data.content);
+    });
   }, [isLoading, id, setInput]);
 
   const updateJournalEntry = async () => {
@@ -93,6 +97,9 @@ export default function JournalTextEditor({
   return (
     <>
       <FlexCol className="gap-1">
+        <Link href="/dashboard">
+          <Icons.arrowLeft />
+        </Link>
         <label htmlFor="title" className="sr-only">
           Journal entry title
         </label>
@@ -108,15 +115,17 @@ export default function JournalTextEditor({
         <label htmlFor="journal-text-editor" className="sr-only pl-4">
           Write down anything that comes to mind
         </label>
-
-        <textarea
-          id="journal-text-editor"
-          name="journal-text-editor"
-          className="h-[60vh] resize-none rounded-lg p-4 text-lg focus:border-transparent focus:outline-none "
-          placeholder="Write your thoughts here..."
-          value={input}
-          onChange={handleInputChange}
-        />
+        <div className="prose prose-stone dark:prose-invert">
+          <TextareaAutosize
+            autoFocus
+            id="journal-text-editor"
+            name="journal-text-editor"
+            placeholder="Write your thoughts here..."
+            className="w-full resize-none appearance-none overflow-hidden bg-transparent p-4 font-bold focus:outline-none"
+            value={input}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="px-4">
           {isSaving ? (
             <Icons.spinner className="animate-spin" />
