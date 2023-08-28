@@ -12,7 +12,6 @@ import Link from 'next/link';
 
 export default async function JournalPage() {
   const entries = await getJournalEntries();
-  console.log(entries);
 
   return (
     <div className="p-4">
@@ -20,7 +19,6 @@ export default async function JournalPage() {
 
       <ul className="mb-2 flex flex-col gap-2">
         {entries.map((entry) => {
-          console.log('entry', entry);
           return (
             <li key={entry.id}>
               <Link href={`/dashboard/journal/${entry.id}`}>

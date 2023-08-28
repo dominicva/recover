@@ -7,5 +7,5 @@ export default async function OnBoardingPage() {
     redirect('/signin');
   }
 
-  return <OnBoarding />;
+  return <div>page</div>;
 }

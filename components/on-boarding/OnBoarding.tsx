@@ -57,8 +57,6 @@ export default function OnBoarding({
   const { data: session } = useSession();
   const user = session?.user as ExtendedUserSession;
 
-  console.log('user', user);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
