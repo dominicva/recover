@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '../ui/card';
 import { Progress } from '@/components/ui/progress';
 import { daysSinceDate } from '@/lib/dates';
 import type { UserSession } from '@/types';

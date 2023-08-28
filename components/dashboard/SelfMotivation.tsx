@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from '@/components/ui/card';
+} from '../ui/card';
 import { buttonVariants } from '@/components/ui/button';
 import { Button } from '../ui/button';
 
