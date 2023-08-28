@@ -16,7 +16,7 @@ import Link from 'next/link';
 
 export default function JournalTextEditor({
   id,
-  title,
+  completion,
   createdAt,
 }: JournalEntry) {
   const {
@@ -28,15 +28,20 @@ export default function JournalTextEditor({
     isLoading,
   } = useChat({
     api: '/api/completion',
-    body: { journalEntryId: id },
     onFinish: async (data) => {
-      await fetch(`/api/journal/completion?id=${id}`, {
+      const response = await fetch(`/api/journal/completion`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ completion: data.content }),
+        body: JSON.stringify({ id, completion: data.content }),
       });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        console.error(error);
+        return;
+      }
     },
   });
 
@@ -103,16 +108,6 @@ export default function JournalTextEditor({
     interval: 2000,
   });
 
-  // const handleGetAdvice = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const currentEntryContent = input;
-
-  //   handleSubmit(e);
-
-  //   setInput(currentEntryContent);
-  // };
-
   return (
     <>
       <FlexCol className="gap-1">
@@ -172,12 +167,22 @@ export default function JournalTextEditor({
       </form>
 
       <Container className="my-12">
-        {messages.slice(1).map((message, index) => (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: message.content }}
-          ></div>
-        ))}
+        {completion ? (
+          <article
+            className="prose prose-stone dark:prose-invert"
+            dangerouslySetInnerHTML={{ __html: completion }}
+          />
+        ) : (
+          messages
+            .slice(1)
+            .map((message, index) => (
+              <div
+                key={index}
+                dangerouslySetInnerHTML={{ __html: message.content }}
+                className="prose prose-stone dark:prose-invert"
+              ></div>
+            ))
+        )}
       </Container>
     </>
   );

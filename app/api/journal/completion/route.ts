@@ -2,26 +2,18 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export const POST = async (request: NextRequest) => {
-  const { completion } = await request.json();
-  const { searchParams } = new URL(request.url);
-  const journalEntryId = searchParams.get('id');
+  const { completion, id } = await request.json();
 
-  if (!journalEntryId) {
+  if (!id) {
     return NextResponse.json(
       { error: 'No journal entry id provided' },
       { status: 400 }
     );
   }
 
-  const updatedEntry = await prisma.completion.create({
-    data: {
-      content: completion,
-      journalEntry: {
-        connect: {
-          id: journalEntryId,
-        },
-      },
-    },
+  const updatedEntry = await prisma.journalEntry.update({
+    where: { id },
+    data: { completion },
   });
 
   return NextResponse.json({ data: updatedEntry }, { status: 200 });
