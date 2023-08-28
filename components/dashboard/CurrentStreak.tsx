@@ -18,7 +18,7 @@ export default function CurrentStreak() {
   const user = session?.user as UserSession;
   const currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
 
-  const [progress, _setProgress] = useState(67);
+  const [progress, _setProgress] = useState(68);
 
   return (
     <Card className="rounded-2xl bg-gray-100">
