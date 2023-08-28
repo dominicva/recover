@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai-edge';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { OpenAIStream, ReplicateStream, StreamingTextResponse } from 'ai';
+import { prisma } from '@/lib/db';
 
 export const runtime = 'edge';
 
@@ -10,7 +11,9 @@ const apiConfig = new Configuration({
 const openai = new OpenAIApi(apiConfig);
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, journalEntryId } = await req.json();
+  console.log('messages', messages);
+  console.log('journalEntryId', journalEntryId);
 
   const systemContent = `
   I will provide you with a personal journal entry. I am trying to overcome an addiction,
@@ -18,16 +21,15 @@ export async function POST(req: Request) {
   of the health, psychology, and addiction literature. You should perform sentiment analysis
   on my journal entry, assigning one of: 'positive', 'neutral', or 'negative'.  You should provide
   3 bullet points around 20 words in length with constructive advice. Please provide your response in semantic HTML, using the following code delimited
-  by """ """ as an example, but bear in mind every response should be unique based on the journal entry.
+  by """ """ as an example, but bear in mind every response should be unique based on the journal entry:
 
   """
   <h2 class="mb-3 text-2xl font-semibold">Analysis</h2>
           <p class="mb-3 text-xl">
-            Based on your journal entry, your mood has been categorised as
-            <span class="font-bold">neutral</span>.
+            Your mood appears to be <span class="font-bold">neutral</span>.
           </p>
           <h3 class="mb-4 text-xl">
-            Here are some tips that might help you feel better
+            A few tips to help you feel better
           </h3>
           <ul>
             <li>
@@ -48,7 +50,6 @@ export async function POST(req: Request) {
           </ul>
   """`;
 
-  // Request the OpenAI API for the response based on the prompt
   const response = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     stream: true,
@@ -58,7 +59,7 @@ export async function POST(req: Request) {
     ],
   });
 
-  // Convert the response into a friendly text-stream
+  // Convert the response into a text-stream
   const stream = OpenAIStream(response);
 
   // Respond with the stream

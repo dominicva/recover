@@ -66,13 +66,14 @@ model VerificationToken {
 }
 
 model JournalEntry {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String?
-  content   String   @db.Text
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  title      String?
+  content    String       @db.Text
+  userId     String
+  user       User         @relation(fields: [userId], references: [id])
+  completion Completion[]
 
   @@index([userId, id])
 }
@@ -96,6 +97,17 @@ model Questionnaire {
   user          User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+model Completion {
+  id           String       @id @default(uuid())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  content      String       @db.Text
+  journalId    String
+  journalEntry JournalEntry @relation(fields: [journalId], references: [id])
+
+  @@index([journalId, id])
 }
 
 model Substance {
