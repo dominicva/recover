@@ -1,6 +1,7 @@
+import Link from 'next/link';
 import Container from '@/components/ui/Container';
 import { FlexCol } from '@/components/ui/Flex';
-import LinkButton from '../ui/buttons/LinkButton';
+import { buttonVariants } from '../ui/button';
 
 export default function Hero() {
   return (
@@ -14,14 +15,16 @@ export default function Hero() {
           Visualize and celebrate your progress.
         </p>
       </FlexCol>
-      <LinkButton
+      <Link
         href="/signup"
-        intent="primary"
-        size="large"
-        className="mx-auto block w-11/12 sm:mx-0 sm:max-w-[160px]"
+        className={buttonVariants({
+          variant: 'default',
+          size: 'lg',
+          className: 'w-full',
+        })}
       >
         <span className="text-lg">Get started</span>
-      </LinkButton>
+      </Link>
     </Container>
   );
 }

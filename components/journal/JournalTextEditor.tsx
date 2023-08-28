@@ -1,18 +1,23 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useTransition } from 'react';
 import { useChat } from 'ai/react';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
-import type { JournalEntry } from '@prisma/client';
+import TextareaAutosize from 'react-textarea-autosize';
+import { NewQuestionnaire } from '../dashboard';
 import Container from '@/components/ui/Container';
-import { FlexCol } from '../ui/Flex';
-import Button from '../ui/buttons/Button';
+import { FlexCol, FlexRow } from '../ui/Flex';
+import { Button } from '../ui/button';
+import { Icons } from '@/components/ui/icons';
+import { formatDate } from '@/lib/dates';
+import type { JournalEntry } from '@prisma/client';
 
 export default function JournalTextEditor({
   id,
-  title,
+  completion,
   createdAt,
 }: JournalEntry) {
   const {
@@ -24,160 +29,168 @@ export default function JournalTextEditor({
     isLoading,
   } = useChat({
     api: '/api/completion',
+    onFinish: async (data) => {
+      const response = await fetch(`/api/journal/completion`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, completion: data.content }),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        console.error(error);
+        return;
+      }
+    },
   });
-
-  console.log('messages', messages);
-
-  // TODO: write my own handleSubmit that calls handleSubmit(e) and preserves the
-  // textarea state
-
-  const [entryTitle, setEntryTitle] = useState(
-    title ?? `Journal entry ${createdAt.toLocaleDateString()}`
-  );
 
   const router = useRouter();
   const [, startTransition] = useTransition();
+
+  const [entryTitle, setEntryTitle] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const getEntry = async () => {
       const res = await fetch(`/api/journal?id=${id}`);
+
       const { data } = await res.json();
 
-      setEntryTitle(data.title);
-      setInput(data.content);
+      return data;
     };
 
-    getEntry();
-    /**
-     * This is a hacky way to prevent the journal entry
-     * from being cleared when the form is submitted.
-     * the handleSubmit helper function provided by useChat
-     * automatically clears the input field.
-     */
+    getEntry().then((data) => {
+      setEntryTitle(data.title);
+      setInput(data.content);
+    });
   }, [isLoading, id, setInput]);
 
   const updateJournalEntry = async () => {
     setIsSaving(true);
-    await fetch(`/api/journal?id=${id}`, {
+
+    const response = await fetch(`/api/journal?id=${id}`, {
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ title: entryTitle, content: input }),
     });
+
     setIsSaving(false);
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      console.error(error);
+      return;
+    }
+
+    setSuccess(true);
+
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
+
     startTransition(() => {
       router.refresh();
     });
   };
 
-  /**
-   * Had to use two separate instances of useAutosave.
-   * When passing [entryTitle, text] as the data prop, the auto-save was saving the
-   * changes to the database, but it initiated a re-save interval
-   * instead of only auto-saving when the user changed the text or title.
-   */
   useAutosave({
     data: entryTitle,
     onSave: updateJournalEntry,
-    interval: 2000, // this is the default value
+    interval: 2000,
   });
   useAutosave({
     data: input,
     onSave: updateJournalEntry,
-    interval: 2000, // this is the default value
+    interval: 2000,
   });
 
   return (
     <>
-      {/* <Container className="mx-auto mb-20 max-w-lg">
-        <h2 className="mb-4 text-xl font-semibold">
-          Track your mood over time
-        </h2>
-        <form>
-          <fieldset>
-            <legend className="mb-8 font-bold">
-              Rate how you feel along each of the following dimensions:
-            </legend>
-            <FlexCol className="mx-auto max-w-sm gap-4">
-              <label htmlFor="mood">Mood (4)</label>
-              <input type="range" name="mood" id="mood" min="1" max="5" />
-              <label htmlFor="energy">Energy (4)</label>
-              <input type="range" name="energy" id="energy" min="1" max="5" />
-              <label htmlFor="motivation">Motivation (3)</label>
-              <input
-                type="range"
-                name="motivation"
-                id="motivation"
-                min="1"
-                max="5"
-              />
-              <label htmlFor="anxiety">Anxiety (1)</label>
-              <input type="range" name="anxiety" id="anxiety" min="1" max="5" />
-              <label htmlFor="depression">Depression (2)</label>
-              <input
-                type="range"
-                name="depression"
-                id="depression"
-                min="1"
-                max="5"
-              />
-              <label htmlFor="sleepQuality">Sleep quality (2)</label>
-              <input
-                type="range"
-                name="sleepQuality"
-                id="sleepQuality"
-                min="1"
-                max="5"
-              />
-              <label htmlFor="cravings">Cravings (5)</label>
-              <input
-                type="range"
-                name="cravings"
-                id="cravings"
-                min="1"
-                max="5"
-              />
-            </FlexCol>
-          </fieldset>
-        </form>
-      </Container> */}
-      {isSaving && <p>Saving...</p>}
-      <form onSubmit={handleSubmit}>
-        <FlexCol className="gap-1">
+      <FlexCol className="gap-1">
+        <Button
+          onClick={router.back}
+          variant="secondary"
+          className="flex w-24 gap-1 pl-3"
+        >
+          <Icons.arrowLeft />
+          <span>Back</span>
+        </Button>
+
+        <div className="mt-8 p-2">
+          <FlexRow className="justify-between">
+            <p>{formatDate(createdAt)}</p>
+            {isSaving ? (
+              <Icons.spinner className="animate-spin" />
+            ) : success ? (
+              <div className="flex gap-1">
+                <Icons.check />
+                <span>Saved</span>
+              </div>
+            ) : null}
+          </FlexRow>
+
           <label htmlFor="title" className="sr-only">
             Journal entry title
           </label>
-          <input
-            type="text"
-            name="title"
+          <TextareaAutosize
+            autoFocus
             id="title"
-            className="mb-1 p-4 text-xl font-semibold"
-            placeholder="Title"
+            name="title"
+            placeholder="Add title"
+            className="mt-4 w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none"
             value={entryTitle}
             onChange={(e) => setEntryTitle(e.target.value)}
           />
-          <label htmlFor="journal-text-editor" className="pl-4">
-            Write down anything that comes to mind 🫶
+
+          <label htmlFor="journal-text-editor" className="sr-only pl-4">
+            Write down anything that comes to mind
           </label>
-          <textarea
-            id="journal-text-editor"
-            name="journal-text-editor"
-            className="h-[60vh] resize-none rounded-lg border-2 border-gray-300 bg-gray-100 p-4 text-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300"
-            placeholder="Write your thoughts here..."
-            value={input}
-            onChange={handleInputChange}
-          />
-        </FlexCol>
-        <Button type="submit" intent="tertiary" className="mt-4">
-          Get advice
+          <div className="prose prose-stone dark:prose-invert">
+            <TextareaAutosize
+              autoFocus
+              id="journal-text-editor"
+              name="journal-text-editor"
+              placeholder="Write your thoughts here..."
+              className="mt-6 w-full resize-none appearance-none overflow-hidden bg-transparent font-bold focus:outline-none"
+              value={input}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="min-h-[320px]" />
+        </div>
+      </FlexCol>
+
+      <NewQuestionnaire />
+
+      <form onSubmit={handleSubmit}>
+        <Button type="submit" size="lg" className="mx-auto mt-6 block w-11/12">
+          Ask for advice
         </Button>
       </form>
+
       <Container className="my-12">
-        {messages.slice(1).map((m, index) => (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: m.content }}
-          ></div>
-        ))}
+        {completion ? (
+          <article
+            className="prose prose-stone dark:prose-invert prose-h4:mb-6"
+            dangerouslySetInnerHTML={{ __html: completion }}
+          />
+        ) : (
+          messages
+            .slice(1)
+            .map((message, index) => (
+              <div
+                key={index}
+                dangerouslySetInnerHTML={{ __html: message.content }}
+                className="prose prose-stone dark:prose-invert"
+              ></div>
+            ))
+        )}
       </Container>
     </>
   );

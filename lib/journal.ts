@@ -39,7 +39,7 @@ export const createJournalEntry = async ({
           id: userId,
         },
       },
-      title: `New Journal Entry ${new Date().toLocaleDateString()}`,
+      title: '',
       content: initialContent,
     },
   });
