@@ -13,7 +13,7 @@ import {
   AreaChart,
   Area,
 } from 'recharts';
-import { useViewport } from '@/hooks/useViewport';
+// import { useViewport } from '@/hooks/useViewport';
 
 import {
   Card,
@@ -44,8 +44,8 @@ function isDateLessThan(date: Date, compare: { [key: string]: number }) {
 }
 
 export default function ProgressPage() {
-  const { width } = useViewport();
-  const CHART_WIDTH = Math.round(width * 0.85);
+  // const { width } = useViewport();
+  // const CHART_WIDTH = Math.round(width * 0.85);
 
   const [data, setData] = useState([]);
 
