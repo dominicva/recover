@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { format, formatDistanceToNowStrict, isBefore, sub } from 'date-fns';
 import {
   LineChart,
   Line,
@@ -24,41 +25,29 @@ import {
 } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
 
-const data = [
-  {
-    name: '1',
-    mood: 1,
-    energy: 3,
-    motivation: 2,
-    anxiety: 4,
-    depression: 5,
-    sleepQuality: 3,
-    cravings: 2,
-  },
-  {
-    name: '2',
-    mood: 2,
-    energy: 4,
-    motivation: 3,
-    anxiety: 5,
-    depression: 4,
-    sleepQuality: 4,
-    cravings: 0,
-  },
-  {
-    name: '3',
-    mood: 5,
-    energy: 5,
-    motivation: 4,
-    anxiety: 4,
-    depression: 3,
-    sleepQuality: 2,
-    cravings: 5,
-  },
-];
+function Tick({ x, y, stroke, payload }: any) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={16} textAnchor="middle" fill="#666">
+        {payload.value}
+      </text>
+    </g>
+  );
+}
+
+function isDateLessThan(date: Date, compare: { [key: string]: number }) {
+  const now = new Date();
+
+  const dateToCompare = sub(now, { ...compare });
+
+  return isBefore(date, now) && isBefore(date, dateToCompare);
+}
 
 export default function ProgressPage() {
   const { width } = useViewport();
+  const CHART_WIDTH = Math.round(width * 0.85);
+
+  const [data, setData] = useState([]);
 
   const [showMood, setShowMood] = useState(true);
   const [showEnergy, setShowEnergy] = useState(true);
@@ -67,8 +56,29 @@ export default function ProgressPage() {
   const [showDepression, setShowDepression] = useState(true);
   const [showSleepQuality, setShowSleepQuality] = useState(true);
   const [showCravings, setShowCravings] = useState(true);
+  const [showTimeFrame, setShowTimeFrame] = useState('week');
 
-  const chartWidth = Math.round(width * 0.85);
+  useEffect(() => {
+    const getProgress = async () => {
+      const res = await fetch('/api/questionnaire');
+
+      let { data } = await res.json();
+
+      for (const item of data) {
+        const createdAtDate = new Date(item.createdAt);
+        const timeToNow = formatDistanceToNowStrict(createdAtDate);
+
+        const date = format(new Date(item.createdAt), 'd/MM');
+        item.createdAt = date;
+      }
+
+      return data;
+    };
+
+    getProgress().then((data) => {
+      setData(data);
+    });
+  }, []);
 
   return (
     <div>
@@ -82,12 +92,12 @@ export default function ProgressPage() {
           <ResponsiveContainer width="100%" height={300} className="mx-auto">
             <LineChart
               data={data}
-              className="mx-auto -mt-16"
-              margin={{ top: 0, right: 5, left: 5, bottom: 0 }}
+              className="mx-auto"
+              margin={{ top: 0, right: 5, left: 5, bottom: 20 }}
             >
-              <XAxis dataKey="name" />
+              <XAxis dataKey="createdAt" tick={<Tick stroke="#000" />} />
+
               <Tooltip />
-              {/* <Legend /> */}
 
               {showMood && (
                 <Line
@@ -98,6 +108,7 @@ export default function ProgressPage() {
                   onClick={() => setShowMood(false)}
                 />
               )}
+
               {showEnergy && (
                 <Line
                   type="monotone"
@@ -106,6 +117,7 @@ export default function ProgressPage() {
                   strokeWidth={2}
                 />
               )}
+
               {showMotivation && (
                 <Line
                   type="monotone"
@@ -114,6 +126,7 @@ export default function ProgressPage() {
                   strokeWidth={2}
                 />
               )}
+
               {showAnxiety && (
                 <Line
                   type="monotone"
@@ -122,6 +135,7 @@ export default function ProgressPage() {
                   strokeWidth={2}
                 />
               )}
+
               {showDepression && (
                 <Line
                   type="monotone"
@@ -130,6 +144,7 @@ export default function ProgressPage() {
                   strokeWidth={2}
                 />
               )}
+
               {showSleepQuality && (
                 <Line
                   type="monotone"
@@ -138,6 +153,7 @@ export default function ProgressPage() {
                   strokeWidth={2}
                 />
               )}
+
               {showCravings && (
                 <Line
                   type="monotone"
@@ -148,43 +164,50 @@ export default function ProgressPage() {
               )}
             </LineChart>
           </ResponsiveContainer>
-          <div className="flex flex-wrap gap-3">
+
+          <div className="mt-10 flex flex-wrap gap-3">
             <Toggle
               className="bg-primary text-white"
               onClick={() => setShowMood(!showMood)}
             >
               Mood
             </Toggle>
+
             <Toggle
               className="bg-secondary text-white"
               onClick={() => setShowEnergy(!showEnergy)}
             >
               Energy
             </Toggle>
+
             <Toggle
               className="bg-tertiary text-white"
               onClick={() => setShowMotivation(!showMotivation)}
             >
               Motivation
             </Toggle>
+
             <Toggle
               className="bg-blue-lighter text-white"
               onClick={() => setShowAnxiety(!showAnxiety)}
             >
               Anxiety
             </Toggle>
+
             <Toggle
               className="bg-blue-darker text-white"
               onClick={() => setShowDepression(!showDepression)}
             >
               Depression
             </Toggle>
+
             <Toggle
               className="bg-purple-lighter text-white"
               onClick={() => setShowSleepQuality(!showSleepQuality)}
             >
               Sleep quality
             </Toggle>
+
             <Toggle
               className="bg-purple-darker text-white"
               onClick={() => setShowCravings(!showCravings)}
