@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserSession } from '@/lib/user';
 import { prisma } from '@/lib/db';
 
+export const GET = async (_req: NextRequest, _res: NextResponse) => {
+  const user = await getUserSession();
+
+  const questionnaires = await prisma.questionnaire.findMany({
+    where: {
+      userId: user.userId,
+    },
+  });
+
+  return NextResponse.json({ data: questionnaires }, { status: 200 });
+};
+
 export const POST = async (req: NextRequest, _res: NextResponse) => {
   const [user, body] = await Promise.all([getUserSession(), req.json()]);
 

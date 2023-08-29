@@ -18,7 +18,7 @@ export default function YourProgress() {
       </CardHeader>
       <CardContent className="pb-0">
         <Link
-          href="/dashboard/questionnaire/new"
+          href="/dashboard/progress"
           className={buttonVariants({
             size: 'icon',
             variant: 'outline',

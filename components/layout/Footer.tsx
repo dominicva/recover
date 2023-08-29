@@ -17,12 +17,12 @@ export default function Footer() {
             </Link>
           </li>
           <li>
-            <Link href="dashboard/progress">
+            <Link href="/dashboard/progress">
               <Icons.barChart />
             </Link>
           </li>
           <li>
-            <Link href="dashboard/achievements">
+            <Link href="/dashboard/achievements">
               <Icons.trophy />
             </Link>
           </li>
