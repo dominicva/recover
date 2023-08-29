@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRevalidate } from '@/hooks/useRevalidate';
 import Container from '@/components/ui/Container';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +9,8 @@ import { Slider } from '@/components/ui/slider';
 import { SliderProps } from '@radix-ui/react-slider';
 
 export default function QuestionnairePage() {
+  const revalidate = useRevalidate();
+
   const [mood, setMood] = useState([0] as SliderProps['defaultValue']);
   const [energy, setEnergy] = useState([0] as SliderProps['defaultValue']);
   const [motivation, setMotivation] = useState([
@@ -33,25 +36,34 @@ export default function QuestionnairePage() {
       body: JSON.stringify(data),
     });
 
-    const json = await response.json();
+    if (!response.ok) {
+      console.error(response.statusText);
+      return;
+    }
 
-    console.log('respnse', json);
+    revalidate({ href: '/dashboard' });
   };
 
   return (
     <Container as="main">
       <section className="p-4">
         <h2 className="text-center text-3xl">How are you feeling today?</h2>
+        <p className="my-4 text-center">
+          For each of the categories below, select a value between 0 and 5. 0
+          means terrible, 5 means great.
+        </p>
       </section>
       <section>
         <Card>
-          <CardContent>
+          <CardContent className="pt-4">
             <form onSubmit={handleSubmit} className="flex flex-col gap-12">
               <div>
-                <label htmlFor="mood">Mood</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {mood}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="mood">Mood</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {mood}
+                  </span>
+                </div>
                 <Slider
                   id="mood"
                   name="mood"
@@ -62,10 +74,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="energy">Energy</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {energy}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="energy">Energy</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {energy}
+                  </span>
+                </div>
                 <Slider
                   id="energy"
                   name="energy"
@@ -76,10 +90,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="motivation">Motivation</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {motivation}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="motivation">Motivation</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {motivation}
+                  </span>
+                </div>
                 <Slider
                   id="motivation"
                   name="motivation"
@@ -90,10 +106,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="anxiety">Anxiety</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {anxiety}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="anxiety">Anxiety</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {anxiety}
+                  </span>
+                </div>
                 <Slider
                   id="anxiety"
                   name="anxiety"
@@ -104,10 +122,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="depression">Depression</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {depression}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="depression">Depression</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {depression}
+                  </span>
+                </div>
                 <Slider
                   id="depression"
                   name="depression"
@@ -118,10 +138,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="sleepQuality">Sleep Quality</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {sleepQuality}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="sleepQuality">Sleep Quality</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {sleepQuality}
+                  </span>
+                </div>
                 <Slider
                   id="sleepQuality"
                   name="sleepQuality"
@@ -132,10 +154,12 @@ export default function QuestionnairePage() {
                 />
               </div>
               <div>
-                <label htmlFor="cravings">Cravings</label>
-                <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
-                  {cravings}
-                </span>
+                <div className="mb-4">
+                  <label htmlFor="cravings">Cravings</label>
+                  <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
+                    {cravings}
+                  </span>
+                </div>
                 <Slider
                   id="cravings"
                   name="cravings"
@@ -145,7 +169,9 @@ export default function QuestionnairePage() {
                   onValueChange={setCravings}
                 />
               </div>
-              <Button type="submit">Submit</Button>
+              <Button size="lg" type="submit">
+                Done
+              </Button>
             </form>
           </CardContent>
         </Card>
