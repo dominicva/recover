@@ -1,11 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
@@ -22,10 +22,11 @@ import {
   CardTitle,
   CardFooter,
 } from '@/components/ui/card';
+import { Toggle } from '@/components/ui/toggle';
 
 const data = [
   {
-    name: 'Week 1',
+    name: '1',
     mood: 1,
     energy: 3,
     motivation: 2,
@@ -35,7 +36,7 @@ const data = [
     cravings: 2,
   },
   {
-    name: 'Week 2',
+    name: '2',
     mood: 2,
     energy: 4,
     motivation: 3,
@@ -45,7 +46,7 @@ const data = [
     cravings: 0,
   },
   {
-    name: 'Week 3',
+    name: '3',
     mood: 5,
     energy: 5,
     motivation: 4,
@@ -59,6 +60,14 @@ const data = [
 export default function ProgressPage() {
   const { width } = useViewport();
 
+  const [showMood, setShowMood] = useState(true);
+  const [showEnergy, setShowEnergy] = useState(true);
+  const [showMotivation, setShowMotivation] = useState(true);
+  const [showAnxiety, setShowAnxiety] = useState(true);
+  const [showDepression, setShowDepression] = useState(true);
+  const [showSleepQuality, setShowSleepQuality] = useState(true);
+  const [showCravings, setShowCravings] = useState(true);
+
   const chartWidth = Math.round(width * 0.85);
 
   return (
@@ -70,56 +79,119 @@ export default function ProgressPage() {
           <CardDescription>Based on your questionnaires</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={360} className="mx-auto">
-            <LineChart data={data} className="mx-auto">
+          <ResponsiveContainer width="100%" height={300} className="mx-auto">
+            <LineChart
+              data={data}
+              className="mx-auto -mt-16"
+              margin={{ top: 0, right: 5, left: 5, bottom: 0 }}
+            >
               <XAxis dataKey="name" />
               <Tooltip />
-              <Legend />
+              {/* <Legend /> */}
 
-              <Line
-                type="monotone"
-                dataKey="mood"
-                stroke="#8884d8"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="energy"
-                stroke="#FF7E1D"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="motivation"
-                stroke="#FECE00"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="anxiety"
-                stroke="#0540FF"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="depression"
-                stroke="#2D2C2B"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="sleepQuality"
-                stroke="#281465"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="cravings"
-                stroke="#8884d8"
-                strokeWidth={2}
-              />
+              {showMood && (
+                <Line
+                  type="monotone"
+                  dataKey="mood"
+                  stroke="#0a6ff8"
+                  strokeWidth={2}
+                  onClick={() => setShowMood(false)}
+                />
+              )}
+              {showEnergy && (
+                <Line
+                  type="monotone"
+                  dataKey="energy"
+                  stroke="#FF7E1D"
+                  strokeWidth={2}
+                />
+              )}
+              {showMotivation && (
+                <Line
+                  type="monotone"
+                  dataKey="motivation"
+                  stroke="#FECE00"
+                  strokeWidth={2}
+                />
+              )}
+              {showAnxiety && (
+                <Line
+                  type="monotone"
+                  dataKey="anxiety"
+                  stroke="#5BBBFF"
+                  strokeWidth={2}
+                />
+              )}
+              {showDepression && (
+                <Line
+                  type="monotone"
+                  dataKey="depression"
+                  stroke="#0540FF"
+                  strokeWidth={2}
+                />
+              )}
+              {showSleepQuality && (
+                <Line
+                  type="monotone"
+                  dataKey="sleepQuality"
+                  stroke="#5330A5"
+                  strokeWidth={2}
+                />
+              )}
+              {showCravings && (
+                <Line
+                  type="monotone"
+                  dataKey="cravings"
+                  stroke="#281465"
+                  strokeWidth={2}
+                />
+              )}
             </LineChart>
           </ResponsiveContainer>
+          <div className="flex flex-wrap gap-3">
+            <Toggle
+              className="bg-primary text-white"
+              onClick={() => setShowMood(!showMood)}
+            >
+              Mood
+            </Toggle>
+            <Toggle
+              className="bg-secondary text-white"
+              onClick={() => setShowEnergy(!showEnergy)}
+            >
+              Energy
+            </Toggle>
+            <Toggle
+              className="bg-tertiary text-white"
+              onClick={() => setShowMotivation(!showMotivation)}
+            >
+              Motivation
+            </Toggle>
+            <Toggle
+              className="bg-blue-lighter text-white"
+              onClick={() => setShowAnxiety(!showAnxiety)}
+            >
+              Anxiety
+            </Toggle>
+            <Toggle
+              className="bg-blue-darker text-white"
+              onClick={() => setShowDepression(!showDepression)}
+            >
+              Depression
+            </Toggle>
+            <Toggle
+              className="bg-purple-lighter text-white"
+              onClick={() => setShowSleepQuality(!showSleepQuality)}
+            >
+              Sleep quality
+            </Toggle>
+            <Toggle
+              className="bg-purple-darker text-white"
+              onClick={() => setShowCravings(!showCravings)}
+            >
+              Cravings
+            </Toggle>
+          </div>
         </CardContent>
         <CardFooter></CardFooter>
       </Card>
