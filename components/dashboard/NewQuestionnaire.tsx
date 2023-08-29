@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { buttonVariants } from '../ui/button';
 
 export default function NewQuestionnaire() {
   return (
@@ -16,7 +17,13 @@ export default function NewQuestionnaire() {
         <CardDescription>Complete a quick questionnaire</CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
-        <Link href="/dashboard/questionnaire">
+        <Link
+          href="/dashboard/questionnaire"
+          className={buttonVariants({
+            size: 'icon',
+            variant: 'outline',
+          })}
+        >
           <Plus color="#000" />
         </Link>
       </CardContent>
