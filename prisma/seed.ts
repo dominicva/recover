@@ -1,6 +1,105 @@
 import { prisma } from '../lib/db';
 
 async function main() {
+  const user = await prisma.user.create({
+    data: {
+      email: 'me@dominicva.com',
+    },
+  });
+
+  const questionnaires = await prisma.questionnaire.createMany({
+    data: [
+      {
+        createdAt: new Date('2023-05-11'),
+        mood: 5,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-05-28'),
+        mood: 2,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-06-10'),
+        mood: 3,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-06-15'),
+        mood: 4,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-06-26'),
+        mood: 5,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-07-05'),
+        mood: 3,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-07-15'),
+        mood: 2,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+      {
+        createdAt: new Date('2023-07-25'),
+        mood: 1,
+        energy: 3,
+        motivation: 2,
+        anxiety: 1,
+        depression: 4,
+        sleepQuality: 5,
+        cravings: 3,
+        userId: user.id,
+      },
+    ],
+  });
+
   const substances = await prisma.substance.createMany({
     data: [
       { name: 'Adderall' },
@@ -11,7 +110,9 @@ async function main() {
       { name: 'Binge Eating' },
       { name: 'Caffeine' },
       { name: 'Cannabis' },
+      { name: 'Cigarettes' },
       { name: 'Cocaine' },
+      { name: 'Codeine' },
       { name: 'DMT' },
       { name: 'Eating Disorders' },
       { name: 'Ecstasy' },
