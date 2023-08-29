@@ -79,22 +79,19 @@ model JournalEntry {
 }
 
 model Questionnaire {
-  id            String   @id @default(uuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  sleepQuality  Int      @default(0) // 0-10 scale
-  motivation    Int      @default(0)
-  contentment   Int      @default(0)
-  arousal       Int      @default(0)
-  anger         Int      @default(0)
-  anxiety       Int      @default(0)
-  stress        Int      @default(0)
-  sadness       Int      @default(0)
-  frustration   Int      @default(0)
-  energy        Int      @default(0)
-  concentration Int      @default(0)
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  mood         Int      @default(0)
+  energy       Int      @default(0)
+  motivation   Int      @default(0)
+  anxiety      Int      @default(0)
+  depression   Int      @default(0)
+  sleepQuality Int      @default(0) // 0-10 scale
+  cravings     Int      @default(0) // 0-10 scale
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
