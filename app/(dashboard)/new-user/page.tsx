@@ -16,9 +16,5 @@ export default async function NewUser() {
     },
   });
 
-  return (
-    <main>
-      <OnBoarding substances={substances} />
-    </main>
-  );
+  return <OnBoarding substances={substances} />;
 }

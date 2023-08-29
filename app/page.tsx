@@ -9,9 +9,5 @@ export default async function Home() {
     redirect('/dashboard');
   }
 
-  return (
-    <main>
-      <Hero />
-    </main>
-  );
+  return <Hero />;
 }
