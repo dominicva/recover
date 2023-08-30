@@ -20,7 +20,7 @@ export default async function JournalEntryPage({
   }
 
   return (
-    <Container as="main" className="h-full w-full px-4">
+    <Container className="px-4">
       <JournalTextEditor {...entry} />
     </Container>
   );
