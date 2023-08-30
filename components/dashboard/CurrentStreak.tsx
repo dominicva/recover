@@ -16,7 +16,12 @@ import type { UserSession } from '@/types';
 export default function CurrentStreak() {
   const { data: session } = useSession();
   const user = session?.user as UserSession;
-  const currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
+
+  let currentStreak;
+
+  if (user?.dateOfSobriety) {
+    currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
+  }
 
   const [progress, _setProgress] = useState(68);
 
