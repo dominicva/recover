@@ -14,6 +14,7 @@ import {
   Area,
 } from 'recharts';
 // import { useViewport } from '@/hooks/useViewport';
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
 
 import {
   Card,
@@ -25,6 +26,7 @@ import {
 } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
 import { isWithinXDays } from '@/lib/dates';
+import { Button } from '@/components/ui/button';
 
 function Tick({ x, y, stroke, payload }: any) {
   return (
@@ -69,6 +71,8 @@ export default function ProgressPage() {
         data = data.filter((item: any) =>
           isWithinXDays(new Date(item.createdAt), 30)
         );
+      } else if (showTimeFrame === 'all') {
+        data = data;
       }
 
       for (const item of data) {
@@ -79,7 +83,7 @@ export default function ProgressPage() {
     };
 
     getProgress().then(filterProgress).then(setData);
-  }, []);
+  }, [showTimeFrame]);
 
   return (
     <div>
@@ -90,6 +94,33 @@ export default function ProgressPage() {
           <CardDescription>Based on your questionnaires</CardDescription>
         </CardHeader>
         <CardContent>
+          <ToggleGroup.Root
+            type="single"
+            defaultValue="all"
+            className="flex gap-3"
+            onValueChange={(value) => {
+              if (value) setShowTimeFrame(value);
+            }}
+          >
+            <ToggleGroup.Item
+              value="week"
+              className="rounded px-2 py-1 data-[state=off]:bg-gray-200 data-[state=on]:bg-blue-lighter"
+            >
+              Week
+            </ToggleGroup.Item>
+            <ToggleGroup.Item
+              value="month"
+              className="rounded px-2 py-1 data-[state=off]:bg-gray-200 data-[state=on]:bg-blue-lighter"
+            >
+              Month
+            </ToggleGroup.Item>
+            <ToggleGroup.Item
+              value="all"
+              className="rounded px-2 py-1 data-[state=off]:bg-gray-200 data-[state=on]:bg-blue-lighter"
+            >
+              All
+            </ToggleGroup.Item>
+          </ToggleGroup.Root>
           <ResponsiveContainer width="100%" height={300} className="mx-auto">
             <AreaChart
               data={data}
