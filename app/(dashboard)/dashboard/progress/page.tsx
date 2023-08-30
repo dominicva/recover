@@ -1,21 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format, formatDistanceToNowStrict, isBefore, sub } from 'date-fns';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-} from 'recharts';
-// import { useViewport } from '@/hooks/useViewport';
+import { format } from 'date-fns';
+import { XAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-
 import {
   Card,
   CardContent,
@@ -26,9 +14,8 @@ import {
 } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
 import { isWithinXDays } from '@/lib/dates';
-import { Button } from '@/components/ui/button';
 
-function Tick({ x, y, stroke, payload }: any) {
+function Tick({ x, y, payload }: any) {
   return (
     <g transform={`translate(${x},${y})`}>
       <text x={0} y={0} dy={16} textAnchor="middle" fill="#666">
@@ -39,9 +26,6 @@ function Tick({ x, y, stroke, payload }: any) {
 }
 
 export default function ProgressPage() {
-  // const { width } = useViewport();
-  // const CHART_WIDTH = Math.round(width * 0.85);
-
   const [data, setData] = useState([]);
 
   const [showMood, setShowMood] = useState(true);
@@ -86,9 +70,9 @@ export default function ProgressPage() {
   }, [showTimeFrame]);
 
   return (
-    <div>
+    <div className="px-4">
       <h2 className="mt-6 text-center text-3xl">Track your progress</h2>
-      <Card>
+      <Card className="mt-8">
         <CardHeader>
           <CardTitle>Your progress</CardTitle>
           <CardDescription>Based on your questionnaires</CardDescription>

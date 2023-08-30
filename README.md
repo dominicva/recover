@@ -15,7 +15,7 @@
 
 - As addiction can impact anyone, the app should be as inclusive as possible. The UI/UX should reflect this.
 - I expect different features (see feature list below) to be used differently. Journalling might be more suited to tablet/desktop, while completing a mood questionnaire is suited to mobile.
-- Building a React Native counterpart app after the bootcamp would be a natural extension.
+- Building a React Native counterpart app would be a natural extension.
 
 ### Features
 
@@ -239,9 +239,3 @@ If time is limited, the following features could easily be dropped without impac
 - Recordings
 
 ---
-
-## TODOS
-
-- think about using middleware to protect routes
-- Tailwind typography to style OpenAI response
-- Recharts for data visualisation
