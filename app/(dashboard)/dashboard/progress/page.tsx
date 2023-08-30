@@ -63,6 +63,10 @@ export default function ProgressPage() {
         item.dateToDisplay = format(new Date(item.createdAt), 'd/MM');
       }
 
+      data.sort((a: any, b: any) => {
+        // @ts-ignore
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      });
       return data;
     };
 
