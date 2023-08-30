@@ -13,3 +13,13 @@ export const daysSinceDate = (date: Date | null | undefined) => {
 };
 
 export const formatDate = (date: Date) => format(date, 'EEE, MMM d hh:mm a');
+
+export const isWithinXDays = (date: Date, days: number) => {
+  const today = new Date();
+
+  const diff = Math.abs(today.getTime() - date.getTime());
+
+  const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  return daysDiff <= days;
+};
