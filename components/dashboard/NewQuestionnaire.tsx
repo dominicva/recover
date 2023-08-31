@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 
 export default function NewQuestionnaire() {
   return (
-    <Card className="flex items-center justify-between rounded-2xl bg-gray-100">
+    <Card className="flex items-center justify-between rounded-2xl bg-light-grey">
       <CardHeader className="px-5">
         <CardTitle className="font-normal">How do you feel today?</CardTitle>
         <CardDescription>Complete a quick questionnaire</CardDescription>

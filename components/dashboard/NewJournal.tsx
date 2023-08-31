@@ -29,7 +29,7 @@ export default function NewJournal() {
   };
 
   return (
-    <Card className="flex items-center justify-between rounded-2xl bg-gray-100">
+    <Card className="flex items-center justify-between rounded-2xl bg-light-grey">
       <CardHeader className="px-5">
         <CardTitle className="font-normal">Add new journal entry</CardTitle>
         <CardDescription>Write whatever comes to mind</CardDescription>
