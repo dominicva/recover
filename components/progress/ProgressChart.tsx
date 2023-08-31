@@ -6,19 +6,15 @@ import {
   XAxis,
   Tooltip,
   ResponsiveContainer,
-  Area,
   Line,
   ComposedChart,
+  LineChart,
 } from 'recharts';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Toggle } from '@/components/ui/toggle';
+import { Card, CardContent } from '@/components/ui/card';
+import AreaItem from './AreaItem';
+import DataParamToggle from './DataParamToggle';
+import Tick from './Tick';
 
 import { format } from 'date-fns';
 import { isWithinXDays } from '@/lib/dates';
@@ -29,53 +25,94 @@ import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 export default function ProgressChart() {
   const [data, setData] = useState([]);
 
-  // refactor to use useReducer?
-  // (prevState) => {...prevState, moreState }
   const [showAverage, setShowAverage] = useState(true);
-  const [showMood, setShowMood] = useState(true);
-  const [showEnergy, setShowEnergy] = useState(true);
-  const [showMotivation, setShowMotivation] = useState(true);
-  const [showAnxiety, setShowAnxiety] = useState(true);
-  const [showDepression, setShowDepression] = useState(true);
-  const [showSleepQuality, setShowSleepQuality] = useState(true);
-  const [showCravings, setShowCravings] = useState(true);
+  const [showMood, setShowMood] = useState(false);
+  const [showEnergy, setShowEnergy] = useState(false);
+  const [showMotivation, setShowMotivation] = useState(false);
+  const [showAnxiety, setShowAnxiety] = useState(false);
+  const [showDepression, setShowDepression] = useState(false);
+  const [showSleepQuality, setShowSleepQuality] = useState(false);
+  const [showCravings, setShowCravings] = useState(false);
 
   const [showTimeFrame, setShowTimeFrame] = useState('all');
+
+  const chartItems = [
+    {
+      dataKey: 'averageScore',
+      stroke: '#fff',
+      fill: '#fff',
+    },
+    {
+      dataKey: 'mood',
+      stroke: '#AD91CC',
+      fill: '#AD91CC',
+    },
+    {
+      dataKey: 'energy',
+      stroke: '#66B27F',
+      fill: '#66B27F',
+    },
+    {
+      dataKey: 'motivation',
+      stroke: '#76C2FF',
+      fill: '#76C2FF',
+    },
+    {
+      dataKey: 'anxiety',
+      stroke: '#4D5358',
+      fill: '#4D5358',
+    },
+    {
+      dataKey: 'depression',
+      stroke: '#E5CDFF',
+      fill: '#E5CDFF',
+    },
+    {
+      dataKey: 'sleepQuality',
+      stroke: '#878D96',
+      fill: '#878D96',
+    },
+    {
+      dataKey: 'cravings',
+      stroke: '#281465',
+      fill: '#281465',
+    },
+  ];
 
   const dataParams = [
     {
       text: 'Average',
-      className: 'bg-primary text-white',
+      className: 'bg-black text-white',
       setState: setShowAverage,
     },
     {
       text: 'Mood',
-      className: 'bg-primary text-white',
+      className: 'bg-dark-purple text-white',
       setState: setShowMood,
     },
     {
       text: 'Energy',
-      className: 'bg-secondary text-white',
+      className: 'bg-dark-green text-white',
       setState: setShowEnergy,
     },
     {
       text: 'Motivation',
-      className: 'bg-tertiary text-white',
+      className: 'bg-dark-blue text-white',
       setState: setShowMotivation,
     },
     {
       text: 'Anxiety',
-      className: 'bg-blue-lighter text-white',
+      className: 'bg-neutral-4 text-white',
       setState: setShowAnxiety,
     },
     {
       text: 'Depression',
-      className: 'bg-blue-darker text-white',
+      className: 'bg-purple-2 text-white',
       setState: setShowDepression,
     },
     {
       text: 'Sleep quality',
-      className: 'bg-purple-lighter text-white',
+      className: 'bg-neutral-3 text-white',
       setState: setShowSleepQuality,
     },
     {
@@ -138,10 +175,6 @@ export default function ProgressChart() {
 
   return (
     <Card className="bg-transparent p-4">
-      {/* <CardHeader className="p-0">
-        <CardTitle>Your progress</CardTitle>
-        <CardDescription>Based on your questionnaires</CardDescription>
-      </CardHeader> */}
       <CardContent className="p-0">
         <ToggleGroup.Root
           type="single"
@@ -171,7 +204,7 @@ export default function ProgressChart() {
           </ToggleGroup.Item>
         </ToggleGroup.Root>
         <ResponsiveContainer width="100%" height={300} className="mx-auto">
-          <ComposedChart
+          <LineChart
             data={data}
             className="mx-auto"
             margin={{ top: 10, right: 5, left: 5, bottom: 20 }}
@@ -180,82 +213,46 @@ export default function ProgressChart() {
 
             <Tooltip />
 
-            {showAverage && (
-              <Line
-                type="monotone"
-                dataKey="averageScore"
-                stroke="#0a6ff8"
-                strokeWidth={2}
-              />
-            )}
-
-            {showMood && (
-              <Area
-                type="monotone"
-                dataKey="mood"
-                stroke="#0a6ff8"
-                fill="#0a6ff8"
-                strokeWidth={2}
-              />
-            )}
-
-            {showEnergy && (
-              <Area
-                type="monotone"
-                dataKey="energy"
-                stroke="#FF7E1D"
-                fill="#FF7E1D"
-                strokeWidth={2}
-              />
-            )}
-
-            {showMotivation && (
-              <Area
-                type="monotone"
-                dataKey="motivation"
-                stroke="#FECE00"
-                fill="#FECE00"
-                strokeWidth={2}
-              />
-            )}
-
-            {showAnxiety && (
-              <Area
-                type="monotone"
-                dataKey="anxiety"
-                stroke="#5BBBFF"
-                fill="#5BBBFF"
-                strokeWidth={2}
-              />
-            )}
-
-            {showDepression && (
-              <Area
-                type="monotone"
-                dataKey="depression"
-                stroke="#0540FF"
-                fill="#0540FF"
-                strokeWidth={2}
-              />
-            )}
-
-            {showSleepQuality && (
-              <Area
-                type="monotone"
-                dataKey="sleepQuality"
-                stroke="#5330A5"
-                fill="#5330A5"
-                strokeWidth={2}
-              />
-            )}
-
-            {showCravings && AreaItem({ dataKey: 'cravings', stroke: '#000' })}
-          </ComposedChart>
+            {chartItems.map((item) => {
+              if (item.dataKey === 'averageScore' && showAverage) {
+                return (
+                  <Line
+                    key={item.dataKey}
+                    dot={{ fill: '#000', strokeWidth: 1 }}
+                    type="monotone"
+                    dataKey="averageScore"
+                    stroke="#000"
+                    strokeWidth={2}
+                  />
+                );
+              } else if (item.dataKey === 'mood' && showMood) {
+                /**
+                 * there is an unusual issue here where invoking AreaItem as a component
+                 * <AreaItem item={item} /> doesn't work, but invoking it as a function
+                 * AreaItem(item) does work.
+                 */
+                return AreaItem(item);
+              } else if (item.dataKey === 'energy' && showEnergy) {
+                return AreaItem(item);
+              } else if (item.dataKey === 'motivation' && showMotivation) {
+                return AreaItem(item);
+              } else if (item.dataKey === 'anxiety' && showAnxiety) {
+                return AreaItem(item);
+              } else if (item.dataKey === 'depression' && showDepression) {
+                return AreaItem(item);
+              } else if (item.dataKey === 'sleepQuality' && showSleepQuality) {
+                return AreaItem(item);
+              } else if (item.dataKey === 'cravings' && showCravings) {
+                return AreaItem(item);
+              }
+            })}
+          </LineChart>
         </ResponsiveContainer>
 
         <div className="mt-10 flex flex-wrap gap-3">
           {dataParams.map((param) => (
             <DataParamToggle
+              defaultPressed={param.text !== 'Average'}
               key={param.text}
               text={param.text}
               className={param.className}
@@ -265,43 +262,5 @@ export default function ProgressChart() {
         </div>
       </CardContent>
     </Card>
-  );
-}
-
-function AreaItem({ dataKey, stroke }: { dataKey: string; stroke: string }) {
-  return (
-    <Area
-      type="monotone"
-      dataKey={dataKey}
-      stroke={stroke}
-      fill={stroke}
-      strokeWidth={2}
-    />
-  );
-}
-
-function Tick({ x, y, payload }: any) {
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={16} textAnchor="middle" fill="#666">
-        {payload.value}
-      </text>
-    </g>
-  );
-}
-
-function DataParamToggle({
-  text,
-  className,
-  setState,
-}: {
-  text: string;
-  className?: string;
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  return (
-    <Toggle className={className} onClick={() => setState((state) => !state)}>
-      {text}
-    </Toggle>
   );
 }
