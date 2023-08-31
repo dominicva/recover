@@ -17,7 +17,7 @@ export default function SelfMotivation() {
     <Card className="rounded-2xl bg-blue">
       <div className="flex items-center justify-between">
         <CardHeader className="px-5">
-          <CardDescription>I need some help</CardDescription>
+          <CardDescription>I need some encouragement</CardDescription>
           <CardTitle className="font-normal">Your self motivation</CardTitle>
         </CardHeader>
         <CardContent className="pb-0 pr-5">

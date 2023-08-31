@@ -10,7 +10,7 @@ export default async function Header() {
   return (
     <Container as="header" className="flex items-center justify-between p-4">
       <h1 className="text-2xl font-semibold text-purple-darker">
-        <Link href={userSession ? '/dashboard' : '/'}>Recover</Link>
+        <Link href="/">Recover</Link>
       </h1>
       <nav>
         {userSession ? (
@@ -19,7 +19,7 @@ export default async function Header() {
               src={userSession?.image}
               alt={userSession?.user?.name ?? 'User avatar'}
             />
-            <AvatarFallback className="bg-gray-300"></AvatarFallback>
+            <AvatarFallback className="bg-neutral-2"></AvatarFallback>
           </Avatar>
         ) : (
           <Link href="/signin" className={buttonVariants({ variant: 'link' })}>
