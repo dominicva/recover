@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 import {
   XAxis,
+  YAxis,
   Tooltip,
   ResponsiveContainer,
   Line,
@@ -22,7 +23,7 @@ import { average } from '@/lib/math';
 
 import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 
-export default function ProgressChart() {
+export default function ProgressChart({ onDashboard = false }) {
   const [data, setData] = useState([]);
 
   const [showAverage, setShowAverage] = useState(true);
@@ -203,13 +204,17 @@ export default function ProgressChart() {
             All
           </ToggleGroup.Item>
         </ToggleGroup.Root>
-        <ResponsiveContainer width="100%" height={300} className="mx-auto">
+        <ResponsiveContainer width="100%" height={280} className="mx-auto">
           <LineChart
             data={data}
             className="mx-auto"
-            margin={{ top: 10, right: 5, left: 5, bottom: 20 }}
+            margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
           >
-            <XAxis dataKey="dateToDisplay" tick={<Tick stroke="#000" />} />
+            <XAxis
+              dataKey="dateToDisplay"
+              tick={<Tick stroke="#000" />}
+              domain={['dataMin', 'dataMax']}
+            />
 
             <Tooltip />
 
