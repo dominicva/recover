@@ -24,7 +24,7 @@ import { average } from '@/lib/math';
 import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 
 export default function ProgressChart({ onDashboard = false }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([] as ExtendedQuestionnaire[]);
 
   const [showAverage, setShowAverage] = useState(true);
   const [showMood, setShowMood] = useState(false);
@@ -149,9 +149,9 @@ export default function ProgressChart({ onDashboard = false }) {
       return data;
     };
 
-    const filterProgress = (data: any) => {
+    const filterProgress = (data: ExtendedQuestionnaire[]) => {
       if (showTimeFrame === 'week') {
-        data = data.filter((item: any) =>
+        data = data.filter((item: ExtendedQuestionnaire) =>
           isWithinXDays(new Date(item.createdAt), 7)
         );
       } else if (showTimeFrame === 'month') {
@@ -171,7 +171,7 @@ export default function ProgressChart({ onDashboard = false }) {
       return data;
     };
 
-    getProgress().then(filterProgress).then(setData);
+    getProgress().then(filterProgress).then(setData).catch(console.error);
   }, [showTimeFrame]);
 
   return (

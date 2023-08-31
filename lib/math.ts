@@ -7,5 +7,5 @@ export const average = (...args: number[]) => {
 
   const result = sum / args.length;
 
-  return Number(result.toFixed(2));
+  return Number(result.toFixed(1));
 };

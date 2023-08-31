@@ -14,10 +14,14 @@ import { cn } from '@/lib/utils';
 export default function YourProgress() {
   return (
     <Card className="flex w-full flex-col items-center justify-between rounded-2xl bg-purple">
-      <CardHeader className="flex w-full flex-row justify-between self-start pb-0">
+      <CardHeader className="flex w-full flex-row justify-between self-start px-4 pb-0">
         <div>
-          <CardTitle className="font-normal">Your progress</CardTitle>
-          <CardDescription>Based on your questionnaires</CardDescription>
+          <CardTitle className="mb-2 text-2xl font-normal">
+            Your progress
+          </CardTitle>
+          <CardDescription className=" text-body-text">
+            Based on your questionnaires
+          </CardDescription>
         </div>
         <Link
           href="/dashboard/progress"
