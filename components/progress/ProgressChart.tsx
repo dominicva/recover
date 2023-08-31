@@ -1,8 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import { XAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+
+import {
+  XAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Area,
+  Line,
+  ComposedChart,
+} from 'recharts';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import {
   Card,
@@ -12,13 +19,19 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
+
+import { format } from 'date-fns';
 import { isWithinXDays } from '@/lib/dates';
+import { average } from '@/lib/math';
+
+import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 
 export default function ProgressChart() {
   const [data, setData] = useState([]);
 
   // refactor to use useReducer?
   // (prevState) => {...prevState, moreState }
+  const [showAverage, setShowAverage] = useState(true);
   const [showMood, setShowMood] = useState(true);
   const [showEnergy, setShowEnergy] = useState(true);
   const [showMotivation, setShowMotivation] = useState(true);
@@ -30,6 +43,11 @@ export default function ProgressChart() {
   const [showTimeFrame, setShowTimeFrame] = useState('all');
 
   const dataParams = [
+    {
+      text: 'Average',
+      className: 'bg-primary text-white',
+      setState: setShowAverage,
+    },
     {
       text: 'Mood',
       className: 'bg-primary text-white',
@@ -73,6 +91,23 @@ export default function ProgressChart() {
 
       const { data } = await res.json();
 
+      for (const item of data) {
+        const scores = [
+          item.mood,
+          item.energy,
+          item.motivation,
+          item.anxiety,
+          item.depression,
+          item.sleepQuality,
+          item.cravings,
+        ];
+
+        const averageScore = average(...scores);
+
+        item.averageScore = averageScore;
+        item.dateToDisplay = format(new Date(item.createdAt), 'd/MM');
+      }
+
       return data;
     };
 
@@ -89,13 +124,10 @@ export default function ProgressChart() {
         data = data;
       }
 
-      for (const item of data) {
-        item.dateToDisplay = format(new Date(item.createdAt), 'd/MM');
-      }
-
-      data.sort((a: any, b: any) => {
-        // @ts-ignore
-        return new Date(a.createdAt) - new Date(b.createdAt);
+      data.sort((a: ExtendedQuestionnaire, b: ExtendedQuestionnaire) => {
+        const diff =
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        return diff;
       });
 
       return data;
@@ -139,7 +171,7 @@ export default function ProgressChart() {
           </ToggleGroup.Item>
         </ToggleGroup.Root>
         <ResponsiveContainer width="100%" height={300} className="mx-auto">
-          <AreaChart
+          <ComposedChart
             data={data}
             className="mx-auto"
             margin={{ top: 10, right: 5, left: 5, bottom: 20 }}
@@ -147,6 +179,15 @@ export default function ProgressChart() {
             <XAxis dataKey="dateToDisplay" tick={<Tick stroke="#000" />} />
 
             <Tooltip />
+
+            {showAverage && (
+              <Line
+                type="monotone"
+                dataKey="averageScore"
+                stroke="#0a6ff8"
+                strokeWidth={2}
+              />
+            )}
 
             {showMood && (
               <Area
@@ -209,7 +250,7 @@ export default function ProgressChart() {
             )}
 
             {showCravings && AreaItem({ dataKey: 'cravings', stroke: '#000' })}
-          </AreaChart>
+          </ComposedChart>
         </ResponsiveContainer>
 
         <div className="mt-10 flex flex-wrap gap-3">
