@@ -27,9 +27,9 @@ export default function UserAvatar({ userSession }: { userSession: any }) {
           <AvatarFallback className="bg-neutral-2"></AvatarFallback>
         </Avatar>
       </PopoverTrigger>
-      <PopoverContent className="mr-4 w-48 rounded-xl">
+      <PopoverContent className="mr-4 w-60 rounded-xl py-8">
         <nav>
-          <FlexCol as="ul" className="gap-2 py-2">
+          <FlexCol as="ul" className="gap-6 py-2">
             <li>
               <Link
                 href="/dashboard"
