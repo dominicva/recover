@@ -40,7 +40,7 @@ export default function UserAvatar({ userSession }: { userSession: any }) {
             </li>
             <li>
               <Link
-                href="/profile"
+                href="/dashboard/profile"
                 className={buttonVariants({ variant: 'ghost' })}
               >
                 Profile
