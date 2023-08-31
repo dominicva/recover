@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { Star } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -17,16 +18,12 @@ export default function CurrentStreak() {
   const { data: session } = useSession();
   const user = session?.user as UserSession;
 
-  let currentStreak;
-
-  if (user?.dateOfSobriety) {
-    currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
-  }
+  const currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
 
   const [progress, _setProgress] = useState(68);
 
   return (
-    <Card className="rounded-2xl bg-gray-100">
+    <Card className="bg-green">
       <CardHeader className="pb-4">
         <CardTitle className="text-center text-3xl font-normal">
           {currentStreak ? currentStreak : null} days
@@ -36,7 +33,7 @@ export default function CurrentStreak() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Progress value={progress} />
+        <Progress value={progress} className="h-2" />
         <p className="mb-2 mt-1 text-center text-gray-400">
           7 days to next milestone
         </p>

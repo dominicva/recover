@@ -10,10 +10,11 @@ import {
 } from '../ui/card';
 import { buttonVariants } from '@/components/ui/button';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 export default function SelfMotivation() {
   return (
-    <Card className="rounded-2xl bg-gray-100">
+    <Card className="rounded-2xl bg-blue">
       <div className="flex items-center justify-between">
         <CardHeader className="pb-4 pr-0">
           <CardDescription>I need some help</CardDescription>
@@ -22,16 +23,19 @@ export default function SelfMotivation() {
         <CardContent className="pb-0">
           <Link
             href="/dashboard/questionnaire/new"
-            className={buttonVariants({
-              size: 'icon',
-              variant: 'outline',
-            })}
+            className={cn(
+              buttonVariants({
+                size: 'icon',
+                variant: 'outline',
+              }),
+              'rounded-full'
+            )}
           >
             <ChevronRight />
           </Link>
         </CardContent>
       </div>
-      <Button size="lg" className="mx-auto mb-4 block w-40">
+      <Button size="lg" className="mb-4 ml-6 block w-40">
         Create
       </Button>
       <CardFooter>

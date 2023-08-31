@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
 import { Plus } from 'react-feather';
 import {
   Card,
@@ -12,21 +10,21 @@ import {
 } from '../ui/card';
 import { buttonVariants, Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useRevalidate } from '@/hooks/useRevalidate';
 
 export default function NewJournal() {
-  const router = useRouter();
-  const [, startTransition] = useTransition();
+  const revalidate = useRevalidate();
 
   const handleClick = async () => {
+    // look into using server actions to achieve this
     const response = await fetch('/api/journal', {
       method: 'POST',
     });
 
     const { data } = await response.json();
 
-    startTransition(() => {
-      router.refresh();
-      router.push(`/dashboard/journal/${data.id}`);
+    revalidate({
+      href: `/dashboard/journal/${data.id}`,
     });
   };
 

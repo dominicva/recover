@@ -46,12 +46,19 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, trigger, user }) {
-      // when we get to building the on-boarding, will use trigger to
-      // determine when/how to update the user's profile on the session
       if (trigger === 'signUp') {
         token.isNewUser = true;
       } else {
         token.isNewUser = false;
+      }
+
+      if (trigger === 'update') {
+        const user = await prisma.user.findUnique({
+          where: { id: token.userId },
+        });
+
+        token.substanceOfAbuse = user.substanceOfAbuse;
+        token.dateOfSobriety = user.dateOfSobriety;
       }
 
       if (user) {
@@ -63,14 +70,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      const user = await prisma.user.findUnique({
-        where: { id: token.userId },
-      });
-
       session.user.isNewUser = token.isNewUser;
       session.user.userId = token.userId;
-      session.user.substanceOfAbuse = user.substanceOfAbuse;
-      session.user.dateOfSobriety = user.dateOfSobriety;
+      session.user.substanceOfAbuse = token.substanceOfAbuse;
+      session.user.dateOfSobriety = token.dateOfSobriety;
 
       return session;
     },

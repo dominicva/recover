@@ -51,7 +51,7 @@ export default function OnBoarding({
   substances: Substance[];
 }) {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const user = session?.user as ExtendedUserSession;
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -77,6 +77,9 @@ export default function OnBoarding({
       if (!res.ok) {
         throw 'Something went wrong updating the user';
       }
+
+      // calls the jwt callback
+      await update();
 
       router.push('/new-user/success');
     } catch (error) {
