@@ -30,11 +30,11 @@ export default function NewJournal() {
 
   return (
     <Card className="flex items-center justify-between rounded-2xl bg-gray-100">
-      <CardHeader className="pr-0">
+      <CardHeader className="px-5">
         <CardTitle className="font-normal">Add new journal entry</CardTitle>
         <CardDescription>Write whatever comes to mind</CardDescription>
       </CardHeader>
-      <CardContent className="pb-0">
+      <CardContent className="pb-0 pr-5">
         <Button
           onClick={handleClick}
           className={cn(

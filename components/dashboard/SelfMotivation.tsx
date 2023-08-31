@@ -16,13 +16,13 @@ export default function SelfMotivation() {
   return (
     <Card className="rounded-2xl bg-blue">
       <div className="flex items-center justify-between">
-        <CardHeader className="pb-4 pr-0">
+        <CardHeader className="px-5">
           <CardDescription>I need some help</CardDescription>
           <CardTitle className="font-normal">Your self motivation</CardTitle>
         </CardHeader>
-        <CardContent className="pb-0">
+        <CardContent className="pb-0 pr-5">
           <Link
-            href="/dashboard/questionnaire/new"
+            href="/dashboard"
             className={cn(
               buttonVariants({
                 size: 'icon',
@@ -35,11 +35,11 @@ export default function SelfMotivation() {
           </Link>
         </CardContent>
       </div>
-      <Button size="lg" className="mb-4 ml-6 block w-40">
+      <Button size="lg" className="mb-4 ml-5 block w-40">
         Create
       </Button>
       <CardFooter>
-        <p className="text-center text-gray-400">
+        <p className="text-body-text">
           Record video or audio for your future self. Remember why you started
           this journey.
         </p>

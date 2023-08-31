@@ -175,7 +175,7 @@ export default function ProgressChart({ onDashboard = false }) {
   }, [showTimeFrame]);
 
   return (
-    <Card className="bg-transparent p-4">
+    <Card className="bg-transparent p-4 px-5">
       <CardContent className="p-0">
         <ToggleGroup.Root
           type="single"

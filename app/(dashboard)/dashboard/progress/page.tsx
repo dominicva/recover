@@ -8,7 +8,7 @@ export default function ProgressPage() {
         Your progress
       </h2>
       <section className="rounded-2xl bg-purple">
-        <div className="px-4 pt-6">
+        <div className="px-5 pt-6">
           <CardTitle className="mb-2 text-2xl font-normal">
             Your progress
           </CardTitle>
