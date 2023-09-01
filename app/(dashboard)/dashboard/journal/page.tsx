@@ -14,7 +14,7 @@ export default async function JournalPage() {
   const entries = await getJournalEntries();
 
   return (
-    <div className="p-4 lg:col-span-5">
+    <div className="p-4 lg:col-span-5 lg:row-span-2">
       <h2 className="mb-8 text-4xl">My Journal</h2>
 
       <ul className="mb-2 grid grid-cols-1 gap-2 sm:grid-cols-3">

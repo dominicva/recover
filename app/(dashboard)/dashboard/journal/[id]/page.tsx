@@ -20,8 +20,8 @@ export default async function JournalEntryPage({
   }
 
   return (
-    <Container className="px-4">
+    <div className="col-span-5 row-span-3 px-4">
       <JournalTextEditor {...entry} />
-    </Container>
+    </div>
   );
 }
