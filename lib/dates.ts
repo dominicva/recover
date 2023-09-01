@@ -1,6 +1,17 @@
 import { add, format, formatDistanceToNowStrict } from 'date-fns';
+import next from 'next/types';
 
-const milestones = [
+type Milestone = {
+  label: string;
+  days?: number;
+  weeks?: number;
+  months?: number;
+  years?: number;
+  achievementDate?: number;
+  timeToAchievement?: number;
+};
+
+const milestones: Milestone[] = [
   {
     label: '1 day',
     days: 1,
@@ -59,35 +70,56 @@ const milestones = [
   },
 ];
 
-export const getTimeToNextMilestone = (sobrietyDatetime: number) => {
-  const milestonesWithTimestamps = milestones.map((milestone) => {
+const augmentMilestones = (sobrietyDatetime: number) => {
+  return milestones.map((milestone) => {
     const { days, months, years } = milestone;
-
     const achievementDate = add(sobrietyDatetime, {
       days,
       months,
       years,
     }).getTime();
-
     const now = new Date().getTime();
-
     const timeToAchievement = achievementDate - now;
-
     return {
       ...milestone,
       achievementDate,
       timeToAchievement,
     };
   });
+};
 
+export const getTimeToNextMilestone = (sobrietyDatetime: number) => {
+  const milestonesWithTimestamps = augmentMilestones(sobrietyDatetime);
   const nextMilestone = milestonesWithTimestamps.find((milestone) => {
     return milestone.timeToAchievement > 0;
   });
-
   return (
     nextMilestone?.achievementDate &&
     formatDistanceToNowStrict(nextMilestone?.achievementDate)
   );
+};
+
+export const getMilestoneProgress = (sobrietyDatetime: number) => {
+  const augmentedMilestones = augmentMilestones(sobrietyDatetime);
+
+  const nextMilestone = augmentedMilestones.find((milestone: Milestone) => {
+    return milestone.timeToAchievement && milestone.timeToAchievement > 0;
+  });
+
+  const previousMilestone = augmentedMilestones.findLast(
+    (milestone: Milestone) => {
+      return milestone.timeToAchievement && milestone.timeToAchievement < 0;
+    }
+  );
+
+  const timeBetweenMilestones =
+    Number(nextMilestone?.achievementDate) -
+    Number(previousMilestone?.achievementDate);
+
+  const percentProgress =
+    (100 * Number(nextMilestone?.timeToAchievement)) / timeBetweenMilestones;
+
+  return Number(percentProgress.toFixed(2));
 };
 
 export const daysSinceDate = (date: Date | null | undefined) => {

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Star, ChevronRight } from 'lucide-react';
 import {
@@ -11,16 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { formatDistanceToNowStrict, add } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { getTimeToNextMilestone } from '@/lib/dates';
+import { getTimeToNextMilestone, getMilestoneProgress } from '@/lib/dates';
 import type { UserSession } from '@/types';
 
 export default function CurrentStreak() {
   const { data: session } = useSession();
   const user = session?.user as UserSession;
-  const [progress, _setProgress] = useState(68);
 
   const sobrietyDatetime = new Date(user?.dateOfSobriety).getTime();
 
@@ -32,6 +30,8 @@ export default function CurrentStreak() {
     formatDistanceToNowStrict(sobrietyDatetime).split(' ');
 
   const timeToNextMilestone = getTimeToNextMilestone(sobrietyDatetime);
+
+  const progress = getMilestoneProgress(sobrietyDatetime);
 
   return (
     <Card className="bg-green">
