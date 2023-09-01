@@ -1,5 +1,4 @@
 import { add, format, formatDistanceToNowStrict } from 'date-fns';
-import next from 'next/types';
 
 type Milestone = {
   label: string;
@@ -18,7 +17,7 @@ const milestones: Milestone[] = [
   },
   {
     label: '1 week',
-    weeks: 1,
+    days: 7,
   },
   {
     label: '2 weeks',
@@ -73,6 +72,7 @@ const milestones: Milestone[] = [
 const augmentMilestones = (sobrietyDatetime: number) => {
   return milestones.map((milestone) => {
     const { days, months, years } = milestone;
+
     const achievementDate = add(sobrietyDatetime, {
       days,
       months,
@@ -118,6 +118,11 @@ export const getMilestoneProgress = (sobrietyDatetime: number) => {
 
   const percentProgress =
     (100 * Number(nextMilestone?.timeToAchievement)) / timeBetweenMilestones;
+  console.log('augmentedMilestones', augmentedMilestones);
+  console.log('nextMilestone', nextMilestone);
+  console.log('previousMilestone', previousMilestone);
+  console.log('timeBetweenMilestones', timeBetweenMilestones);
+  console.log('percentProgress', percentProgress);
 
   return Number(percentProgress.toFixed(2));
 };

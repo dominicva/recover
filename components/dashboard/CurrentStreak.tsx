@@ -1,7 +1,6 @@
-'use client';
-
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { Star, ChevronRight } from 'lucide-react';
 import {
   Card,
@@ -16,8 +15,9 @@ import { cn } from '@/lib/utils';
 import { getTimeToNextMilestone, getMilestoneProgress } from '@/lib/dates';
 import type { UserSession } from '@/types';
 
-export default function CurrentStreak() {
-  const { data: session } = useSession();
+export default async function CurrentStreak() {
+  const session = await getServerSession(authOptions);
+
   const user = session?.user as UserSession;
 
   const sobrietyDatetime = new Date(user?.dateOfSobriety).getTime();
@@ -32,6 +32,8 @@ export default function CurrentStreak() {
   const timeToNextMilestone = getTimeToNextMilestone(sobrietyDatetime);
 
   const progress = getMilestoneProgress(sobrietyDatetime);
+
+  // console.log('progress', progress);
 
   return (
     <Card className="bg-green">
