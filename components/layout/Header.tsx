@@ -3,6 +3,7 @@ import Container from '@/components/ui/Container';
 import { buttonVariants } from '@/components/ui/button';
 import UserAvatar from './UserAvatar';
 import { getUserSession } from '@/lib/user';
+import { cn } from '@/lib/utils';
 
 export default async function Header() {
   const userSession = await getUserSession();
@@ -17,7 +18,16 @@ export default async function Header() {
         {userSession ? (
           <UserAvatar userSession={userSession} />
         ) : (
-          <Link href="/signin" className={buttonVariants({ variant: 'link' })}>
+          <Link
+            href="/signin"
+            className={cn(
+              buttonVariants({
+                size: 'lg',
+                variant: 'outline',
+              }),
+              'md:text-base'
+            )}
+          >
             Sign In
           </Link>
         )}

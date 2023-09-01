@@ -20,7 +20,6 @@ export default function Hero() {
         className={buttonVariants({
           variant: 'default',
           size: 'lg',
-          className: 'w-full',
         })}
       >
         <span className="text-lg">Get started</span>
