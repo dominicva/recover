@@ -3,7 +3,7 @@ import { Icons } from '../ui/icons';
 
 export default function MobileNav() {
   return (
-    <div className="sticky -bottom-1 lg:col-span-1 lg:row-span-4">
+    <div className="sticky -bottom-1 lg:col-span-1 lg:row-span-4 lg:hidden">
       <nav className="rounded-lg bg-gray-100 py-6 lg:h-full">
         <ul className="flex justify-center gap-14 lg:flex lg:flex-col lg:items-center">
           <li>
