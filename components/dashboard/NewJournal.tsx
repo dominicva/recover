@@ -42,7 +42,7 @@ export default function NewJournal() {
               size: 'icon',
               variant: 'outline',
             }),
-            'p-0'
+            'bg-gray-2 p-0'
           )}
         >
           <Plus color="#000" />

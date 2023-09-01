@@ -25,7 +25,7 @@ export default function NewQuestionnaire() {
               size: 'icon',
               variant: 'outline',
             }),
-            'rounded-full'
+            'rounded-full bg-gray-2'
           )}
         >
           <Plus color="#000" />

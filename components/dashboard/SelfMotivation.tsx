@@ -28,7 +28,7 @@ export default function SelfMotivation() {
                 size: 'icon',
                 variant: 'outline',
               }),
-              'rounded-full'
+              'rounded-full bg-blue-2'
             )}
           >
             <ChevronRight />
