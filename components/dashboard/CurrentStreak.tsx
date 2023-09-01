@@ -11,18 +11,27 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { daysSinceDate } from '@/lib/dates';
+import { formatDistanceToNowStrict, add } from 'date-fns';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getTimeToNextMilestone } from '@/lib/dates';
 import type { UserSession } from '@/types';
 
 export default function CurrentStreak() {
   const { data: session } = useSession();
   const user = session?.user as UserSession;
-
-  const currentStreak = daysSinceDate(new Date(user?.dateOfSobriety));
-
   const [progress, _setProgress] = useState(68);
+
+  const sobrietyDatetime = new Date(user?.dateOfSobriety).getTime();
+
+  if (!sobrietyDatetime) {
+    return null;
+  }
+
+  const [sobrietyTimeValue, sobrietyTimeInterval] =
+    formatDistanceToNowStrict(sobrietyDatetime).split(' ');
+
+  const timeToNextMilestone = getTimeToNextMilestone(sobrietyDatetime);
 
   return (
     <Card className="bg-green">
@@ -53,13 +62,13 @@ export default function CurrentStreak() {
         </div>
         <div>
           <CardDescription className="text-2xl">
-            <span className="text-4xl text-black">
-              {currentStreak ? currentStreak : null}
-            </span>{' '}
-            <span className="text-base text-body-text">days</span>
+            <span className="text-4xl text-black">{sobrietyTimeValue}</span>{' '}
+            <span className="text-base text-body-text">
+              {sobrietyTimeInterval}
+            </span>
           </CardDescription>
-          <p className="mb-2 mt-1 text-body-text">
-            7 days to your next milestone
+          <p className="mb-2 ml-1 mt-1 text-body-text">
+            {timeToNextMilestone} to your next milestone
           </p>
         </div>
       </CardContent>
