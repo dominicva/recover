@@ -3,8 +3,8 @@ import { FlexCol } from '@/components/ui/Flex';
 
 export default function VerifyRequest() {
   return (
-    <FlexCol as="main" className="h-screen items-center justify-center px-4">
-      <Card className="pb-10 pt-6">
+    <FlexCol className="mt-28 p-3">
+      <Card className="mx-auto max-w-md p-10">
         <h1 className="mb-6 mt-2 text-center text-3xl font-semibold">
           Check your email
         </h1>
