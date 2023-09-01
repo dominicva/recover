@@ -33,8 +33,6 @@ export default async function CurrentStreak() {
 
   const progress = getMilestoneProgress(sobrietyDatetime);
 
-  // console.log('progress', progress);
-
   return (
     <Card className="bg-green">
       <CardHeader className="flex flex-row items-center justify-between px-5 pb-4">
