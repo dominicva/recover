@@ -26,7 +26,7 @@ export default function CurrentStreak() {
 
   return (
     <Card className="bg-green">
-      <CardHeader className="flex flex-row items-center justify-between pb-4 pl-5">
+      <CardHeader className="flex flex-row items-center justify-between px-5 pb-4">
         <CardTitle className="text-xl font-normal">Current streak</CardTitle>
         <Link
           href="/dashboard/achievements"

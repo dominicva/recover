@@ -21,7 +21,7 @@ export default async function RootLayout({
       <body className={`${hankenGrotesk.className} text-off-black`}>
         <NextAuthProvider>
           <Header />
-          <main className="h-[100vh] overflow-scroll">{children}</main>
+          <main>{children}</main>
           <Footer />
         </NextAuthProvider>
       </body>
