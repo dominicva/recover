@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 
 export default function YourProgress() {
   return (
-    <Card className="flex w-full flex-col items-center justify-between rounded-2xl bg-purple">
+    <Card className="flex w-full flex-col items-center justify-between rounded-2xl bg-purple lg:col-span-3 lg:row-span-3">
       <CardHeader className="flex w-full flex-row justify-between self-start px-5 pb-0">
         <div>
           <CardTitle className="mb-2 text-2xl font-normal">

@@ -7,7 +7,7 @@ export default function Container({
   children,
 }: BaseComponentProps) {
   return (
-    <Component className={clsx('mx-auto max-w-5xl', className ?? null)}>
+    <Component className={clsx('mx-auto max-w-6xl', className ?? null)}>
       {children}
     </Component>
   );

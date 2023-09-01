@@ -18,7 +18,7 @@ module.exports = {
     extend: {
       colors: {
         'body-text': '#636364',
-        'light-grey': '#F7F8FA',
+        'light-gray': '#F7F8FA',
         'gray-2': '#E7EAF1',
         'dark-purple': '#AD91CC',
         purple: '#EFE1FF',

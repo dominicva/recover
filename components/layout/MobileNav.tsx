@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Icons } from '../ui/icons';
 
-export default function Nav() {
+export default function MobileNav() {
   return (
-    <div className="sticky -bottom-1">
-      <nav className="rounded-lg bg-gray-100 py-6">
-        <ul className="flex justify-center gap-14">
+    <div className="sticky -bottom-1 lg:col-span-1 lg:row-span-4">
+      <nav className="rounded-lg bg-gray-100 py-6 lg:h-full">
+        <ul className="flex justify-center gap-14 lg:flex lg:flex-col lg:items-center">
           <li>
             <Link href="/dashboard">
               <Icons.home />

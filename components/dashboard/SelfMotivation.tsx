@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 
 export default function SelfMotivation() {
   return (
-    <Card className="rounded-2xl bg-blue">
+    <Card className="rounded-2xl bg-blue lg:col-span-5 lg:row-span-1">
       <div className="flex items-center justify-between">
         <CardHeader className="px-5">
           <CardDescription>I need some encouragement</CardDescription>

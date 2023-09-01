@@ -1,4 +1,3 @@
-import { FlexCol } from '@/components/ui/Flex';
 import {
   CurrentStreak,
   NewJournal,
@@ -9,12 +8,12 @@ import {
 
 export default async function DashboardHome() {
   return (
-    <FlexCol className="gap-2 p-3 md:flex-row">
+    <>
       <CurrentStreak />
+      <YourProgress />
       <NewJournal />
       <NewQuestionnaire />
-      <YourProgress />
       <SelfMotivation />
-    </FlexCol>
+    </>
   );
 }

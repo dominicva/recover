@@ -34,7 +34,7 @@ export default async function CurrentStreak() {
   const progress = getMilestoneProgress(sobrietyDatetime);
 
   return (
-    <Card className="bg-green">
+    <Card className="bg-green lg:col-span-2 lg:row-span-1">
       <CardHeader className="flex flex-row items-center justify-between px-5 pb-4">
         <CardTitle className="text-xl font-normal">Current streak</CardTitle>
         <Link
