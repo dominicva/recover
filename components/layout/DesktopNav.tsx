@@ -1,36 +1,46 @@
-import Link from 'next/link';
 import { Icons } from '../ui/icons';
+import { NavLink } from '../ui/NavLink';
 
 export default function DesktopNav() {
   return (
     <div className="sticky -bottom-1 hidden lg:col-span-1 lg:row-span-4 lg:block">
       <nav className="flex items-start justify-center rounded-lg py-6 lg:h-full">
-        <ul className="mt-14 flex flex-col  justify-center gap-14">
+        <ul className="mt-14 flex flex-col  justify-center gap-12">
           <li>
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <Icons.home /> <span>Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/dashboard/journal" className="flex items-center gap-2">
-              <Icons.alignLeft /> <span>Journal</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/dashboard/progress"
-              className="flex items-center gap-2"
+            <NavLink
+              href="/dashboard"
+              activePathname="/dashboard"
+              className="justify-start"
             >
-              <Icons.barChart /> <span>Progress</span>
-            </Link>
+              <Icons.home /> <span>Dashboard</span>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
+              href="/dashboard/journal"
+              activePathname="/dashboard/journal"
+              className="justify-start"
+            >
+              <Icons.penLine /> <span>Journal</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              href="/dashboard/progress"
+              activePathname="/dashboard/progress"
+              className="justify-start"
+            >
+              <Icons.trendingUp /> <span>Progress</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               href="/dashboard/achievements"
-              className="flex items-center gap-2"
+              activePathname="/dashboard/achievements"
+              className="justify-start"
             >
               <Icons.trophy /> <span>Achievements</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
