@@ -33,12 +33,7 @@ export default function QuestionnairePage() {
       value: mood,
       setValue: setMood,
     },
-    {
-      id: 'energy',
-      label: 'Energy',
-      value: energy,
-      setValue: setEnergy,
-    },
+
     {
       id: 'motivation',
       label: 'Motivation',
@@ -51,12 +46,7 @@ export default function QuestionnairePage() {
       value: anxiety,
       setValue: setAnxiety,
     },
-    {
-      id: 'depression',
-      label: 'Depression',
-      value: depression,
-      setValue: setDepression,
-    },
+
     {
       id: 'sleepQuality',
       label: 'Sleep Quality',
@@ -91,9 +81,9 @@ export default function QuestionnairePage() {
   };
 
   return (
-    <Container>
+    <Container className="lg:col-span-3 lg:row-span-3">
       <section className="mb-4 p-4">
-        <hgroup className="text-center">
+        <hgroup className="text-center lg:text-left">
           <h2 className="text-3xl">How are you feeling today?</h2>
           <p className="mt-3">{formatDate(new Date())}</p>
           <p className="my-4">

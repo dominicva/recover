@@ -83,10 +83,8 @@ model Questionnaire {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   mood         Int      @default(0)
-  energy       Int      @default(0)
   motivation   Int      @default(0)
   anxiety      Int      @default(0)
-  depression   Int      @default(0)
   sleepQuality Int      @default(0) // 0-10 scale
   cravings     Int      @default(0) // 0-10 scale
 

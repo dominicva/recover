@@ -15,7 +15,7 @@ export default function ParamSlider({
   return (
     <div>
       <div className="mb-4">
-        <label htmlFor="cravings">{capitalize(label)}</label>
+        <label htmlFor={id}>{capitalize(label)}</label>
         <span className="text-muted-foreground hover:border-border w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm">
           {value}
         </span>
