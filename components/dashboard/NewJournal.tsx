@@ -1,5 +1,7 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 import { Plus } from 'react-feather';
 import {
   Card,
@@ -14,6 +16,7 @@ import { useRevalidate } from '@/hooks/useRevalidate';
 
 export default function NewJournal() {
   const revalidate = useRevalidate();
+  const pathname = usePathname();
 
   const handleClick = async () => {
     // look into using server actions to achieve this
@@ -28,8 +31,13 @@ export default function NewJournal() {
     });
   };
 
+  const className = clsx(
+    'flex items-center justify-between rounded-2xl bg-light-gray lg:col-span-2 lg:row-span-1',
+    pathname === '/dashboard/journal' && 'bg-purple'
+  );
+
   return (
-    <Card className="flex items-center justify-between rounded-2xl bg-light-gray lg:col-span-2 lg:row-span-1">
+    <Card className={className}>
       <CardHeader className="px-5">
         <CardTitle className="font-normal">Add new journal entry</CardTitle>
         <CardDescription>Write whatever comes to mind</CardDescription>
@@ -42,7 +50,10 @@ export default function NewJournal() {
               size: 'icon',
               variant: 'outline',
             }),
-            'bg-gray-2 p-0'
+            'p-0',
+            pathname === '/dashboard/journal'
+              ? 'bg-purple-2 hover:bg-purple'
+              : 'bg-gray-2'
           )}
         >
           <Plus color="#000" />

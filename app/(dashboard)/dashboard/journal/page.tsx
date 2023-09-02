@@ -38,8 +38,8 @@ export default async function JournalPage() {
             </li>
           );
         })}
+        <NewJournal />
       </ul>
-      <NewJournal />
     </div>
   );
 }

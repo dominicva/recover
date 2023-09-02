@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Plus } from 'react-feather';
+import clsx from 'clsx';
 import {
   Card,
   CardContent,
@@ -10,9 +11,14 @@ import {
 import { buttonVariants } from '../ui/button';
 import { cn } from '@/lib/utils';
 
-export default function NewQuestionnaire() {
+export default function NewQuestionnaire({ pathname }: { pathname?: string }) {
+  const className = clsx(
+    'flex items-center justify-between rounded-2xl bg-light-gray lg:col-span-2 lg:row-span-1 max-w-sm',
+    pathname?.startsWith('/dashboard/journal') && 'bg-purple'
+  );
+
   return (
-    <Card className="bg-light-gray flex items-center justify-between rounded-2xl lg:col-span-2 lg:row-span-1">
+    <Card className={className}>
       <CardHeader className="px-5">
         <CardTitle className="font-normal">How do you feel today?</CardTitle>
         <CardDescription>Complete a quick questionnaire</CardDescription>
@@ -25,7 +31,9 @@ export default function NewQuestionnaire() {
               size: 'icon',
               variant: 'outline',
             }),
-            'rounded-full bg-gray-2'
+            'rounded-full bg-gray-2',
+            pathname?.startsWith('/dashboard/journal') &&
+              'bg-purple-2 hover:bg-purple'
           )}
         >
           <Plus color="#000" />

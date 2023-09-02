@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect, useTransition } from 'react';
 import { useChat } from 'ai/react';
 // @ts-ignore
@@ -45,6 +45,7 @@ export default function JournalTextEditor({
     },
   });
 
+  const pathname = usePathname();
   const router = useRouter();
   const [, startTransition] = useTransition();
 
@@ -165,10 +166,14 @@ export default function JournalTextEditor({
         </div>
       </FlexCol>
 
-      <NewQuestionnaire />
+      <NewQuestionnaire pathname={pathname} />
 
       <form onSubmit={handleSubmit}>
-        <Button type="submit" size="lg" className="mx-auto mt-6 block w-11/12">
+        <Button
+          type="submit"
+          size="lg"
+          className="mx-auto mt-6 block w-11/12 max-w-sm lg:mx-0"
+        >
           Ask for advice
         </Button>
       </form>

@@ -17,7 +17,7 @@ export default function CurrentStreak() {
               size: 'icon',
               variant: 'ghost',
             }),
-            'rounded-full bg-green-2'
+            'rounded-full bg-green-2 hover:bg-green'
           )}
         >
           <ChevronRight color="#000" />

@@ -30,7 +30,7 @@ export default function YourProgress() {
               size: 'icon',
               variant: 'outline',
             }),
-            'rounded-full bg-purple-2'
+            'rounded-full bg-purple-2 hover:bg-purple'
           )}
         >
           <ChevronRight />
