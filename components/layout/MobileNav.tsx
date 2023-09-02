@@ -1,30 +1,31 @@
 import Link from 'next/link';
 import { Icons } from '../ui/icons';
+import { NavLink } from '../ui/NavLink';
 
 export default function MobileNav() {
   return (
-    <div className="sticky -bottom-1 lg:col-span-1 lg:row-span-4 lg:hidden">
-      <nav className="rounded-lg bg-gray-100 py-6 lg:h-full">
-        <ul className="flex justify-center gap-12 lg:flex lg:flex-col lg:items-center">
+    <div className="sticky bottom-0 lg:col-span-1 lg:row-span-4 lg:hidden">
+      <nav className="rounded-lg bg-white py-4 lg:h-full">
+        <ul className="flex justify-center gap-8 lg:flex lg:flex-col lg:items-center">
           <li>
-            <Link href="/dashboard" className="block p-1">
+            <NavLink href="/dashboard" className="px-3 py-6">
               <Icons.home />
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link href="/dashboard/journal" className="block p-1">
-              <Icons.alignLeft />
-            </Link>
+            <NavLink href="/dashboard/journal" className="px-3 py-6">
+              <Icons.penLine />
+            </NavLink>
           </li>
           <li>
-            <Link href="/dashboard/progress" className="block p-1">
-              <Icons.barChart />
-            </Link>
+            <NavLink href="/dashboard/progress" className="px-3 py-6">
+              <Icons.trendingUp />
+            </NavLink>
           </li>
           <li>
-            <Link href="/dashboard/achievements" className="block p-1">
+            <NavLink href="/dashboard/achievements" className="px-3 py-6">
               <Icons.trophy />
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

@@ -7,37 +7,24 @@ export default function DesktopNav() {
       <nav className="flex items-start justify-center rounded-lg py-6 lg:h-full">
         <ul className="mt-14 flex flex-col  justify-center gap-12">
           <li>
-            <NavLink
-              href="/dashboard"
-              activePathname="/dashboard"
-              className="justify-start"
-            >
+            <NavLink href="/dashboard" className="justify-start p-6">
               <Icons.home /> <span>Dashboard</span>
             </NavLink>
           </li>
           <li>
-            <NavLink
-              href="/dashboard/journal"
-              activePathname="/dashboard/journal"
-              className="justify-start"
-            >
+            <NavLink href="/dashboard/journal" className="justify-start p-6">
               <Icons.penLine /> <span>Journal</span>
             </NavLink>
           </li>
           <li>
-            <NavLink
-              href="/dashboard/progress"
-              activePathname="/dashboard/progress"
-              className="justify-start"
-            >
+            <NavLink href="/dashboard/progress" className="justify-start p-6">
               <Icons.trendingUp /> <span>Progress</span>
             </NavLink>
           </li>
           <li>
             <NavLink
               href="/dashboard/achievements"
-              activePathname="/dashboard/achievements"
-              className="justify-start"
+              className="justify-start p-6"
             >
               <Icons.trophy /> <span>Achievements</span>
             </NavLink>

@@ -8,12 +8,10 @@ import { cn } from '@/lib/utils';
 export function NavLink({
   children,
   href,
-  activePathname,
   className,
 }: {
   children: React.ReactNode;
   href: string;
-  activePathname: string;
   className?: string;
 }) {
   const pathname = usePathname();
@@ -24,8 +22,8 @@ export function NavLink({
       variant: 'ghost',
     }),
     className,
-    'flex items-center gap-2 p-6',
-    pathname === activePathname && 'bg-black text-white rounded-lg'
+    'flex items-center gap-2',
+    href === pathname && 'bg-black text-white rounded-lg'
   );
 
   return (

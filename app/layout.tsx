@@ -17,7 +17,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${hankenGrotesk.className} text-off-black`}>
+      <body className={`${hankenGrotesk.className}  text-off-black`}>
         <NextAuthProvider>
           <Header />
           <main>{children}</main>
