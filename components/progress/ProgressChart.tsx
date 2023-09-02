@@ -25,14 +25,11 @@ import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 
 export default function ProgressChart({ onDashboard = false }) {
   const [data, setData] = useState([] as ExtendedQuestionnaire[]);
-  console.log(data);
 
   const [showAverage, setShowAverage] = useState(true);
   const [showMood, setShowMood] = useState(false);
-  // const [showEnergy, setShowEnergy] = useState(false);
   const [showMotivation, setShowMotivation] = useState(false);
   const [showAnxiety, setShowAnxiety] = useState(false);
-  // const [showDepression, setShowDepression] = useState(false);
   const [showSleepQuality, setShowSleepQuality] = useState(false);
   const [showCravings, setShowCravings] = useState(false);
 
@@ -92,11 +89,6 @@ export default function ProgressChart({ onDashboard = false }) {
       className: 'bg-dark-purple text-white',
       setState: setShowMood,
     },
-    // {
-    //   text: 'Energy',
-    //   className: 'bg-dark-green text-white',
-    //   setState: setShowEnergy,
-    // },
     {
       text: 'Motivation',
       className: 'bg-dark-blue text-white',
@@ -107,11 +99,6 @@ export default function ProgressChart({ onDashboard = false }) {
       className: 'bg-neutral-4 text-white',
       setState: setShowAnxiety,
     },
-    // {
-    //   text: 'Depression',
-    //   className: 'bg-purple-2 text-white',
-    //   setState: setShowDepression,
-    // },
     {
       text: 'Sleep quality',
       className: 'bg-neutral-3 text-white',
@@ -133,10 +120,8 @@ export default function ProgressChart({ onDashboard = false }) {
       for (const item of data) {
         const scores = [
           item.mood,
-          // item.energy,
           item.motivation,
           item.anxiety,
-          // item.depression,
           item.sleepQuality,
           item.cravings,
         ];
