@@ -3,7 +3,7 @@ import { ProgressChart, ProgressCalendar } from '@/components/progress';
 
 export default function ProgressPage() {
   return (
-    <div className="col-span-5 row-span-3 px-2">
+    <div className="col-span-5 row-span-3 min-h-screen px-2 lg:min-h-full">
       <h2 className="mb-6 mt-4 text-center text-4xl font-semibold lg:text-left">
         Your progress
       </h2>

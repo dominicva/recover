@@ -57,6 +57,8 @@ export const authOptions: NextAuthOptions = {
           where: { id: token.userId },
         });
 
+        token.name = user.name;
+        token.email = user.email;
         token.substanceOfAbuse = user.substanceOfAbuse;
         token.dateOfSobriety = user.dateOfSobriety;
       }

@@ -23,12 +23,16 @@ export default function Profile() {
   const { data } = useSession();
   const userSession = data as ExtendedUserSession;
 
+  console.log('userSession', userSession);
+
   return (
-    <Container>
-      <div className="px-3">
+    <Container className="min-h-screen lg:min-h-full">
+      <div>
         <BackButton />
 
-        <h2 className="mt-6 pl-3 text-3xl font-semibold">Profile page</h2>
+        <h2 className="mt-6 pl-3 text-3xl font-semibold">
+          {userSession?.name ?? 'Your profile'}
+        </h2>
 
         <div className="my-8 flex items-center gap-6 pl-3">
           <Avatar className="h-20 w-20">
@@ -48,7 +52,7 @@ export default function Profile() {
                 <CardTitle className="font-normal">Settings</CardTitle>
               </div>
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/profile/settings"
                 className={cn(
                   buttonVariants({
                     size: 'icon',

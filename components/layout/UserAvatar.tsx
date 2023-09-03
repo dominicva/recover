@@ -10,8 +10,13 @@ import {
 } from '@/components/ui/popover';
 import { signOut } from 'next-auth/react';
 import { FlexCol } from '../ui/Flex';
+import type { ExtendedUserSession } from '@/types';
 
-export default function UserAvatar({ userSession }: { userSession: any }) {
+export default function UserAvatar({
+  userSession,
+}: {
+  userSession: ExtendedUserSession;
+}) {
   const handleSignOut = async () => {
     await signOut();
   };
@@ -21,7 +26,7 @@ export default function UserAvatar({ userSession }: { userSession: any }) {
       <PopoverTrigger>
         <Avatar>
           <AvatarImage
-            src={userSession?.image}
+            src={userSession?.image ?? ''}
             alt={userSession?.user?.name ?? 'User avatar'}
           />
           <AvatarFallback className="bg-neutral-2"></AvatarFallback>

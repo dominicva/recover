@@ -2,18 +2,23 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export const PATCH = async (req: NextRequest) => {
-  const { userId, name, substanceOfAbuse, dateOfSobriety } = await req.json();
+  const { userId, name, substanceOfAbuse, dateOfSobriety, email } =
+    await req.json();
 
   try {
+    const updateData = {
+      ...(name && { name }),
+      ...(substanceOfAbuse && { substanceOfAbuse }),
+      ...(dateOfSobriety && { dateOfSobriety: new Date(dateOfSobriety) }),
+      ...(email && { email }),
+    };
+
     const updatedUser = await prisma.user.update({
       where: {
         id: userId,
+        email,
       },
-      data: {
-        name,
-        substanceOfAbuse,
-        dateOfSobriety: new Date(dateOfSobriety),
-      },
+      data: updateData,
     });
 
     return NextResponse.json({ data: updatedUser }, { status: 200 });
