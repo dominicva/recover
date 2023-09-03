@@ -16,13 +16,11 @@ import { buttonVariants } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
 import { Button } from '@/components/ui/button';
-import { ExtendedUserSession } from '@/types';
 import BackButton from '@/components/ui/BackButton';
 import { cn } from '@/lib/utils';
 
 export default function ManageAccountPage() {
   const { data: session } = useSession() as any;
-  console.log(session?.user);
 
   const handleSignOut = () => {
     signOut();
