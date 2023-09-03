@@ -1,7 +1,7 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
-
 import {
   XAxis,
   YAxis,
@@ -20,11 +20,13 @@ import Tick from './Tick';
 import { format } from 'date-fns';
 import { isWithinXDays } from '@/lib/dates';
 import { average } from '@/lib/math';
-
+import { buttonVariants } from '../ui/button';
+import { cn } from '@/lib/utils';
 import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 
-export default function ProgressChart({ onDashboard = false }) {
+export default function ProgressChart() {
   const [data, setData] = useState([] as ExtendedQuestionnaire[]);
+  const noQuestionnaire = data.length === 0;
 
   const [showAverage, setShowAverage] = useState(true);
   const [showMood, setShowMood] = useState(false);
@@ -151,93 +153,117 @@ export default function ProgressChart({ onDashboard = false }) {
   }, [showTimeFrame]);
 
   return (
-    <Card className="bg-transparent p-4 px-5">
-      <CardContent className="p-0">
-        <ToggleGroup.Root
-          type="single"
-          defaultValue="all"
-          className="flex gap-3"
-          onValueChange={(value) => {
-            if (value) setShowTimeFrame(value);
-          }}
-        >
-          <ToggleGroup.Item
-            value="week"
-            className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
+    <Card className="bg-transparent">
+      {noQuestionnaire ? (
+        <div className="">
+          <p className="mx-auto mt-4 max-w-sm text-center text-body-text lg:text-center">
+            Complete your first questionnaire to see your progress.
+          </p>
+          <Link
+            href="/dashboard/questionnaire"
+            className={cn(
+              buttonVariants({
+                size: 'lg',
+              }),
+              'mx-auto mb-5 mt-6 flex max-w-[220px] items-center justify-center'
+            )}
           >
-            Week
-          </ToggleGroup.Item>
-          <ToggleGroup.Item
-            value="month"
-            className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
-          >
-            Month
-          </ToggleGroup.Item>
-          <ToggleGroup.Item
-            value="all"
-            className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
-          >
-            All
-          </ToggleGroup.Item>
-        </ToggleGroup.Root>
-        <ResponsiveContainer width="100%" height={280} className="mx-auto">
-          <LineChart
-            data={data}
-            className="mx-auto"
-            margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
-          >
-            <XAxis
-              dataKey="dateToDisplay"
-              tick={<Tick stroke="#000" />}
-              domain={['dataMin', 'dataMax']}
-            />
-
-            <Tooltip />
-
-            {chartItems.map((item) => {
-              if (item.dataKey === 'averageScore' && showAverage) {
-                return (
-                  <Line
-                    key={item.dataKey}
-                    dot={{ fill: '#000', strokeWidth: 1 }}
-                    type="monotone"
-                    dataKey="averageScore"
-                    stroke="#000"
-                    strokeWidth={2}
-                  />
-                );
-              } else if (item.dataKey === 'mood' && showMood) {
-                /**
-                 * there is an unusual issue here where invoking AreaItem as a component
-                 * <AreaItem item={item} /> doesn't work, but invoking it as a function
-                 * AreaItem(item) does work.
-                 */
-                return AreaItem(item);
-              } else if (item.dataKey === 'motivation' && showMotivation) {
-                return AreaItem(item);
-              } else if (item.dataKey === 'anxiety' && showAnxiety) {
-                return AreaItem(item);
-              } else if (item.dataKey === 'sleepQuality' && showSleepQuality) {
-                return AreaItem(item);
-              } else if (item.dataKey === 'cravings' && showCravings) {
-                return AreaItem(item);
-              }
-            })}
-          </LineChart>
-        </ResponsiveContainer>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          {dataParams.map((param) => (
-            <DataParamToggle
-              defaultPressed={param.text !== 'Average'}
-              key={param.text}
-              text={param.text}
-              className={param.className}
-              setState={param.setState}
-            />
-          ))}
+            Start questionnaire
+          </Link>
         </div>
-      </CardContent>
+      ) : (
+        <>
+          <CardContent className="p-0">
+            <ToggleGroup.Root
+              type="single"
+              defaultValue="all"
+              className="flex gap-3"
+              onValueChange={(value) => {
+                if (value) setShowTimeFrame(value);
+              }}
+            >
+              <ToggleGroup.Item
+                value="week"
+                className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
+              >
+                Week
+              </ToggleGroup.Item>
+              <ToggleGroup.Item
+                value="month"
+                className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
+              >
+                Month
+              </ToggleGroup.Item>
+              <ToggleGroup.Item
+                value="all"
+                className="rounded-lg border-2 bg-transparent px-2 py-1 data-[state=off]:border-dark-purple data-[state=on]:border-black data-[state=off]:text-dark-purple data-[state=on]:text-black"
+              >
+                All
+              </ToggleGroup.Item>
+            </ToggleGroup.Root>
+            <ResponsiveContainer width="100%" height={280} className="mx-auto">
+              <LineChart
+                data={data}
+                className="mx-auto"
+                margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+              >
+                <XAxis
+                  dataKey="dateToDisplay"
+                  tick={<Tick stroke="#000" />}
+                  domain={['dataMin', 'dataMax']}
+                />
+
+                <Tooltip />
+
+                {chartItems.map((item) => {
+                  if (item.dataKey === 'averageScore' && showAverage) {
+                    return (
+                      <Line
+                        key={item.dataKey}
+                        dot={{ fill: '#000', strokeWidth: 1 }}
+                        type="monotone"
+                        dataKey="averageScore"
+                        stroke="#000"
+                        strokeWidth={2}
+                      />
+                    );
+                  } else if (item.dataKey === 'mood' && showMood) {
+                    /**
+                     * there is an unusual issue here where invoking AreaItem as a component
+                     * <AreaItem item={item} /> doesn't work, but invoking it as a function
+                     * AreaItem(item) does work.
+                     */
+                    return AreaItem(item);
+                  } else if (item.dataKey === 'motivation' && showMotivation) {
+                    return AreaItem(item);
+                  } else if (item.dataKey === 'anxiety' && showAnxiety) {
+                    return AreaItem(item);
+                  } else if (
+                    item.dataKey === 'sleepQuality' &&
+                    showSleepQuality
+                  ) {
+                    return AreaItem(item);
+                  } else if (item.dataKey === 'cravings' && showCravings) {
+                    return AreaItem(item);
+                  }
+                })}
+              </LineChart>
+            </ResponsiveContainer>
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              {dataParams.map((param) => (
+                <DataParamToggle
+                  defaultPressed={param.text !== 'Average'}
+                  key={param.text}
+                  text={param.text}
+                  className={param.className}
+                  setState={param.setState}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </>
+      )}
     </Card>
   );
 }

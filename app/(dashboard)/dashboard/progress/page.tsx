@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ProgressChart, ProgressCalendar } from '@/components/progress';
 
 export default function ProgressPage() {

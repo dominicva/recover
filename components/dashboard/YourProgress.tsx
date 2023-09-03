@@ -36,7 +36,7 @@ export default function YourProgress() {
           <ChevronRight />
         </Link>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="self-start px-5 lg:self-center">
         <ProgressChart />
       </CardContent>
     </Card>

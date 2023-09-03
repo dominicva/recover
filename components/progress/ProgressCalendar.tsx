@@ -123,13 +123,13 @@ export default function ProgressCalendar() {
 
   return (
     <section>
-      <article className="my-12 rounded-xl bg-blue">
+      <article className="my-12 rounded-xl">
         <Calendar
           mode="single"
           modifiers={{ hasQuestionnaire: daysWithQuestionnaire }}
           onDayClick={handleDayClick}
           modifiersStyles={{ hasQuestionnaire: hasQuestionnaireStyle }}
-          className="rounded-md border"
+          className="mx-auto max-w-[348px] rounded-md bg-blue py-8 lg:mx-0"
         />
       </article>
       {progressChart && <ProgressChart questionnaire={progressChart} />}

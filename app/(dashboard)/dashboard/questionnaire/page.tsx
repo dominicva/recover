@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { SliderProps } from '@radix-ui/react-slider';
 import ParamSlider from '@/components/questionnaire/ParamSlider';
 import { formatDate } from '@/lib/dates';
+import BackButton from '@/components/ui/BackButton';
 
 export default function QuestionnairePage() {
   const revalidate = useRevalidate();
@@ -82,6 +83,7 @@ export default function QuestionnairePage() {
 
   return (
     <Container className="lg:col-span-3 lg:row-span-3">
+      <BackButton />
       <section className="mb-4 p-4">
         <hgroup className="text-center lg:text-left">
           <h2 className="text-3xl">How are you feeling today?</h2>
