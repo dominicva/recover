@@ -5,12 +5,18 @@ import BackButton from '@/components/ui/BackButton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icons } from '@/components/ui/icons';
 import { SettingsForm } from '@/components/profile';
-import { ExtendedUserSession } from '@/types';
+import { prisma } from '@/lib/db';
+import type { ExtendedUserSession } from '@/types';
 
 export default async function ProfileSettings() {
   const userSession = (await getServerSession(
     authOptions
   )) as ExtendedUserSession;
+  const substances = await prisma.substance.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  });
 
   return (
     <Container className="min-h-screen lg:min-h-full">
@@ -25,7 +31,7 @@ export default async function ProfileSettings() {
         </Avatar>
       </button>
 
-      <SettingsForm userSession={userSession} />
+      <SettingsForm substances={substances} />
     </Container>
   );
 }
