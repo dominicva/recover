@@ -23,10 +23,8 @@ export default function Profile() {
   const { data } = useSession();
   const userSession = data as ExtendedUserSession;
 
-  console.log('userSession', userSession);
-
   return (
-    <Container className="min-h-screen lg:min-h-full">
+    <div className="min-h-screen lg:min-h-full">
       <div>
         <BackButton />
 
@@ -87,6 +85,6 @@ export default function Profile() {
           </Card>
         </FlexCol>
       </div>
-    </Container>
+    </div>
   );
 }

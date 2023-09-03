@@ -65,13 +65,11 @@ export default function ProfileSettings({
   const { data: session, update } = useSession();
   const user = session?.user ?? ({} as any);
 
-  console.log('user', user);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: user.name ?? '',
-      dateOfSobriety: new Date(),
+      dateOfSobriety: new Date(user.dateOfSobriety ?? ''),
       substanceOfAbuse: user.substanceOfAbuse ?? '',
     },
   });
@@ -100,35 +98,14 @@ export default function ProfileSettings({
 
   return (
     <>
-      <section className="flex flex-col gap-4 text-lg font-semibold">
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <h3 id="name">{user.name ?? 'No name yet'}</h3>
-        </div>
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <p id="email">{user.email}</p>
-        </div>
-        <div>
-          <Label htmlFor="substanceOfAbuse">Substance of abuse</Label>
-          <p id="substanceOfAbuse">{user.substanceOfAbuse}</p>
-        </div>
-        <div>
-          <Label htmlFor="dateOfSobriety">Date of sobriety</Label>
-          <p id="dateOfSobriety">
-            {new Date(user.dateOfSobriety).toLocaleDateString()}
-          </p>
-        </div>
-      </section>
-
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex gap-2 p-6">
+          <Button variant="outline" className="mb-6 ml-6 flex gap-2 p-6">
             <Icons.penLine size={24} />
             <span>Edit profile</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-11/12 px-4 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
@@ -272,6 +249,26 @@ export default function ProfileSettings({
           </Form>
         </DialogContent>
       </Dialog>
+      <section className="flex flex-col gap-4 px-6 text-lg font-semibold">
+        <div>
+          <Label htmlFor="name">Name</Label>
+          <h3 id="name">{user.name ?? 'No name yet'}</h3>
+        </div>
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <p id="email">{user.email}</p>
+        </div>
+        <div>
+          <Label htmlFor="substanceOfAbuse">Substance of abuse</Label>
+          <p id="substanceOfAbuse">{user.substanceOfAbuse}</p>
+        </div>
+        <div>
+          <Label htmlFor="dateOfSobriety">Date of sobriety</Label>
+          <p id="dateOfSobriety">
+            {new Date(user.dateOfSobriety).toLocaleDateString()}
+          </p>
+        </div>
+      </section>
     </>
   );
 }

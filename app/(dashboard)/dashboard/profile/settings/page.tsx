@@ -19,7 +19,7 @@ export default async function ProfileSettings() {
   });
 
   return (
-    <Container className="min-h-screen lg:min-h-full">
+    <div className="min-h-screen lg:min-h-full">
       <BackButton />
       <h2 className="mt-8 text-center text-3xl font-semibold">Your settings</h2>
       <button className="mx-auto my-6 block">
@@ -32,6 +32,6 @@ export default async function ProfileSettings() {
       </button>
 
       <SettingsForm substances={substances} />
-    </Container>
+    </div>
   );
 }

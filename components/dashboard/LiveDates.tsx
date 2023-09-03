@@ -30,7 +30,9 @@ export default function LiveDates() {
       <div
         className="mt-1 flex h-14 w-14 items-center justify-center rounded-full"
         style={{
-          background: `radial-gradient(closest-side, #B3F5C9 79%, transparent 80% 100%), conic-gradient(#000 ${progress}%, rgba(0,0,0, 0.12) 0)`,
+          background: `radial-gradient(closest-side, #B3F5C9 79%, transparent 80% 100%), conic-gradient(#000 ${
+            (1 - progress) * 100
+          }%, rgba(0,0,0, 0.12) 0)`,
         }}
       >
         <Star fill="#000" />
