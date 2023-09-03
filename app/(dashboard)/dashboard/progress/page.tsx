@@ -18,7 +18,7 @@ export default function ProgressPage() {
         </div>
         <ProgressChart />
       </section>
-      {/* <ProgressCalendar /> */}
+      <ProgressCalendar />
     </div>
   );
 }
