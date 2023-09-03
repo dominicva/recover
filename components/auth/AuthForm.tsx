@@ -68,7 +68,7 @@ export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} autoComplete="email" />
                   </FormControl>
                   <FormDescription>
                     You will receive a sign in link in your email inbox.

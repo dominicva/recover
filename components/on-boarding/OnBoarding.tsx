@@ -88,12 +88,12 @@ export default function OnBoarding({
   };
 
   return (
-    <Container className="px-4">
+    <Container className="mt-6 max-w-md px-4">
       <h2 className="mb-4 text-center text-2xl font-semibold">
         Create your account
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
           <FormField
             name="name"
             control={form.control}
