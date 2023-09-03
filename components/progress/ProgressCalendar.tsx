@@ -92,17 +92,15 @@ export default function ProgressCalendar() {
 
   const handleDayClick: DayClickEventHandler = async (day, modifiers) => {
     const dayMatch = daysWithQuestionnaire.find((d) => isSameDay(d, day));
-    console.log('dayMatch', dayMatch);
 
     if (dayMatch) {
       const response = await fetch('/api/questionnaire');
       const { data: questionnaires } = await response.json();
-      console.log('questionnaires', questionnaires);
       const selectedQuestionnaire = questionnaires.find(
         (questionnaire: Questionnaire) =>
           isSameDay(new Date(questionnaire.createdAt), day)
       );
-      console.log('selectedQuestionnaire', selectedQuestionnaire);
+
       setProgressChart(selectedQuestionnaire);
     }
     setHasQuestionnaire(day && modifiers.hasQuestionnaire);

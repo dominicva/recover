@@ -5,6 +5,7 @@ import {
   updateJournalEntry,
   getJournalEntryById,
 } from '@/lib/journal';
+import { prisma } from '@/lib/db';
 
 export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
@@ -48,4 +49,22 @@ export const PATCH = async (request: NextRequest) => {
   });
 
   return NextResponse.json({ data: { updatedJournalEntry } });
+};
+
+export const DELETE = async (request: NextRequest) => {
+  const journalEntryId = request.nextUrl.searchParams.get('id');
+
+  if (!journalEntryId) {
+    return NextResponse.json({
+      error: 'No journal entry id provided',
+    });
+  }
+
+  const deletedJournalEntry = await prisma.journalEntry.delete({
+    where: {
+      id: journalEntryId,
+    },
+  });
+
+  return NextResponse.json({ data: { deletedJournalEntry } });
 };

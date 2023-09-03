@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -5,10 +6,11 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card';
+import { Icons } from '@/components/ui/icons';
 import { NewJournal } from '@/components/dashboard';
 import { getJournalEntries } from '@/lib/journal';
 import { formatDate } from '@/lib/dates';
-import Link from 'next/link';
+import JournalEntryActions from '@/components/journal/JournalEntryActions';
 
 export default async function JournalPage() {
   const entries = await getJournalEntries();
@@ -21,8 +23,8 @@ export default async function JournalPage() {
         {entries.map((entry) => {
           return (
             <li key={entry.id}>
-              <Link href={`/dashboard/journal/${entry.id}`}>
-                <Card className="rounded-lg bg-gray-100">
+              <Card className="flex items-center justify-between rounded-lg bg-gray-100 pr-5">
+                <Link href={`/dashboard/journal/${entry.id}`}>
                   <CardHeader className="pb-2">
                     <CardDescription>
                       {formatDate(entry.createdAt)}
@@ -33,8 +35,9 @@ export default async function JournalPage() {
                       {entry.title || 'Untitled'}
                     </CardTitle>
                   </CardContent>
-                </Card>
-              </Link>
+                </Link>
+                <JournalEntryActions journalEntryId={entry.id} />
+              </Card>
             </li>
           );
         })}

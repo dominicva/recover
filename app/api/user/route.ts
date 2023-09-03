@@ -30,7 +30,6 @@ export const PATCH = async (req: NextRequest) => {
 
 export const DELETE = async (req: NextRequest) => {
   const userId = req.nextUrl.searchParams.get('userId');
-  console.log('userId', userId);
 
   if (!userId)
     return NextResponse.json({ error: 'No userId provided' }, { status: 400 });
