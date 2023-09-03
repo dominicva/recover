@@ -42,10 +42,8 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Icons } from '../ui/icons';
-import { toast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
-import type { ExtendedUserSession } from '@/types';
 import type { Substance } from '@prisma/client';
 import { DialogClose } from '@radix-ui/react-dialog';
 
@@ -69,7 +67,7 @@ export default function ProfileSettings({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: user.name ?? '',
-      dateOfSobriety: new Date(user.dateOfSobriety ?? ''),
+      dateOfSobriety: new Date(),
       substanceOfAbuse: user.substanceOfAbuse ?? '',
     },
   });
@@ -102,10 +100,10 @@ export default function ProfileSettings({
         <DialogTrigger asChild>
           <Button variant="outline" className="mb-6 ml-6 flex gap-2 p-6">
             <Icons.penLine size={24} />
-            <span>Edit profile</span>
+            <span>Edit</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-11/12 px-4 sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>

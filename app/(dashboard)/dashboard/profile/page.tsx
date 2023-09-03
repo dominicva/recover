@@ -24,11 +24,11 @@ export default function Profile() {
   const userSession = data as ExtendedUserSession;
 
   return (
-    <div className="min-h-screen lg:min-h-full">
+    <div className="min-h-screen lg:col-span-2 lg:min-h-full">
       <div>
         <BackButton />
 
-        <h2 className="mt-6 pl-3 text-3xl font-semibold">
+        <h2 className="mt-8 pl-3 text-3xl font-semibold">
           {userSession?.name ?? 'Your profile'}
         </h2>
 
