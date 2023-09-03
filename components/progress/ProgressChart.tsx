@@ -47,11 +47,6 @@ export default function ProgressChart({ onDashboard = false }) {
       fill: '#AD91CC',
     },
     {
-      dataKey: 'energy',
-      stroke: '#66B27F',
-      fill: '#66B27F',
-    },
-    {
       dataKey: 'motivation',
       stroke: '#76C2FF',
       fill: '#76C2FF',
@@ -60,11 +55,6 @@ export default function ProgressChart({ onDashboard = false }) {
       dataKey: 'anxiety',
       stroke: '#4D5358',
       fill: '#4D5358',
-    },
-    {
-      dataKey: 'depression',
-      stroke: '#E5CDFF',
-      fill: '#E5CDFF',
     },
     {
       dataKey: 'sleepQuality',
