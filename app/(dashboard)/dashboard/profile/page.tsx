@@ -70,7 +70,7 @@ export default function Profile() {
                 <CardTitle className="font-normal">Manage account</CardTitle>
               </div>
               <Link
-                href="/dashboard/account"
+                href="/dashboard/profile/manage-account"
                 className={cn(
                   buttonVariants({
                     size: 'icon',

@@ -18,7 +18,7 @@ export default async function ProfileSettings() {
   });
 
   return (
-    <div className="min-h-screen lg:col-span-2 lg:min-h-full">
+    <div className="min-h-screen lg:col-span-2 lg:row-span-3 lg:min-h-full">
       <BackButton />
       <h2 className="mt-8 text-center text-3xl font-semibold lg:text-left">
         Your settings

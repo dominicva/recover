@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export const PATCH = async (req: NextRequest) => {
@@ -22,6 +22,42 @@ export const PATCH = async (req: NextRequest) => {
     });
 
     return NextResponse.json({ data: updatedUser }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error }, { status: 500 });
+  }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  const userId = req.nextUrl.searchParams.get('userId');
+  console.log('userId', userId);
+
+  if (!userId)
+    return NextResponse.json({ error: 'No userId provided' }, { status: 400 });
+
+  try {
+    const deletedJournalEntries = await prisma.journalEntry.deleteMany({
+      where: {
+        userId,
+      },
+    });
+
+    const deletedQuestionnaires = await prisma.questionnaire.deleteMany({
+      where: {
+        userId,
+      },
+    });
+
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    return NextResponse.json(
+      { data: { deletedUser, deletedJournalEntries, deletedQuestionnaires } },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error }, { status: 500 });
