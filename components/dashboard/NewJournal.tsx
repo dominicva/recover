@@ -1,8 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import clsx from 'clsx';
 import { Plus } from 'react-feather';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import {
   Card,
   CardContent,
@@ -17,14 +19,18 @@ import { useRevalidate } from '@/hooks/useRevalidate';
 export default function NewJournal() {
   const revalidate = useRevalidate();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    // look into using server actions to achieve this
+    setLoading(true);
+
     const response = await fetch('/api/journal', {
       method: 'POST',
     });
 
     const { data } = await response.json();
+
+    setLoading(false);
 
     revalidate({
       href: `/dashboard/journal/${data.id}`,
@@ -56,7 +62,11 @@ export default function NewJournal() {
               : 'bg-gray-2'
           )}
         >
-          <Plus color="#000" />
+          {loading ? (
+            <TwoSeventyRing className="h-8 w-8" color="#000" />
+          ) : (
+            <Plus color="#000" />
+          )}
         </Button>
       </CardContent>
     </Card>

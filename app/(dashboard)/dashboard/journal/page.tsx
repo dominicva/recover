@@ -6,7 +6,6 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card';
-import { Icons } from '@/components/ui/icons';
 import { NewJournal } from '@/components/dashboard';
 import { getJournalEntries } from '@/lib/journal';
 import { formatDate } from '@/lib/dates';

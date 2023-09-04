@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import { ChevronRight } from 'react-feather';
 import {
   Card,
   CardContent,
@@ -7,9 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { buttonVariants } from '@/components/ui/button';
 import { ProgressChart } from '../progress';
-import { cn } from '@/lib/utils';
+import { ProgressLink } from './Buttons';
 
 export default function YourProgress() {
   return (
@@ -23,18 +20,7 @@ export default function YourProgress() {
             Based on your questionnaires
           </CardDescription>
         </div>
-        <Link
-          href="/dashboard/progress"
-          className={cn(
-            buttonVariants({
-              size: 'icon',
-              variant: 'outline',
-            }),
-            'rounded-full bg-purple-2 hover:bg-purple'
-          )}
-        >
-          <ChevronRight />
-        </Link>
+        <ProgressLink />
       </CardHeader>
       <CardContent className="self-start px-5 lg:self-center">
         <ProgressChart />
