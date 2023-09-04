@@ -1,3 +1,4 @@
+import { AchievementProps } from '@/types';
 import { add, format, formatDistanceToNowStrict } from 'date-fns';
 
 type Milestone = {
@@ -92,7 +93,9 @@ export const getMilestones = async (dateOfSobriety: number) => {
   return augmentMilestones(new Date(dateOfSobriety).getTime());
 };
 
-export const getAchievedMilestones = async (dateOfSobriety: number) => {
+export const getAchievedMilestones = async (
+  dateOfSobriety: number
+): Promise<AchievementProps[] | null> => {
   // const session = (await getServerSession(authOptions)) as any;
 
   const milestones = await getMilestones(dateOfSobriety);

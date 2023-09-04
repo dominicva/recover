@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import type { AchievementProps } from '@/types';
 
-export default function RecentAchievement({
+export default function Achievement({
   achievement,
   substanceOfAbuse,
 }: {
@@ -16,7 +16,7 @@ export default function RecentAchievement({
   substanceOfAbuse: string;
 }) {
   return (
-    <Card className="h-48 shrink-0 grow-0 basis-auto bg-purple">
+    <Card className="col-span-1 bg-blue">
       <CardHeader></CardHeader>
       <CardContent></CardContent>
       <CardFooter className="flex-col items-start gap-1">

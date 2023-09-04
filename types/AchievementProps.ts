@@ -1,4 +1,4 @@
-export type RecentAchievementProps = {
+export type AchievementProps = {
   label: string;
   days?: number;
   weeks?: number;
