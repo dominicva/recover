@@ -26,6 +26,7 @@ export default function UserAvatar({
       <PopoverTrigger>
         <Avatar>
           <AvatarImage
+            // @ts-ignore
             src={userSession?.image ?? ''}
             alt={userSession?.user?.name ?? 'User avatar'}
           />
