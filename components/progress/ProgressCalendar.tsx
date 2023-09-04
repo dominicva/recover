@@ -18,6 +18,7 @@ import {
 import type { Questionnaire } from '@prisma/client';
 import Tick from './Tick';
 import QuestionnaireChart from './QuestionnaireChart';
+import { Divide } from 'lucide-react';
 
 export default function ProgressCalendar() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -64,15 +65,21 @@ export default function ProgressCalendar() {
   }, []);
 
   return (
-    <article className="my-12  items-center justify-center gap-20 rounded-xl">
+    <article className="my-12 flex flex-wrap items-center justify-center rounded-xl lg:flex lg:gap-24">
       <Calendar
         mode="single"
         modifiers={{ hasQuestionnaire: daysWithQuestionnaire }}
         onDayClick={handleDayClick}
         modifiersStyles={{ hasQuestionnaire: hasQuestionnaireStyle }}
-        className="mx-auto max-w-[380px] rounded-md bg-blue py-8 lg:mx-0"
+        className="mx-auto w-[380px] rounded-md bg-blue py-8 lg:mx-0"
       />
-      {progressChart && <QuestionnaireChart questionnaire={progressChart} />}
+      <div>
+        {progressChart ? (
+          <QuestionnaireChart questionnaire={progressChart} />
+        ) : (
+          <div>here</div>
+        )}
+      </div>
     </article>
   );
 }

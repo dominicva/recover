@@ -88,6 +88,22 @@ const augmentMilestones = (sobrietyDatetime: number) => {
   });
 };
 
+export const getMilestones = async (dateOfSobriety: number) => {
+  return augmentMilestones(new Date(dateOfSobriety).getTime());
+};
+
+export const getAchievedMilestones = async (dateOfSobriety: number) => {
+  // const session = (await getServerSession(authOptions)) as any;
+
+  const milestones = await getMilestones(dateOfSobriety);
+
+  if (!milestones) return null;
+
+  return milestones.filter((milestone) => {
+    return milestone.timeToAchievement <= 0;
+  });
+};
+
 export const getTimeToNextMilestone = (sobrietyDatetime: number) => {
   const milestonesWithTimestamps = augmentMilestones(sobrietyDatetime);
   const nextMilestone = milestonesWithTimestamps.find((milestone) => {

@@ -15,7 +15,6 @@ export default function QuestionnaireChart({
 }: {
   questionnaire: Questionnaire;
 }) {
-  console.log('questionnaire', questionnaire);
   const { anxiety, cravings, mood, motivation, sleepQuality } = questionnaire;
 
   const data = [
@@ -42,7 +41,7 @@ export default function QuestionnaireChart({
   ];
 
   return (
-    <div className="mx-auto max-w-[380px] lg:mx-0">
+    <div className="mx-auto  w-[320px] lg:mx-0">
       <ResponsiveContainer width="100%" height={400}>
         <BarChart width={400} height={400} data={data}>
           <XAxis dataKey="name" fontSize={13} />
