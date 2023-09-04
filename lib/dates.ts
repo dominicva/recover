@@ -72,15 +72,19 @@ const milestones: Milestone[] = [
 
 const augmentMilestones = (sobrietyDatetime: number) => {
   return milestones.map((milestone) => {
-    const { days, months, years } = milestone;
+    const { days, weeks, months, years } = milestone;
 
     const achievementDate = add(sobrietyDatetime, {
       days,
+      weeks,
       months,
       years,
     }).getTime();
+
     const now = new Date().getTime();
+
     const timeToAchievement = achievementDate - now;
+
     return {
       ...milestone,
       achievementDate,
@@ -89,16 +93,14 @@ const augmentMilestones = (sobrietyDatetime: number) => {
   });
 };
 
-export const getMilestones = async (dateOfSobriety: number) => {
+export const getMilestones = (dateOfSobriety: number) => {
   return augmentMilestones(new Date(dateOfSobriety).getTime());
 };
 
-export const getAchievedMilestones = async (
+export const getAchievedMilestones = (
   dateOfSobriety: number
-): Promise<AchievementProps[] | null> => {
-  // const session = (await getServerSession(authOptions)) as any;
-
-  const milestones = await getMilestones(dateOfSobriety);
+): AchievementProps[] | null => {
+  const milestones = getMilestones(dateOfSobriety);
 
   if (!milestones) return null;
 
@@ -109,9 +111,11 @@ export const getAchievedMilestones = async (
 
 export const getTimeToNextMilestone = (sobrietyDatetime: number) => {
   const milestonesWithTimestamps = augmentMilestones(sobrietyDatetime);
+
   const nextMilestone = milestonesWithTimestamps.find((milestone) => {
     return milestone.timeToAchievement > 0;
   });
+
   return (
     nextMilestone?.achievementDate &&
     formatDistanceToNowStrict(nextMilestone?.achievementDate)

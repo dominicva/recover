@@ -7,8 +7,12 @@ import type { ExtendedUserSession } from '@/types';
 
 export default async function AchievementsPage() {
   const session = (await getServerSession(authOptions)) as ExtendedUserSession;
-  //   @ts-ignore
-  const milestones = await getAchievedMilestones(session?.user.dateOfSobriety);
+
+  const milestones = await getAchievedMilestones(
+    //   @ts-ignore
+    new Date(session?.user?.dateOfSobriety).getTime()
+  );
+
   return (
     <div className="min-h-screen">
       <h2 className="mb-4 text-2xl font-semibold">Recent achievements</h2>
