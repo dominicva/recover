@@ -3,7 +3,7 @@ import { Icons } from '../ui/icons';
 
 export default function Footer() {
   return (
-    <footer className="sticky -bottom-1">
+    <footer className="sticky -bottom-1 col-span-5">
       <nav className="rounded-lg bg-gray-100 py-6">
         <ul className="flex justify-center gap-14">
           <li>

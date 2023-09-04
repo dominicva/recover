@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Icons } from '../ui/icons';
 import { NavLink } from '../ui/NavLink';
 
