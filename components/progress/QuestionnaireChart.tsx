@@ -42,7 +42,7 @@ export default function QuestionnaireChart({
   ];
 
   return (
-    <div className="mx-auto max-w-[348px] lg:mx-0">
+    <div className="mx-auto max-w-[380px] lg:mx-0">
       <ResponsiveContainer width="100%" height={400}>
         <BarChart width={400} height={400} data={data}>
           <XAxis dataKey="name" fontSize={13} />

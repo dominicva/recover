@@ -70,7 +70,7 @@ export default function ProgressCalendar() {
         modifiers={{ hasQuestionnaire: daysWithQuestionnaire }}
         onDayClick={handleDayClick}
         modifiersStyles={{ hasQuestionnaire: hasQuestionnaireStyle }}
-        className="mx-auto max-w-[348px] rounded-md bg-blue py-8 lg:mx-0"
+        className="mx-auto max-w-[380px] rounded-md bg-blue py-8 lg:mx-0"
       />
       {progressChart && <QuestionnaireChart questionnaire={progressChart} />}
     </article>
