@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { ArrowLeft, Mail, GitHub } from 'react-feather';
@@ -27,6 +29,10 @@ const formSchema = z.object({
 });
 
 export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [githubLoading, setGithubLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,16 +43,22 @@ export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
   const callbackUrl = title === 'Sign Up' ? '/new-user' : '/';
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setEmailLoading(true);
     const { email } = data;
     await signIn('email', { email, callbackUrl });
+    setEmailLoading(false);
   };
 
   const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
     await signIn('google', { callbackUrl });
+    setGoogleLoading(false);
   };
 
   const handleGitHubSignIn = async () => {
+    setGithubLoading(true);
     await signIn('github', { callbackUrl });
+    setGithubLoading(false);
   };
 
   return (
@@ -82,8 +94,14 @@ export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
               type="submit"
               className="flex w-full items-center justify-center gap-4"
             >
-              <Mail className="-ml-3 w-8" />
-              Continue with Email
+              {emailLoading ? (
+                <TwoSeventyRing className="h-8 w-8" color="#fff" />
+              ) : (
+                <>
+                  <Mail className="-ml-3 w-8" />
+                  <span>Continue with Email</span>
+                </>
+              )}
             </Button>
           </form>
         </Form>
@@ -94,8 +112,14 @@ export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
             size="lg"
             className="flex w-full items-center justify-center gap-4"
           >
-            <Image src={googleIcon} alt="Google icon" className="h-6 w-8" />
-            Continue with Google
+            {googleLoading ? (
+              <TwoSeventyRing className="h-8 w-8" color="#fff" />
+            ) : (
+              <>
+                <Image src={googleIcon} alt="Google icon" className="h-6 w-8" />
+                <span>Continue with Google</span>
+              </>
+            )}
           </Button>
           <Button
             onClick={handleGitHubSignIn}
@@ -103,8 +127,14 @@ export default function AuthForm({ title }: { title: 'Sign Up' | 'Sign In' }) {
             type="submit"
             className="flex w-full items-center justify-center gap-4"
           >
-            <GitHub className="w-8" />
-            Continue with GitHub
+            {githubLoading ? (
+              <TwoSeventyRing className="h-8 w-8" color="#fff" />
+            ) : (
+              <>
+                <GitHub className="w-8" />
+                <span>Continue with GitHub</span>
+              </>
+            )}
           </Button>
         </div>
       </FlexCol>
