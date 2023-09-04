@@ -27,7 +27,6 @@ import type { ExtendedQuestionnaire } from '@/types/ExtendedQuestionnaire';
 export default function ProgressChart() {
   const [data, setData] = useState([] as ExtendedQuestionnaire[]);
   const noQuestionnaire = data.length === 0;
-  console.log('data', data);
 
   const [showAverage, setShowAverage] = useState(true);
   const [showMood, setShowMood] = useState(false);
