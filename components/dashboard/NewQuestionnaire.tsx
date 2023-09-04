@@ -10,8 +10,8 @@ import { NewQuestionnaireLink } from './Buttons';
 
 export default function NewQuestionnaire({ pathname }: { pathname?: string }) {
   const className = clsx(
-    'flex items-center justify-between rounded-2xl bg-light-gray lg:col-span-2 lg:row-span-1 max-w-sm',
-    pathname?.startsWith('/dashboard/journal') && 'bg-purple'
+    'flex items-center justify-between rounded-2xl bg-light-gray lg:col-span-2 lg:row-span-1',
+    pathname?.startsWith('/dashboard/journal') && 'bg-purple max-w-sm'
   );
 
   return (
