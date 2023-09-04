@@ -14,7 +14,7 @@ export default async function AchievementsPage() {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen lg:col-span-4">
       <h2 className="mb-4 text-2xl font-semibold">Recent achievements</h2>
       <RecentAchievements
         session={session}

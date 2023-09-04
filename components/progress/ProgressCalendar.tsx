@@ -4,34 +4,26 @@ import { useState, useEffect } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { DayClickEventHandler } from 'react-day-picker';
 import { isSameDay } from 'date-fns';
-import {
-  XAxis,
-  YAxis,
-  BarChart,
-  Bar,
-  Tooltip,
-  ResponsiveContainer,
-  Line,
-  ComposedChart,
-  LineChart,
-} from 'recharts';
-import type { Questionnaire } from '@prisma/client';
-import Tick from './Tick';
 import QuestionnaireChart from './QuestionnaireChart';
-import { Divide } from 'lucide-react';
+import { colors } from '@/lib/colors';
+import { average } from '@/lib/math';
+import type { Questionnaire } from '@prisma/client';
 
 export default function ProgressCalendar() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [hasQuestionnaire, setHasQuestionnaire] = useState<boolean>(false);
-  const [daysWithQuestionnaire, setDaysWithQuestionnaire] = useState<Date[]>(
-    []
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
+
+  const daysWithQuestionnaire = questionnaires.map(
+    (questionnaire: Questionnaire) => new Date(questionnaire.createdAt)
   );
 
   const [progressChart, setProgressChart] = useState<
     Questionnaire | undefined
   >();
 
-  const hasQuestionnaireStyle = { backgroundColor: '#000', color: '#fff' };
+  const hasQuestionnaireStyle = {
+    backgroundColor: '#000',
+    color: '#fff',
+  };
 
   const handleDayClick: DayClickEventHandler = async (day, modifiers) => {
     const dayMatch = daysWithQuestionnaire.find((d) => isSameDay(d, day));
@@ -46,39 +38,64 @@ export default function ProgressCalendar() {
 
       setProgressChart(selectedQuestionnaire);
     }
-    setHasQuestionnaire(day && modifiers.hasQuestionnaire);
   };
 
   useEffect(() => {
-    const getQuestionnaireDates = async () => {
+    const getQuestionnaires = async () => {
       const response = await fetch('/api/questionnaire');
 
       const { data: questionnaires } = await response.json();
 
-      const dates = questionnaires.map(
-        (questionnaire: Questionnaire) => new Date(questionnaire.createdAt)
+      const scoresSum = questionnaires.reduce(
+        (
+          result: number,
+          { mood, motivation, anxiety, cravings, sleepQuality }: Questionnaire
+        ) => {
+          return mood + motivation + anxiety + cravings + sleepQuality + result;
+        },
+        0
       );
 
-      return dates;
+      const averageQuestionnaireScore =
+        scoresSum / (questionnaires.length * 5) || 0;
+
+      return questionnaires.map((questionnaire: Questionnaire) => {
+        const averageScore = average(
+          questionnaire.mood,
+          questionnaire.motivation,
+          questionnaire.anxiety,
+          questionnaire.cravings,
+          questionnaire.sleepQuality
+        );
+
+        return {
+          ...questionnaire,
+          aboveAverageScore:
+            averageScore && averageScore > averageQuestionnaireScore,
+        };
+      });
     };
-    getQuestionnaireDates().then(setDaysWithQuestionnaire);
+
+    getQuestionnaires().then(setQuestionnaires);
   }, []);
 
   return (
     <article className="my-12 flex flex-wrap items-center justify-center rounded-xl lg:flex lg:gap-24">
       <Calendar
         mode="single"
-        modifiers={{ hasQuestionnaire: daysWithQuestionnaire }}
+        modifiers={{
+          hasQuestionnaire: daysWithQuestionnaire,
+        }}
         onDayClick={handleDayClick}
-        modifiersStyles={{ hasQuestionnaire: hasQuestionnaireStyle }}
+        modifiersStyles={{
+          hasQuestionnaire: hasQuestionnaireStyle,
+        }}
         className="mx-auto w-[380px] rounded-md bg-blue py-8 lg:mx-0"
       />
       <div>
         {progressChart ? (
           <QuestionnaireChart questionnaire={progressChart} />
-        ) : (
-          <div>here</div>
-        )}
+        ) : null}
       </div>
     </article>
   );

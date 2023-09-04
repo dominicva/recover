@@ -9,6 +9,8 @@ import {
   YAxis,
 } from 'recharts';
 import type { Questionnaire } from '@prisma/client';
+import { formatDate } from '@/lib/dates';
+import { format } from 'date-fns';
 
 export default function QuestionnaireChart({
   questionnaire,
@@ -41,9 +43,12 @@ export default function QuestionnaireChart({
   ];
 
   return (
-    <div className="mx-auto  w-[320px] lg:mx-0">
+    <div className="mx-auto mt-8  w-[320px] lg:mx-0">
+      <h3 className="text-xl">
+        {format(new Date(questionnaire.createdAt), 'EEEE dd MMM y')}
+      </h3>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart width={400} height={400} data={data}>
+        <BarChart width={400} height={400} data={data} className="-mt-16">
           <XAxis dataKey="name" fontSize={13} />
           <Bar dataKey="score" fill="#E5CDFF" background={false}>
             <LabelList dataKey="score" position="top" fontSize={16} />
