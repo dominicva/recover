@@ -142,7 +142,7 @@ export const getMilestoneProgress = (sobrietyDatetime: number) => {
   const percentProgress =
     Number(nextMilestone?.timeToAchievement) / timeBetweenMilestones;
 
-  return Number(percentProgress.toFixed(2));
+  return 1 - Number(percentProgress.toFixed(2));
 };
 
 export const daysSinceDate = (date: Date | null | undefined) => {
