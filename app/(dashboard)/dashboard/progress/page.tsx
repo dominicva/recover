@@ -16,7 +16,9 @@ export default function ProgressPage() {
             Based on your questionnaires
           </CardDescription>
         </div>
-        <ProgressChart />
+        <div className="p-6">
+          <ProgressChart />
+        </div>
       </section>
       <ProgressCalendar />
     </div>

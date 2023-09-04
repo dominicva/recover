@@ -32,7 +32,7 @@ export default function Profile() {
           {userSession?.name ?? 'Your profile'}
         </h2>
 
-        <div className="my-8 flex items-center gap-6 pl-3">
+        <div className="mb-12 mt-8 flex items-center gap-6 pl-3">
           <Avatar className="h-20 w-20">
             <AvatarImage
               src={userSession?.user?.image ?? ''}
@@ -42,7 +42,7 @@ export default function Profile() {
           </Avatar>
           <h3 className="text-3xl">{userSession?.user?.name}</h3>
         </div>
-        <FlexCol className="gap-2">
+        <FlexCol className="gap-4">
           <Card className=" bg-light-grey">
             <CardContent className="flex items-center justify-between p-6">
               <div className="flex items-center gap-6">
