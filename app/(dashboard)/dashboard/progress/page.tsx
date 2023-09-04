@@ -1,9 +1,11 @@
 import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ProgressChart, ProgressCalendar } from '@/components/progress';
+import BackButton from '@/components/ui/BackButton';
 
 export default function ProgressPage() {
   return (
     <div className="col-span-5 row-span-3 min-h-screen px-2 lg:min-h-full">
+      <BackButton />
       <h2 className="mb-6 mt-4 text-center text-4xl font-semibold lg:text-left">
         Your progress
       </h2>

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import RecentAchievements from '@/components/achievements/RecentAchievements';
 import AllAchievements from '@/components/achievements/AllAchievements';
+import BackButton from '@/components/ui/BackButton';
 import { getAchievedMilestones } from '@/lib/dates';
 import type { ExtendedUserSession } from '@/types';
 
@@ -15,7 +16,8 @@ export default async function AchievementsPage() {
 
   return (
     <div className="min-h-screen lg:col-span-4">
-      <h2 className="mb-4 text-2xl font-semibold">Recent achievements</h2>
+      <BackButton />
+      <h2 className="my-4 text-2xl font-semibold">Recent achievements</h2>
       <RecentAchievements
         session={session}
         milestones={milestones?.slice(0, 4) ?? []}
