@@ -64,7 +64,6 @@ export default function ProgressCalendar() {
   }, []);
 
   return (
-    // <section>
     <article className="my-12 rounded-xl">
       <Calendar
         mode="single"
@@ -75,6 +74,5 @@ export default function ProgressCalendar() {
       />
       {progressChart && <QuestionnaireChart questionnaire={progressChart} />}
     </article>
-    // </section>
   );
 }
