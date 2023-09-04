@@ -64,7 +64,7 @@ export default function ProgressCalendar() {
   }, []);
 
   return (
-    <article className="my-12 rounded-xl">
+    <article className="my-12  items-center justify-center gap-20 rounded-xl">
       <Calendar
         mode="single"
         modifiers={{ hasQuestionnaire: daysWithQuestionnaire }}
