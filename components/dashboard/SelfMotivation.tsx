@@ -22,7 +22,7 @@ export default function SelfMotivation() {
         </CardHeader>
         <CardContent className="pb-0 pr-5">
           <Link
-            href="/dashboard"
+            href="/dashboard/recording"
             className={cn(
               buttonVariants({
                 size: 'icon',

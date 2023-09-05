@@ -11,8 +11,8 @@ export default function Hero() {
           Get a helping hand with your recovery
         </h2>
         <p className="max-w-xl text-lg lg:text-xl">
-          Journal and receive gentle advice from your AI recovery helper.
-          Visualize and celebrate your progress.
+          Journal and receive gentle advice from your AI addiction recovery
+          helper. Visualize and celebrate your progress.
         </p>
       </FlexCol>
       <Link
