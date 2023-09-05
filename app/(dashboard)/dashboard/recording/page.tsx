@@ -11,7 +11,7 @@ import { Icons } from '@/components/ui/icons';
 
 export default function Recording() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen lg:col-span-3">
       <h2 className="text-center text-3xl font-semibold">Motivation</h2>
       <section>
         <Card className="mt-6 bg-purple">
