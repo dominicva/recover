@@ -12,21 +12,35 @@ import { Icons } from '@/components/ui/icons';
 export default function Recording() {
   return (
     <div className="min-h-screen">
-      <h2 className="text-center text-3xl font-semibold">Motivation vault</h2>
+      <h2 className="text-center text-3xl font-semibold">Motivation</h2>
       <section>
-        <Card>
+        <Card className="mt-6 bg-purple">
           <CardHeader>
             <CardDescription>Create new content</CardDescription>
             <CardTitle>Promises to your future self</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-center gap-16">
-              <Button className="h-12 w-12 rounded-full">
-                <Icons.mic color="#fff" />
-              </Button>
+              <div className="flex flex-col items-center gap-1">
+                <Button className="h-14 w-14 rounded-full bg-purple-2 hover:bg-purple">
+                  <Icons.add color="#000" />
+                </Button>
+                <p className="font-semibold">Note</p>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <Button className="h-14 w-14 rounded-full bg-purple-2 hover:bg-purple">
+                  <Icons.camera color="#000" />
+                </Button>
+                <p className="font-semibold">Media</p>
+              </div>
             </div>
           </CardContent>
         </Card>
+      </section>
+      <section className="mt-8">
+        <h2 className="text-center text-2xl font-semibold">
+          Your motivation vault
+        </h2>
       </section>
     </div>
   );
