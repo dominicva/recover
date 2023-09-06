@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -20,14 +19,17 @@ export default async function Recording() {
     where: {
       userId: user?.id,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
-  console.log(motivationNotes);
+
   return (
     <div className="min-h-screen lg:col-span-3">
       <BackButton />
       <h2 className="mb-8 mt-6 text-4xl">Your motivation</h2>
       <section>
-        <Card className="mt-6 bg-purple">
+        <Card className="mt-6 bg-blue">
           <CardHeader>
             <CardDescription>Create new content</CardDescription>
             <CardTitle>Promises to your future self</CardTitle>
@@ -41,11 +43,16 @@ export default async function Recording() {
         <h2 className="text-center text-2xl font-semibold">
           Your motivation vault
         </h2>
-        {motivationNotes?.map((note) => (
-          <Card key={note.id} className="mt-6 bg-green p-6">
-            <div>{note.content}</div>
-          </Card>
-        ))}
+        <div className="my-6 grid gap-3 sm:grid-cols-2">
+          {motivationNotes?.map((note) => (
+            <Card
+              key={note.id}
+              className="flex min-h-[120px] items-center bg-purple p-6  text-lg font-medium"
+            >
+              {note.content}
+            </Card>
+          ))}
+        </div>
       </section>
     </div>
   );

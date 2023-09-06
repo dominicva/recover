@@ -11,8 +11,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useRevalidate } from '@/hooks/useRevalidate';
 
 export default function NewNote() {
+  const revalidate = useRevalidate();
+  const [open, setOpen] = useState(false);
+
   const handleNoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const note = e.currentTarget.note.value;
@@ -26,27 +30,27 @@ export default function NewNote() {
         body: JSON.stringify({ note }),
       });
       if (response.ok) {
-        console.log('Note saved');
+        revalidate({ href: '/dashboard/recording' });
       }
-      const { data } = await response.json();
-      console.log(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setOpen(false);
     }
   };
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <div className="flex justify-center gap-16">
           <div className="flex flex-col items-center gap-1">
-            <DialogTrigger className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-2 hover:bg-purple">
+            <DialogTrigger className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-2 hover:bg-blue">
               <Icons.stickyNote color="#000" />
             </DialogTrigger>
             <p className="font-semibold">Note</p>
           </div>
           <div className="flex flex-col items-center gap-1">
-            <DialogTrigger className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-2 hover:bg-purple">
+            <DialogTrigger className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-2 hover:bg-blue">
               <Icons.camera color="#000" />
             </DialogTrigger>
             <p className="font-semibold">Media</p>
