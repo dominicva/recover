@@ -20,10 +20,12 @@ export default async function AchievementsPage() {
       <h2 className="mb-8 mt-6 text-4xl">Your achievements</h2>
 
       <h2 className="my-4 text-2xl font-semibold">Recent achievements</h2>
+
       <RecentAchievements
         session={session}
         milestones={milestones?.slice(-3).reverse() ?? []}
       />
+
       <AllAchievements
         session={session}
         milestones={milestones?.slice(0, -3).reverse() ?? []}

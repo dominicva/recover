@@ -11,7 +11,7 @@ export default async function RecentAchievements({
   return (
     <div>
       <section className="flex w-full gap-2 overflow-x-auto">
-        {milestones?.map((milestone: AchievementProps) => (
+        {milestones?.map((milestone: AchievementProps, idx) => (
           <RecentAchievement
             key={milestone.label}
             achievement={milestone}

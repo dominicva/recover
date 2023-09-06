@@ -15,7 +15,7 @@ import { prisma } from '@/lib/db';
 
 export default async function Recording() {
   const { user } = await getUserSession();
-  // const { user } = session;
+
   const motivationNotes = await prisma.motivationNote.findMany({
     where: {
       userId: user?.id,
