@@ -42,10 +42,10 @@ model Session {
 }
 
 model User {
-  id               String          @id @default(uuid())
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  email            String          @unique
+  id               String           @id @default(uuid())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  email            String           @unique
   emailVerified    DateTime?
   name             String?
   image            String?
@@ -53,6 +53,7 @@ model User {
   substanceOfAbuse String?
   journalEntries   JournalEntry[]
   questionnaires   Questionnaire[]
+  motivationNotes  MotivationNote[]
   accounts         Account[]
   sessions         Session[]
 }
@@ -85,8 +86,8 @@ model Questionnaire {
   mood         Int      @default(0)
   motivation   Int      @default(0)
   anxiety      Int      @default(0)
-  sleepQuality Int      @default(0) // 0-10 scale
-  cravings     Int      @default(0) // 0-10 scale
+  sleepQuality Int      @default(0)
+  cravings     Int      @default(0)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -99,4 +100,15 @@ model Substance {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String   @unique
+}
+
+model MotivationNote {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String   @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }

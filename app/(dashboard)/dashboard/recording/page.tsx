@@ -10,8 +10,18 @@ import {
 import { Icons } from '@/components/ui/icons';
 import BackButton from '@/components/ui/BackButton';
 import NewNote from '@/components/motivation/CreateNote';
+import { getUserSession } from '@/lib/user';
+import { prisma } from '@/lib/db';
 
-export default function Recording() {
+export default async function Recording() {
+  const { user } = await getUserSession();
+  // const { user } = session;
+  const motivationNotes = await prisma.motivationNote.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+  console.log(motivationNotes);
   return (
     <div className="min-h-screen lg:col-span-3">
       <BackButton />
@@ -31,6 +41,11 @@ export default function Recording() {
         <h2 className="text-center text-2xl font-semibold">
           Your motivation vault
         </h2>
+        {motivationNotes?.map((note) => (
+          <Card key={note.id} className="mt-6 bg-green p-6">
+            <div>{note.content}</div>
+          </Card>
+        ))}
       </section>
     </div>
   );

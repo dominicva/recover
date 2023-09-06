@@ -67,7 +67,7 @@ export default function NewNote() {
                 minRows={6}
               />
               <Button className="mt-6 text-base" size="lg" type="submit">
-                Save note
+                Create
               </Button>
             </form>
           </DialogContent>
