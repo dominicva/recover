@@ -8,11 +8,14 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Icons } from '@/components/ui/icons';
+import BackButton from '@/components/ui/BackButton';
+import NewNote from '@/components/motivation/CreateNote';
 
 export default function Recording() {
   return (
     <div className="min-h-screen lg:col-span-3">
-      <h2 className="text-center text-3xl font-semibold">Motivation</h2>
+      <BackButton />
+      <h2 className="mb-8 mt-6 text-4xl">Your motivation</h2>
       <section>
         <Card className="mt-6 bg-purple">
           <CardHeader>
@@ -20,20 +23,7 @@ export default function Recording() {
             <CardTitle>Promises to your future self</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-center gap-16">
-              <div className="flex flex-col items-center gap-1">
-                <Button className="h-14 w-14 rounded-full bg-purple-2 hover:bg-purple">
-                  <Icons.add color="#000" />
-                </Button>
-                <p className="font-semibold">Note</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <Button className="h-14 w-14 rounded-full bg-purple-2 hover:bg-purple">
-                  <Icons.camera color="#000" />
-                </Button>
-                <p className="font-semibold">Media</p>
-              </div>
-            </div>
+            <NewNote />
           </CardContent>
         </Card>
       </section>

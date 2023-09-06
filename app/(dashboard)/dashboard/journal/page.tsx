@@ -10,13 +10,15 @@ import { NewJournal } from '@/components/dashboard';
 import { getJournalEntries } from '@/lib/journal';
 import { formatDate } from '@/lib/dates';
 import JournalEntryActions from '@/components/journal/JournalEntryActions';
+import BackButton from '@/components/ui/BackButton';
 
 export default async function JournalPage() {
   const entries = await getJournalEntries();
 
   return (
-    <div className="min-h-screen p-4 lg:col-span-5 lg:row-span-2 lg:min-h-full">
-      <h2 className="mb-8 text-4xl">My Journal</h2>
+    <div className="min-h-screen px-2 pt-0 lg:col-span-5 lg:row-span-2 lg:min-h-full">
+      <BackButton />
+      <h2 className="mb-8 mt-6 text-4xl">My Journal</h2>
 
       <ul className="mb-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
         {entries.map((entry) => {

@@ -17,6 +17,8 @@ export default async function AchievementsPage() {
   return (
     <div className="min-h-screen lg:col-span-4">
       <BackButton />
+      <h2 className="mb-8 mt-6 text-4xl">Your achievements</h2>
+
       <h2 className="my-4 text-2xl font-semibold">Recent achievements</h2>
       <RecentAchievements
         session={session}
