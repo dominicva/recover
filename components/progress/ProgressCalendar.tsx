@@ -11,17 +11,29 @@ import type { Questionnaire } from '@prisma/client';
 
 export default function ProgressCalendar() {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
+  const [progressChart, setProgressChart] = useState<
+    Questionnaire | undefined
+  >();
 
   const daysWithQuestionnaire = questionnaires.map(
     (questionnaire: Questionnaire) => new Date(questionnaire.createdAt)
   );
 
-  const [progressChart, setProgressChart] = useState<
-    Questionnaire | undefined
-  >();
+  const withQuestionnaireAboveAverage = questionnaires.filter(
+    (questionnaire: any) => questionnaire?.aboveAverageScore
+  );
 
-  const hasQuestionnaireStyle = {
-    backgroundColor: '#000',
+  const withQuestionnaireAboveAverageStyle = {
+    backgroundColor: colors['success-dark'],
+    color: '#fff',
+  };
+
+  const withQuestionnaireBelowAverage = questionnaires.filter(
+    (questionnaire: any) => !questionnaire?.aboveAverageScore
+  );
+
+  const withQuestionnaireBelowAverageStyle = {
+    backgroundColor: colors['error'],
     color: '#fff',
   };
 
@@ -79,17 +91,37 @@ export default function ProgressCalendar() {
     getQuestionnaires().then(setQuestionnaires);
   }, []);
 
+  const footer = (
+    <div className="mt-4">
+      <div className="flex items-center gap-2">
+        <div className="mb-3 h-8 w-8 rounded-lg bg-success-dark" />
+        <p>Above average score</p>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="h-8 w-8 rounded-lg bg-error" />
+        <p>Below average score</p>
+      </div>
+    </div>
+  );
+
   return (
     <article className="my-12 flex flex-wrap items-center justify-center rounded-xl lg:flex lg:gap-24">
       <Calendar
         mode="single"
-        modifiers={{
-          hasQuestionnaire: daysWithQuestionnaire,
-        }}
         onDayClick={handleDayClick}
-        modifiersStyles={{
-          hasQuestionnaire: hasQuestionnaireStyle,
+        modifiers={{
+          withQuestionnaireAboveAverage: withQuestionnaireAboveAverage.map(
+            (questionnaire: any) => new Date(questionnaire.createdAt)
+          ),
+          withQuestionnaireBelowAverage: withQuestionnaireBelowAverage.map(
+            (questionnaire: any) => new Date(questionnaire.createdAt)
+          ),
         }}
+        modifiersStyles={{
+          withQuestionnaireAboveAverage: withQuestionnaireAboveAverageStyle,
+          withQuestionnaireBelowAverage: withQuestionnaireBelowAverageStyle,
+        }}
+        footer={footer}
         className="mx-auto w-[380px] rounded-md bg-blue py-8 lg:mx-0"
       />
       <div>

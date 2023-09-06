@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useState, useEffect, useTransition } from 'react';
+import React, { useState, useEffect, useTransition, useRef } from 'react';
+import clsx from 'clsx';
 import { useChat } from 'ai/react';
 // @ts-ignore
 import { useAutosave } from 'react-autosave';
@@ -45,6 +46,9 @@ export default function JournalTextEditor({
     },
   });
 
+  const completionRef = useRef<HTMLElement>(null);
+  const [completionStarted, setCompletionStarted] = useState(false);
+
   const pathname = usePathname();
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -52,6 +56,19 @@ export default function JournalTextEditor({
   const [entryTitle, setEntryTitle] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    console.log('here');
+    if (completionStarted) {
+      console.log('here in if block');
+      completionRef.current?.scrollBy(0, 400);
+
+      // completionRef.current?.scrollTo({
+      //   top: completionRef.current?.scrollHeight,
+      //   behavior: 'smooth',
+      // });
+    }
+  }, [completionStarted]);
 
   useEffect(() => {
     const getEntry = async () => {
@@ -67,6 +84,15 @@ export default function JournalTextEditor({
       setInput(data.content);
     });
   }, [isLoading, id, setInput]);
+
+  const handleCompletionSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    setCompletionStarted(true);
+
+    handleSubmit(e);
+  };
 
   const updateJournalEntry = async () => {
     setIsSaving(true);
@@ -168,7 +194,7 @@ export default function JournalTextEditor({
 
       <NewQuestionnaire pathname={pathname} />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleCompletionSubmit}>
         <Button
           type="submit"
           size="lg"
@@ -181,7 +207,11 @@ export default function JournalTextEditor({
       <Container className="my-12">
         {completion ? (
           <article
-            className="prose prose-stone dark:prose-invert prose-h4:mb-6"
+            ref={completionRef}
+            className={clsx(
+              `prose prose-stone h-screen dark:prose-invert prose-h4:mb-6`
+              // completionStarted && 'min-h-[400px]'
+            )}
             dangerouslySetInnerHTML={{ __html: completion }}
           />
         ) : (
