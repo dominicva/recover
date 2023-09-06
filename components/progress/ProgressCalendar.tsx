@@ -92,9 +92,9 @@ export default function ProgressCalendar() {
   }, []);
 
   const footer = (
-    <div className="mt-4">
+    <div className="mt-6 flex flex-col items-center gap-2">
       <div className="flex items-center gap-2">
-        <div className="mb-3 h-8 w-8 rounded-lg bg-success-dark" />
+        <div className="h-8 w-8 rounded-lg bg-success-dark" />
         <p>Above average score</p>
       </div>
       <div className="flex items-center gap-2">

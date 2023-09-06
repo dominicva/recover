@@ -8,7 +8,6 @@ import { useChat } from 'ai/react';
 import { useAutosave } from 'react-autosave';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NewQuestionnaire } from '../dashboard';
-import Container from '@/components/ui/Container';
 import { FlexCol, FlexRow } from '../ui/Flex';
 import { Button } from '../ui/button';
 import { Icons } from '@/components/ui/icons';
@@ -46,7 +45,6 @@ export default function JournalTextEditor({
     },
   });
 
-  const completionRef = useRef<HTMLElement>(null);
   const [completionStarted, setCompletionStarted] = useState(false);
 
   const pathname = usePathname();
@@ -58,24 +56,22 @@ export default function JournalTextEditor({
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    console.log('here');
-    if (completionStarted) {
-      console.log('here in if block');
-      completionRef.current?.scrollBy(0, 400);
+    const scrollToBottom = () => {
+      if (completionStarted) {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+    };
 
-      // completionRef.current?.scrollTo({
-      //   top: completionRef.current?.scrollHeight,
-      //   behavior: 'smooth',
-      // });
-    }
-  }, [completionStarted]);
+    scrollToBottom();
+  }, [isLoading]);
 
   useEffect(() => {
     const getEntry = async () => {
       const res = await fetch(`/api/journal?id=${id}`);
-
       const { data } = await res.json();
-
       return data;
     };
 
@@ -89,14 +85,12 @@ export default function JournalTextEditor({
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    setCompletionStarted(true);
-
     handleSubmit(e);
+    setCompletionStarted(true);
   };
 
   const updateJournalEntry = async () => {
     setIsSaving(true);
-
     const response = await fetch(`/api/journal?id=${id}`, {
       method: 'PATCH',
       headers: {
@@ -104,7 +98,6 @@ export default function JournalTextEditor({
       },
       body: JSON.stringify({ title: entryTitle, content: input }),
     });
-
     setIsSaving(false);
 
     if (!response.ok) {
@@ -112,13 +105,10 @@ export default function JournalTextEditor({
       console.error(error);
       return;
     }
-
     setSuccess(true);
-
     setTimeout(() => {
       setSuccess(false);
     }, 2000);
-
     startTransition(() => {
       router.refresh();
     });
@@ -146,7 +136,6 @@ export default function JournalTextEditor({
           <Icons.arrowLeft />
           <span>Back</span>
         </Button>
-
         <div className="mt-8 p-2">
           <FlexRow className="justify-between">
             <p>{formatDate(createdAt)}</p>
@@ -159,7 +148,6 @@ export default function JournalTextEditor({
               </div>
             ) : null}
           </FlexRow>
-
           <label htmlFor="title" className="sr-only">
             Journal entry title
           </label>
@@ -172,7 +160,6 @@ export default function JournalTextEditor({
             value={entryTitle}
             onChange={(e) => setEntryTitle(e.target.value)}
           />
-
           <label htmlFor="journal-text-editor" className="sr-only pl-4">
             Write down anything that comes to mind
           </label>
@@ -187,13 +174,10 @@ export default function JournalTextEditor({
               onChange={handleInputChange}
             />
           </div>
-
           <div className="min-h-[320px]" />
         </div>
       </FlexCol>
-
       <NewQuestionnaire pathname={pathname} />
-
       <form onSubmit={handleCompletionSubmit}>
         <Button
           type="submit"
@@ -203,14 +187,16 @@ export default function JournalTextEditor({
           Ask for advice
         </Button>
       </form>
-
-      <Container className="my-12">
+      <div
+        className={clsx(
+          'rounded-x my-12 h-[560px] max-w-xl overflow-auto rounded-xl p-8',
+          (completionStarted || completion) && 'bg-blue'
+        )}
+      >
         {completion ? (
           <article
-            ref={completionRef}
             className={clsx(
-              `prose prose-stone h-screen dark:prose-invert prose-h4:mb-6`
-              // completionStarted && 'min-h-[400px]'
+              `prose prose-stone dark:prose-invert prose-h4:mb-6 prose-strong:text-lg prose-strong:font-bold`
             )}
             dangerouslySetInnerHTML={{ __html: completion }}
           />
@@ -225,7 +211,7 @@ export default function JournalTextEditor({
               ></div>
             ))
         )}
-      </Container>
+      </div>
     </>
   );
 }
