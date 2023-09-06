@@ -55,7 +55,7 @@ export default function NewNote() {
             </DialogTrigger>
             <p className="font-semibold">Media</p>
           </div>
-          <DialogContent className="bg-blue">
+          <DialogContent className="top-[30%] bg-blue md:top-1/2">
             <form onSubmit={handleNoteSubmit}>
               <DialogTitle className="mb-6 text-2xl">
                 Create a new note
