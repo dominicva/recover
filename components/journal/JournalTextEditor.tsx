@@ -66,7 +66,7 @@ export default function JournalTextEditor({
     };
 
     scrollToBottom();
-  }, [isLoading]);
+  }, [isLoading, completionStarted]);
 
   useEffect(() => {
     const getEntry = async () => {
