@@ -14,14 +14,10 @@ export default function QuestionnairePage() {
   const revalidate = useRevalidate();
 
   const [mood, setMood] = useState([0] as SliderProps['defaultValue']);
-  const [energy, setEnergy] = useState([0] as SliderProps['defaultValue']);
   const [motivation, setMotivation] = useState([
     0,
   ] as SliderProps['defaultValue']);
   const [anxiety, setAnxiety] = useState([0] as SliderProps['defaultValue']);
-  const [depression, setDepression] = useState([
-    0,
-  ] as SliderProps['defaultValue']);
   const [sleepQuality, setSleepQuality] = useState([
     0,
   ] as SliderProps['defaultValue']);

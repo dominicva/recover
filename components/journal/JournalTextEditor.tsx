@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
-import React, { useState, useEffect, useTransition, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { useChat } from 'ai/react';
 // @ts-ignore
@@ -10,9 +10,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { NewQuestionnaire } from '../dashboard';
 import { FlexCol, FlexRow } from '../ui/Flex';
 import { Button } from '../ui/button';
+import { useRevalidate } from '@/hooks/useRevalidate';
 import { Icons } from '@/components/ui/icons';
 import { formatDate } from '@/lib/dates';
 import type { JournalEntry } from '@prisma/client';
+import BackButton from '../ui/BackButton';
 
 export default function JournalTextEditor({
   id,
@@ -48,8 +50,7 @@ export default function JournalTextEditor({
   const [completionStarted, setCompletionStarted] = useState(false);
 
   const pathname = usePathname();
-  const router = useRouter();
-  const [, startTransition] = useTransition();
+  const revalidate = useRevalidate();
 
   const [entryTitle, setEntryTitle] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -105,13 +106,14 @@ export default function JournalTextEditor({
       console.error(error);
       return;
     }
+
     setSuccess(true);
+
     setTimeout(() => {
       setSuccess(false);
     }, 2000);
-    startTransition(() => {
-      router.refresh();
-    });
+
+    revalidate();
   };
 
   useAutosave({
@@ -128,14 +130,15 @@ export default function JournalTextEditor({
   return (
     <>
       <FlexCol className="gap-1">
-        <Button
+        <BackButton />
+        {/* <Button
           onClick={router.back}
           variant="secondary"
           className="flex w-24 gap-1 pl-3"
-        >
-          <Icons.arrowLeft />
-          <span>Back</span>
-        </Button>
+        > */}
+        {/* <Icons.arrowLeft /> */}
+        {/* <span>Back</span> */}
+        {/* </Button> */}
         <div className="mt-8 p-2">
           <FlexRow className="justify-between">
             <p>{formatDate(createdAt)}</p>

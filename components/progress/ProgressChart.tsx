@@ -2,15 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import {
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Line,
-  ComposedChart,
-  LineChart,
-} from 'recharts';
+import { XAxis, Tooltip, ResponsiveContainer, Line, LineChart } from 'recharts';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { Card, CardContent } from '@/components/ui/card';
 import AreaItem from './AreaItem';

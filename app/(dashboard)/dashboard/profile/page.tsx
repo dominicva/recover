@@ -4,15 +4,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { Settings, ArrowRight, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card';
-import Container from '@/components/ui/Container';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import BackButton from '@/components/ui/BackButton';
 import type { ExtendedUserSession } from '@/types';
 import { FlexCol } from '@/components/ui/Flex';

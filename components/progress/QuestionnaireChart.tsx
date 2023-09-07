@@ -1,16 +1,6 @@
-import {
-  Bar,
-  BarChart,
-  Label,
-  LabelList,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
-import type { Questionnaire } from '@prisma/client';
-import { formatDate } from '@/lib/dates';
+import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from 'recharts';
 import { format } from 'date-fns';
+import type { Questionnaire } from '@prisma/client';
 
 export default function QuestionnaireChart({
   questionnaire,

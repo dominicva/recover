@@ -7,6 +7,7 @@ import { getAchievedMilestones } from '@/lib/dates';
 import type { ExtendedUserSession } from '@/types';
 
 export default async function AchievementsPage() {
+  // TODO: refactor ExtendedUserSession to make TS happy
   const session = (await getServerSession(authOptions)) as ExtendedUserSession;
 
   const milestones = await getAchievedMilestones(
