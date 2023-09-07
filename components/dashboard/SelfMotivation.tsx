@@ -36,13 +36,20 @@ export default function SelfMotivation() {
           </Link>
         </CardContent>
       </div>
-      <Button size="lg" className="mb-4 ml-5 block w-40">
-        Create
-      </Button>
+      <Link
+        className={cn(
+          buttonVariants({
+            size: 'lg',
+          }),
+          'mb-4 ml-5 w-52'
+        )}
+        href={'/dashboard/motivation'}
+      >
+        Get encouragement
+      </Link>
       <CardFooter>
         <p className="text-body-text">
-          Record video or audio for your future self. Remember why you started
-          this journey.
+          Create notes and other media for your future self
         </p>
       </CardFooter>
     </Card>
