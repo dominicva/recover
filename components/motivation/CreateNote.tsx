@@ -30,7 +30,7 @@ export default function NewNote() {
         body: JSON.stringify({ note }),
       });
       if (response.ok) {
-        revalidate({ href: '/dashboard/recording' });
+        revalidate({ href: '/dashboard/motivation' });
       }
     } catch (error) {
       console.error(error);

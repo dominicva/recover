@@ -1,6 +1,6 @@
 /**
  * TODO: refactor this component to be more generic
- * It closely mirrors NoteActions.tsx
+ * It closely mirrors JournalEntryActions.tsx
  */
 'use client';
 
@@ -25,11 +25,7 @@ import {
 import { Icons } from '@/components/ui/icons';
 import { useRevalidate } from '@/hooks/useRevalidate';
 
-export default function JournalEntryActions({
-  journalEntryId,
-}: {
-  journalEntryId: string;
-}) {
+export default function NoteActions({ noteId }: { noteId: string }) {
   const revalidate = useRevalidate();
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
@@ -37,7 +33,7 @@ export default function JournalEntryActions({
   const handleDeleteEntry = async () => {
     setIsDeleteLoading(true);
 
-    const response = await fetch(`/api/journal?id=${journalEntryId}`, {
+    const response = await fetch(`/api/motivation/note?noteId=${noteId}`, {
       method: 'DELETE',
     });
 
@@ -50,13 +46,13 @@ export default function JournalEntryActions({
 
     setIsDeleteLoading(false);
     setShowDeleteAlert(false);
-    revalidate({ href: '/dashboard/journal' });
+    revalidate();
   };
 
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-10 w-10 items-center justify-center rounded-full border bg-gray-2  transition-colors hover:bg-light-gray">
+        <DropdownMenuTrigger className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full border bg-purple-2  transition-colors hover:bg-purple">
           <Icons.ellipsis className="h-4 w-4" />
           <span className="sr-only">Open</span>
         </DropdownMenuTrigger>
@@ -74,7 +70,7 @@ export default function JournalEntryActions({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this entry?
+              Are you sure you want to delete this note?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone.

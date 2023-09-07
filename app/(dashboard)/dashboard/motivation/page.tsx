@@ -9,8 +9,9 @@ import BackButton from '@/components/ui/BackButton';
 import NewNote from '@/components/motivation/CreateNote';
 import { getUserSession } from '@/lib/user';
 import { prisma } from '@/lib/db';
+import NoteActions from '@/components/motivation/NoteActions';
 
-export default async function Recording() {
+export default async function MotivationPage() {
   const { user } = await getUserSession();
 
   const motivationNotes = await prisma.motivationNote.findMany({
@@ -45,9 +46,10 @@ export default async function Recording() {
           {motivationNotes?.map((note) => (
             <Card
               key={note.id}
-              className="flex min-h-[120px] items-center bg-purple p-6  text-lg font-medium"
+              className="relative flex min-h-[120px] items-center bg-purple p-6 pr-12  text-lg font-medium"
             >
               {note.content}
+              <NoteActions noteId={note.id} />
             </Card>
           ))}
         </div>

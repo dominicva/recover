@@ -62,12 +62,13 @@ export default function ProfileSettings({
 }) {
   const { data: session, update } = useSession();
   const user = session?.user ?? ({} as any);
+  // console.log(user);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: user.name ?? '',
-      dateOfSobriety: new Date(),
+      dateOfSobriety: user?.substanceOfAbuse,
       substanceOfAbuse: user.substanceOfAbuse ?? '',
     },
   });

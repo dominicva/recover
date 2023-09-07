@@ -5,17 +5,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icons } from '@/components/ui/icons';
 import { SettingsForm } from '@/components/profile';
 import { prisma } from '@/lib/db';
-import type { ExtendedUserSession } from '@/types';
 
 export default async function ProfileSettings() {
-  const userSession = (await getServerSession(
-    authOptions
-  )) as ExtendedUserSession;
-  const substances = await prisma.substance.findMany({
-    orderBy: {
-      name: 'asc',
-    },
-  });
+  const [userSession, substances] = await Promise.all([
+    getServerSession(authOptions),
+    prisma.substance.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    }),
+  ]);
 
   return (
     <div className="min-h-screen lg:col-span-2 lg:row-span-3 lg:min-h-full">

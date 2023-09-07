@@ -5,10 +5,13 @@ export function useRevalidate() {
   const router = useRouter();
   const [, startTransition] = useTransition();
 
-  return ({ href }: { href: string }) => {
+  return ({ href }: { href?: string } = {}) => {
     startTransition(() => {
       router.refresh();
-      router.push(href);
+
+      if (href) {
+        router.push(href);
+      }
     });
   };
 }
