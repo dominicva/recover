@@ -4,9 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from '@/components/ui/card';
-import { Icons } from '@/components/ui/icons';
 import BackButton from '@/components/ui/BackButton';
 import NewNote from '@/components/motivation/CreateNote';
 import { getUserSession } from '@/lib/user';

@@ -16,6 +16,7 @@ export default function Achievement({
   achievement: AchievementProps;
   substanceOfAbuse: string;
 }) {
+  // hacky / temporary solution to get the right icon to show up
   let icon;
 
   switch (achievement.label) {
@@ -35,7 +36,7 @@ export default function Achievement({
       icon = <Icons.cherry width={40} height={40} />;
       break;
     case '2 months':
-      icon = <Icons.fish width={40} height={40} />;
+      icon = <Icons.carrot width={40} height={40} />;
       break;
     case '3 months':
       icon = <Icons.ferrisWheel width={40} height={40} />;
@@ -47,7 +48,7 @@ export default function Achievement({
       icon = <Icons.bird width={40} height={40} />;
       break;
     case '1 year':
-      icon = <Icons.fish width={40} height={40} />;
+      icon = <Icons.cake width={40} height={40} />;
     case '2 years':
       icon = <Icons.crown width={40} height={40} />;
     case '3 years':
@@ -59,6 +60,7 @@ export default function Achievement({
     default:
       icon = <Icons.crown width={40} height={40} />;
   }
+
   return (
     <Card className="col-span-1 bg-blue">
       <CardHeader></CardHeader>

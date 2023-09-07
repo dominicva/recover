@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-import type { AchievementProps } from '@/types';
 import { Icons } from '../ui/icons';
+import type { AchievementProps } from '@/types';
 
 export default function RecentAchievement({
   achievement,
@@ -16,6 +16,7 @@ export default function RecentAchievement({
   achievement: AchievementProps;
   substanceOfAbuse: string;
 }) {
+  // hacky / temporary solution to get the right icon to show up
   let icon;
 
   switch (achievement.label) {
@@ -35,7 +36,7 @@ export default function RecentAchievement({
       icon = <Icons.cherry width={40} height={40} />;
       break;
     case '2 months':
-      icon = <Icons.fish width={40} height={40} />;
+      icon = <Icons.carrot width={40} height={40} />;
       break;
     case '3 months':
       icon = <Icons.ferrisWheel width={40} height={40} />;
@@ -47,7 +48,7 @@ export default function RecentAchievement({
       icon = <Icons.bird width={40} height={40} />;
       break;
     case '1 year':
-      icon = <Icons.crown width={40} height={40} />;
+      icon = <Icons.cake width={40} height={40} />;
     case '2 years':
       icon = <Icons.crown width={40} height={40} />;
     case '3 years':
