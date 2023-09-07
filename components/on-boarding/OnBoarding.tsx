@@ -7,6 +7,13 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   Form,
   FormControl,
   FormDescription,
@@ -16,13 +23,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command';
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -30,12 +30,11 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import Container from '@/components/ui/Container';
-import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { ExtendedUserSession } from '@/types';
-import type { Substance } from '@prisma/client';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
+import type { Substance } from '@prisma/client';
+import type { ExtendedUserSession } from '@/types';
 
 const formSchema = z.object({
   name: z.string().nonempty(),
@@ -109,72 +108,50 @@ export default function OnBoarding({
             )}
           />
           <FormField
-            control={form.control}
             name="substanceOfAbuse"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>What are you trying to quit?</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pick a substance or habit" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="h-48">
+                    {substances.map((substance) => (
+                      <SelectItem
+                        value={substance?.name}
+                        key={substance.id}
+                        onSelect={() => {
+                          form.setValue('substanceOfAbuse', substance.name);
+                        }}
                       >
-                        {field.value
-                          ? substances.find(
-                              (substance) => substance.name === field.value
-                            )?.name
-                          : 'Select substance'}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-full p-0">
-                    <Command>
-                      <CommandInput placeholder="Search substance..." />
-                      <CommandEmpty>No substance found.</CommandEmpty>
-                      <CommandGroup className="h-96 overflow-scroll">
-                        {substances.map((substance) => (
-                          <CommandItem
-                            value={substance?.name}
-                            key={substance.name}
-                            onSelect={() => {
-                              form.setValue('substanceOfAbuse', substance.name);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                'mr-2 h-4 w-4',
-                                substance.name === field.value
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                            {substance?.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                        {substance?.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormDescription>
                   You can change this later in your profile settings
                 </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="dateOfSobriety"
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Your sober birthday</FormLabel>
+
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
