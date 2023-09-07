@@ -11,6 +11,7 @@ import type { Questionnaire } from '@prisma/client';
 
 export default function ProgressCalendar() {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
+
   const [progressChart, setProgressChart] = useState<
     Questionnaire | undefined
   >();
@@ -88,7 +89,10 @@ export default function ProgressCalendar() {
       });
     };
 
-    getQuestionnaires().then(setQuestionnaires);
+    getQuestionnaires().then((questionnaires) => {
+      setQuestionnaires(questionnaires);
+      setProgressChart(questionnaires[0]);
+    });
   }, []);
 
   const footer = (
@@ -106,24 +110,29 @@ export default function ProgressCalendar() {
 
   return (
     <article className="my-12 flex flex-wrap items-center justify-center rounded-xl lg:flex lg:gap-24">
-      <Calendar
-        mode="single"
-        onDayClick={handleDayClick}
-        modifiers={{
-          withQuestionnaireAboveAverage: withQuestionnaireAboveAverage.map(
-            (questionnaire: any) => new Date(questionnaire.createdAt)
-          ),
-          withQuestionnaireBelowAverage: withQuestionnaireBelowAverage.map(
-            (questionnaire: any) => new Date(questionnaire.createdAt)
-          ),
-        }}
-        modifiersStyles={{
-          withQuestionnaireAboveAverage: withQuestionnaireAboveAverageStyle,
-          withQuestionnaireBelowAverage: withQuestionnaireBelowAverageStyle,
-        }}
-        footer={footer}
-        className="mx-auto w-[380px] rounded-md bg-blue py-8 lg:mx-0"
-      />
+      <div>
+        <h3 className="mb-2 max-w-[300px] text-xl font-medium">
+          Pick a day for a breakdown of your scores
+        </h3>
+        <Calendar
+          mode="single"
+          onDayClick={handleDayClick}
+          modifiers={{
+            withQuestionnaireAboveAverage: withQuestionnaireAboveAverage.map(
+              (questionnaire: any) => new Date(questionnaire.createdAt)
+            ),
+            withQuestionnaireBelowAverage: withQuestionnaireBelowAverage.map(
+              (questionnaire: any) => new Date(questionnaire.createdAt)
+            ),
+          }}
+          modifiersStyles={{
+            withQuestionnaireAboveAverage: withQuestionnaireAboveAverageStyle,
+            withQuestionnaireBelowAverage: withQuestionnaireBelowAverageStyle,
+          }}
+          footer={footer}
+          className="mx-auto w-[380px] rounded-md bg-blue py-8 lg:mx-0"
+        />
+      </div>
       <div>
         {progressChart ? (
           <QuestionnaireChart questionnaire={progressChart} />

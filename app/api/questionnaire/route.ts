@@ -9,6 +9,9 @@ export const GET = async (_req: NextRequest, _res: NextResponse) => {
     where: {
       userId: user.userId,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return NextResponse.json({ data: questionnaires }, { status: 200 });
