@@ -131,14 +131,7 @@ export default function JournalTextEditor({
     <>
       <FlexCol className="gap-1">
         <BackButton />
-        {/* <Button
-          onClick={router.back}
-          variant="secondary"
-          className="flex w-24 gap-1 pl-3"
-        > */}
-        {/* <Icons.arrowLeft /> */}
-        {/* <span>Back</span> */}
-        {/* </Button> */}
+
         <div className="mt-8 p-2">
           <FlexRow className="justify-between">
             <p>{formatDate(createdAt)}</p>
