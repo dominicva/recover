@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { XAxis, Tooltip, ResponsiveContainer, Line, LineChart } from 'recharts';
+import {
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Line,
+  LineChart,
+} from 'recharts';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { Card, CardContent } from '@/components/ui/card';
 import AreaItem from './AreaItem';
@@ -197,13 +204,15 @@ export default function ProgressChart() {
               <LineChart
                 data={data}
                 className="mx-auto"
-                margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                margin={{ top: 40, right: 10, left: 10, bottom: 0 }}
               >
                 <XAxis
                   dataKey="dateToDisplay"
                   tick={<Tick stroke="#000" />}
                   domain={['dataMin', 'dataMax']}
                 />
+
+                <YAxis type="number" hide={true} domain={[0, 5]} />
 
                 <Tooltip />
 
