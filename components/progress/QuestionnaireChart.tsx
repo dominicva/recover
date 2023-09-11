@@ -44,8 +44,16 @@ export default function QuestionnaireChart({
       <h3 className="mb-8 text-xl">
         {format(new Date(questionnaire.createdAt), 'EEEE dd MMM y')}
       </h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart width={400} height={400} data={data} className="-mt-16">
+      <ResponsiveContainer width="100%" height={360}>
+        <BarChart
+          width={400}
+          height={400}
+          data={data}
+          className=""
+          margin={{
+            top: 30,
+          }}
+        >
           <XAxis dataKey="name" fontSize={13} />
           <YAxis type="number" hide={true} domain={[0, 5]} />
 
